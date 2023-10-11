@@ -1,0 +1,96 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile Contract",
+            "type": "shell",
+            "command": "cargo partisia-contract build --release",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Compile All Contracts",
+            "type": "shell",
+            "command": "cargo partisia-contract build --release",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run Java tests",
+            "type": "shell",
+            "command": "mvn test",
+            "options": {
+                "cwd": "${workspaceFolder}/java-test"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Deploy Petition Contract",
+            "type": "shell",
+            "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey .vscode/aa.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi 'Cake is better than oatmeal.'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },            
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Sign petition for Person A",
+            "type": "shell",
+            "command": "",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Sign petition for Person B",
+            "type": "shell",
+            "command": "",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Sign petition for Person C",
+            "type": "shell",
+            "command": "",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
