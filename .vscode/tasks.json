@@ -43,10 +43,10 @@
         {
             "label": "Deploy Petition Contract",
             "type": "shell",
-            "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey .vscode/aa.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi 'Cake is better than oatmeal.'",
+            "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey .vscode/A.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi 'Cake is better than oatmeal.'",
             "options": {
                 "cwd": "${workspaceFolder}"
-            },            
+            },
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -56,7 +56,7 @@
         {
             "label": "Sign petition for Person A",
             "type": "shell",
-            "command": "",
+            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey .vscode/A.pk ${input:contract-address} sign",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -69,7 +69,7 @@
         {
             "label": "Sign petition for Person B",
             "type": "shell",
-            "command": "",
+            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey .vscode/B.pk ${input:contract-address} sign",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -82,7 +82,7 @@
         {
             "label": "Sign petition for Person C",
             "type": "shell",
-            "command": "",
+            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey .vscode/C.pk ${input:contract-address} sign",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -92,5 +92,13 @@
                 "isDefault": true
             }
         }
+    ],
+    "inputs": [
+        {
+            "id": "contract-address",
+            "description": "The Address of a deployed Petition contract.",
+            "type": "promptString"
+        }
+
     ]
 }
