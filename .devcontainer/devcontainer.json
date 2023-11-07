@@ -25,6 +25,7 @@
 			]
 		}
 	},
+	"postStartCommand": "cp -r /workspaces/web-ide/README.md /build/example-contracts/",
 	"workspaceFolder": "/build/example-contracts",
 	"postAttachCommand": "cp -r /workspaces/web-ide/.vscode /build/example-contracts/"
 }
