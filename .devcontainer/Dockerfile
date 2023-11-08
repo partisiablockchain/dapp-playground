@@ -7,6 +7,3 @@ LABEL authors="Partisia"
 USER 0
 
 RUN cargo install cargo-partisia-contract
-
-RUN cargo partisia-contract build --release
-
