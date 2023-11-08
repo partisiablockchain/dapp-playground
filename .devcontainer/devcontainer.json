@@ -11,10 +11,10 @@
 		"codespaces": {
 			"openFiles": [
 				"README.md",
-				"Change-the-contract.md",
-				"Deploy-your-first-contract.md",
-				"Interact-with-your-first-contract.md",
-				"The-power-of-zk.md"
+				"tutorial/Change-the-contract.md",
+				"tutorial/Deploy-your-first-contract.md",
+				"tutorial/Interact-with-your-first-contract.md",
+				"tutorial/The-power-of-zk.md"
 			]
 		},
 		"vscode": {
