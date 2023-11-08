@@ -10,7 +10,11 @@
 		// Configure properties specific to VS Code.
 		"codespaces": {
 			"openFiles": [
-				"README.md"
+				"README.md",
+				"Change-the-contract.md",
+				"Deploy-your-first-contract.md",
+				"Interact-with-your-first-contract.md",
+				"The-power-of-zk.md"
 			]
 		},
 		"vscode": {
@@ -27,5 +31,8 @@
 	},
 	"postStartCommand": "cp -r /workspaces/web-ide/README.md /build/example-contracts/",
 	"workspaceFolder": "/build/example-contracts",
-	"postAttachCommand": "cp -r /workspaces/web-ide/.vscode /build/example-contracts/"
+	"postAttachCommand": {
+		"vscode-copy": "cp -r /workspaces/web-ide/.vscode /build/example-contracts/",
+		"tutorial-copy": "cp -r /workspaces/web-ide/tutorial /build/example-contracts/",
+	}
 }
