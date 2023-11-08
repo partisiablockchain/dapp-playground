@@ -11,10 +11,8 @@
 		"codespaces": {
 			"openFiles": [
 				"README.md",
-				"tutorial/Change-the-contract.md",
-				"tutorial/Deploy-your-first-contract.md",
-				"tutorial/Interact-with-your-first-contract.md",
-				"tutorial/The-power-of-zk.md"
+				"tutorial/public-contract-example.md",
+				"tutorial/zk-contract-example.md"
 			]
 		},
 		"vscode": {
@@ -29,12 +27,4 @@
 			]
 		}
 	},
-	"postStartCommand": {
-		"tutorial-copy": "cp -r /workspaces/web-ide/tutorial /build/example-contracts/",
-		"README-copy": "cp -r /workspaces/web-ide/README.md /build/example-contracts/"
-	},
-	"workspaceFolder": "/build/example-contracts",
-	"postAttachCommand": {
-		"vscode-copy": "cp -r /workspaces/web-ide/.vscode /build/example-contracts/",
-	}
 }

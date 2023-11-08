@@ -1,1 +1,0 @@
-# The power of MPC from ZK Rust
