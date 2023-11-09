@@ -16,12 +16,12 @@
  *
  */
 
-import { ContractAbi, FnRpcBuilder } from "@partisiablockchain/abi-client-ts";
-import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";
-import BN from "bn.js";
+import { ContractAbi, FnRpcBuilder, ZkInputBuilder } from "@partisiablockchain/abi-client";
+import { ZkRpcBuilder, BlockchainAddress, BlockchainPublicKey  } from "@partisiablockchain/zk-client";
 import { Buffer } from "buffer";
 import { TransactionApi } from "../client/TransactionApi";
 import { Address } from "./Addresses";
+import { computeAverageSalary } from "./AverageSalary";
 
 /**
  * API for the token contract.
@@ -30,13 +30,17 @@ import { Address } from "./Addresses";
  * The implementation uses the TransactionApi to send transactions, and ABI for the contract to be
  * able to build the RPC for the transfer transaction.
  */
-export class TokenContractApi {
+export class AverageSalaryApi {
   private readonly transactionApi: TransactionApi;
+  private readonly sender: BlockchainAddress;
   private readonly abi: ContractAbi;
+  private readonly engineKeys: BlockchainPublicKey[]
 
-  constructor(transactionApi: TransactionApi, abi: ContractAbi) {
+  constructor(transactionApi: TransactionApi, sender: string, abi: ContractAbi, engineKeys: BlockchainPublicKey[]) {
     this.transactionApi = transactionApi;
+    this.sender = BlockchainAddress.fromString(sender);
     this.abi = abi;
+    this.engineKeys = engineKeys.map(key => BlockchainPublicKey.fromBuffer(key.asBuffer()));
   }
 
   /**
@@ -44,21 +48,21 @@ export class TokenContractApi {
    * @param to receiver of tokens
    * @param amount number of tokens to send
    */
-  readonly transfer = (to: string, amount: BN) => {
+  readonly addSalary = (amount: number) => {
     // First build the RPC buffer that is the payload of the transaction.
-    const rpc = this.buildTransferRpc(to, amount);
+    const rpc = this.buildAddSalaryRpc(amount);
     // Then send the payload via the transaction API.
     // We are sending the transaction to the configured address of the token address, and use the
     // GasCost utility to estimate how much the transaction costs.
-    return this.transactionApi.sendTransactionAndWait(Address.token, rpc, 10_000);
+    return this.transactionApi.sendTransactionAndWait(Address.averageSalary, rpc, 100_000);
   };
 
   /**
    * Build and send mint transaction
    */
-  readonly mint = () => {
-    const rpc = this.buildMintRpc();
-    return this.transactionApi.sendTransactionAndWait(Address.token, rpc, 10_000);
+  readonly compute = () => {
+    const rpc = this.ComputeAverageSalaryRpc();
+    return this.transactionApi.sendTransactionAndWait(Address.averageSalary, rpc, 10_000);
   };
 
   /**
@@ -66,29 +70,22 @@ export class TokenContractApi {
    * @param to receiver of tokens
    * @param amount number of tokens to send
    */
-  private readonly buildTransferRpc = (to: string, amount: BN): Buffer => {
-    // First construct a Function RPC builder that can format the bytes correctly.
-    // Specify the name of the function, i.e. "transfer" and use the ABI to the builder knows how to
-    // format for the function.
-    const fnBuilder = new FnRpcBuilder("transfer", this.abi);
-    // Write the address as bytes in a buffer and add as function argument.
-    const encodedAddress = Buffer.from(to, "hex");
-    fnBuilder.addAddress(encodedAddress);
-    // Add the amount as an u128 function argument.
-    fnBuilder.addU128(amount);
-    // Write out the encoded function call as bytes and return the result as the RPC.
-    const bufferWriter = new BigEndianByteOutput();
-    fnBuilder.write(bufferWriter);
-    return bufferWriter.toBuffer();
+  private readonly buildAddSalaryRpc = (amount: number): Buffer => {
+    const fnBuilder = new FnRpcBuilder("add_salary", this.abi);
+    
+    const additionalRpc = fnBuilder.getBytes();
+
+    const secretInputBuilder = ZkInputBuilder.createZkInputBuilder("add_salary", this.abi);
+    secretInputBuilder.addI32(amount);
+    const compactBitArray = secretInputBuilder.getBits();
+
+    return ZkRpcBuilder.zkInputOnChain(this.sender, compactBitArray, additionalRpc, this.engineKeys);
   };
 
   /**
    * Build the RPC payload for the transfer transaction.
    */
-  private readonly buildMintRpc = (): Buffer => {
-    const fnBuilder = new FnRpcBuilder("mint", this.abi);
-    const bufferWriter = new BigEndianByteOutput();
-    fnBuilder.write(bufferWriter);
-    return bufferWriter.toBuffer();
+  private readonly ComputeAverageSalaryRpc = (): Buffer => {
+    return computeAverageSalary();
   };
 }

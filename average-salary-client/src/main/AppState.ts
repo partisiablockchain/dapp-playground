@@ -16,11 +16,12 @@
  *
  */
 
-import { ContractAbi } from "@partisiablockchain/abi-client-ts";
+import { ContractAbi } from "@partisiablockchain/abi-client";
+import { BlockchainPublicKey } from "@partisiablockchain/zk-client"
 import { ShardedClient } from "./client/ShardedClient";
 import { TransactionApi } from "./client/TransactionApi";
 import { ConnectedWallet } from "./ConnectedWallet";
-import { TokenContractApi } from "./contract/TokenContractApi";
+import { AverageSalaryApi } from "./contract/AverageSalaryApi";
 import { updateContractState } from "./WalletIntegration";
 
 export const CLIENT = new ShardedClient("https://node1.testnet.partisiablockchain.com", [
@@ -31,7 +32,8 @@ export const CLIENT = new ShardedClient("https://node1.testnet.partisiablockchai
 
 let currentAccount: ConnectedWallet | undefined;
 let contractAbi: ContractAbi | undefined;
-let tokenApi: TokenContractApi | undefined;
+let tokenApi: AverageSalaryApi | undefined;
+let engineKeys: BlockchainPublicKey[] | undefined;
 
 export const setAccount = (account: ConnectedWallet | undefined) => {
   currentAccount = account;
@@ -56,12 +58,21 @@ export const getContractAbi = () => {
 };
 
 export const setTokenApi = () => {
-  if (currentAccount != undefined && contractAbi != undefined) {
+  if (currentAccount != undefined && contractAbi != undefined && engineKeys !== undefined) {
     const transactionApi = new TransactionApi(currentAccount, updateContractState);
-    tokenApi = new TokenContractApi(transactionApi, contractAbi);
+    tokenApi = new AverageSalaryApi(transactionApi, currentAccount.address, contractAbi, engineKeys);
   }
 };
 
 export const getTokenApi = () => {
   return tokenApi;
+};
+
+export const getEngineKeys = () => {
+  return engineKeys;
+};
+
+export const setEngineKeys = (keys: BlockchainPublicKey[]) => {
+  engineKeys = keys;
+  setTokenApi()
 };

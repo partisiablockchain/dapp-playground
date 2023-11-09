@@ -24,15 +24,17 @@ import {
   ScValueNumber,
   ScValueString,
   StateReader,
-} from "@partisiablockchain/abi-client-ts";
+} from "@partisiablockchain/abi-client";
 import { LittleEndianByteInput } from "@secata-public/bitmanipulation-ts";
 import { Buffer } from "buffer";
 import PartisiaSdk from "partisia-sdk";
-import { CLIENT, getContractAbi, resetAccount, setAccount, setContractAbi } from "./AppState";
+import { CLIENT, getContractAbi, resetAccount, setAccount, setContractAbi, getEngineKeys, setEngineKeys } from "./AppState";
+import { BlockchainPublicKey  } from "@partisiablockchain/zk-client";
 import { TransactionApi } from "./client/TransactionApi";
 import { serializeTransaction } from "./client/TransactionSerialization";
 import { ConnectedWallet } from "./ConnectedWallet";
 import { Address } from "./contract/Addresses";
+import { deserializeContractState } from "./contract/AverageSalary";
 
 interface MetamaskRequestArguments {
   /** The RPC method to request. */
@@ -255,14 +257,26 @@ export const disconnectWalletClick = () => {
  * Structure of the raw data from a WASM contract.
  */
 interface RawContractData {
-  state: { data: string };
+  engines: { engines: Engine[] };
+  openState: { openState: { data: string } };
 }
+
+/** dto of an engine in the zk contract object. */
+interface Engine {
+  /** Address of the engine. */
+  identity: string;
+  /** Public key of the engine encoded in base64. */
+  publicKey: string;
+  /** Rest interface of the engine. */
+  restInterface: string;
+}
+
 
 /**
  * Write some of the state to the UI.
  */
 export const updateContractState = () => {
-  CLIENT.getContractData<RawContractData>(Address.token).then((contract) => {
+  CLIENT.getContractData<RawContractData>(Address.averageSalary).then((contract) => {
     if (contract != null) {
       const stateView = document.querySelector("#contract-state");
       if (stateView != null) {
@@ -275,47 +289,40 @@ export const updateContractState = () => {
         setContractAbi(abi.contract);
       }
 
-      const stateBuffer = Buffer.from(contract.serializedContract.state.data, "base64");
-      const stateReader = new StateReader(
-        new LittleEndianByteInput(stateBuffer),
-        <ContractAbi>getContractAbi()
-      );
-      const state = stateReader.readState();
-
-      const tokenName = document.createElement("h2");
-      tokenName.innerHTML = (state.getFieldValue("name") as ScValueString).value;
-      if (stateView != null) {
-        stateView.appendChild(tokenName);
+      if (getEngineKeys() === undefined) {
+        const engineKeys = contract.serializedContract.engines.engines.map((e) =>
+          BlockchainPublicKey.fromBuffer(Buffer.from(e.publicKey, "base64"))
+        );
+        setEngineKeys(engineKeys);
       }
 
-      const contractAddress = document.createElement("div");
-      contractAddress.innerHTML = `Contract address <a target="_blank" href="https://testnet.partisiablockchain.com/info/contract/${contract.address}">${contract.address}</a>`;
+      const stateBuffer = Buffer.from(contract.serializedContract.openState.openState.data, "base64");
+
+      const state = deserializeContractState({state: stateBuffer});
+
+      
+      const stateHeader = document.createElement("h2");
+      stateHeader.innerHTML = "State"
       if (stateView != null) {
-        stateView.appendChild(contractAddress);
+        stateView.appendChild(stateHeader);
+      }
+      const administrator = document.createElement("div");
+      administrator.innerHTML = `Administrator: ${state.administrator.asString()}`;
+      if (stateView != null) {
+        stateView.appendChild(administrator);
       }
 
-      const ownerAddress = (state.getFieldValue("owner") as ScValueAddress).value.toString("hex");
-      const contractOwner = document.createElement("div");
-      contractOwner.innerHTML = `Contract owned by <a target="_blank" href="https://testnet.partisiablockchain.com/info/account/${ownerAddress}">${ownerAddress}</a>`;
+      const averageSalaryResult = document.createElement("div");
+      averageSalaryResult.innerHTML = `Average Salary Result: ${state.averageSalaryResult ?? "None"}`;
       if (stateView != null) {
-        stateView.appendChild(contractOwner);
+        stateView.appendChild(averageSalaryResult);
       }
 
-      const balances = document.createElement("h3");
-      balances.innerHTML = "Token Balances";
+      const numEmployees = document.createElement("div");
+      numEmployees.innerHTML = `Number of employess: ${state.numEmployees ?? "None"}`;
       if (stateView != null) {
-        stateView.appendChild(balances);
+        stateView.appendChild(numEmployees);
       }
-      const balanceMap = state.getFieldValue("balances") as ScValueMap;
-      balanceMap.map.forEach((v, k) => {
-        const tokenOwner = (k as ScValueAddress).value.toString("hex");
-        const amount = (v as ScValueNumber).asBN().toString();
-        const balance = document.createElement("div");
-        balance.innerHTML = `${tokenOwner}: ${amount}`;
-        if (stateView != null) {
-          stateView.appendChild(balance);
-        }
-      });
     } else {
       throw new Error("Could not find data for contract");
     }

@@ -22,5 +22,5 @@
  */
 export const Address = {
   // Address of the token contract.
-  token: "0213fd8bba63ab342b040c1b1bc6b7e63ca1244663",
+  averageSalary: "03f26ab43e5db1bec660057e7f7066ff86669661fe",
 } as const;

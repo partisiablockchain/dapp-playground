@@ -39,30 +39,24 @@ disconnectWallet.addEventListener("click", disconnectWalletClick);
 
 // Setup event listener that sends a transfer transaction to the contract.
 // This requires that a wallet has been connected.
-const transferSubmitBtn = <Element>document.querySelector("#transfer-submit-btn");
-transferSubmitBtn.addEventListener("click", transferFormAction);
+const transferSubmitBtn = <Element>document.querySelector("#add-salary-btn");
+transferSubmitBtn.addEventListener("click", addSalaryFormAction);
 
-const mintTokensBtn = <Element>document.querySelector("#mint-tokens-btn");
-mintTokensBtn.addEventListener("click", mintTokensAction);
+const mintTokensBtn = <Element>document.querySelector("#compute-average-salary-btn");
+mintTokensBtn.addEventListener("click", computeAction);
 
 // Fetch the state of the Token contract and write relevant values to the UI.
 updateContractState();
 
 // Form action for the transfer tokens form.
 // The action reads the values from the input fields and validates them.
-function transferFormAction() {
+function addSalaryFormAction() {
   // Test if a user has connected via the MPC wallet extension
   if (isConnected()) {
-    const to = <HTMLInputElement>document.querySelector("#transfer-to");
-    const amount = <HTMLInputElement>document.querySelector("#transfer-amount");
-    const address = to.value;
-    const regex = /[0-9A-Fa-f]{42}/g;
-    if (address.length != 42 || address.match(regex) == null) {
-      // Validate that address is 21 bytes in hexidecimal format
-      console.error(`${address} is not a valid PBC address`);
-    } else if (parseInt(amount.value, 10) <= 0 || isNaN(parseInt(amount.value, 10))) {
+    const salary = <HTMLInputElement>document.querySelector("#salary");
+    if (isNaN(parseInt(salary.value, 10))) {
       // Validate that amount is greater than zero
-      console.error("Transfer amount must be greater than zero");
+      console.error("Salary must be a number");
     } else {
       // All fields validated, transfer tokens.
       // To be able to tokens we need the token API to be set in state.
@@ -72,7 +66,7 @@ function transferFormAction() {
       if (api !== undefined) {
         // Transfer tokens via the token api
         api
-          .transfer(address, new BN(amount.value))
+          .addSalary(parseInt(salary.value, 10))
           .then(() => console.warn("Transfer was successful!"));
       }
     }
@@ -81,9 +75,9 @@ function transferFormAction() {
   }
 }
 
-function mintTokensAction() {
+function computeAction() {
   const api = getTokenApi();
   if (isConnected() && api !== undefined) {
-    api.mint().then(() => console.warn("Minted tokens"));
+    api.compute().then(() => console.warn("Computed average salary"));
   }
 }
