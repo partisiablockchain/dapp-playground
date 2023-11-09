@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PBC wallet integration</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/conf/config.js"></script>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>PBC wallet integration demo</h1>
+
+    <div>
+      <h2>Account</h2>
+      <div id="connection-status">
+        <p>Currently not connected</p>
+      </div>
+
+      <div id="wallet-connect">
+        <form>
+          <input id="wallet-connect-btn" type="button" value="Connect MPC Wallet" />
+        </form>
+      </div>
+
+      <div id="metamask-connect">
+        <form>
+          <input id="metamask-connect-btn" type="button" value="Connect MetaMask snap" />
+        </form>
+      </div>
+
+      <div id="wallet-disconnect" class="hidden">
+        <form>
+          <input id="wallet-disconnect-btn" type="button" value="Logout" />
+        </form>
+      </div>
+    </div>
+
+    <div id="contract-interaction" class="hidden">
+      <h2>Mint tokens</h2>
+      <form>
+        <input id="mint-tokens-btn" type="button" value="Mint 10.000 tokens" />
+      </form>
+
+      <h2>Transfer tokens</h2>
+      <form name="transfer-action-form">
+        <label>Transfer to:</label>
+        <input id="transfer-to" name="transfer-to" type="text" />
+        <label>Transfer amount</label>
+        <input id="transfer-amount" name="transfer-amount" type="number" />
+        <input id="transfer-submit-btn" type="button" value="Transfer" />
+      </form>
+    </div>
+
+    <div id="contract-state">
+      <h2>Token State</h2>
+    </div>
+  </body>
+</html>
