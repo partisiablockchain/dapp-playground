@@ -6,11 +6,10 @@ extern crate pbc_contract_codegen;
 extern crate pbc_contract_common;
 extern crate pbc_lib;
 
-mod zk_compute;
-
 use pbc_contract_common::address::Address;
 use pbc_contract_common::context::ContractContext;
 use pbc_contract_common::events::EventGroup;
+use pbc_contract_common::shortname::ShortnameZkComputation;
 use pbc_contract_common::zk::ZkClosed;
 use pbc_contract_common::zk::{CalculationStatus, SecretVarId, ZkInputDef, ZkState, ZkStateChange};
 use read_write_rpc_derive::ReadWriteRPC;
@@ -31,6 +30,8 @@ const BITLENGTH_OF_SECRET_SALARY_VARIABLES: u32 = 32;
 
 /// Number of employees to wait for before starting computation. A value of 2 or below is useless.
 const MIN_NUM_EMPLOYEES: u32 = 3;
+
+const ZK_COMPUTE_SUM: ShortnameZkComputation = ShortnameZkComputation::from_u32(0x61);
 
 /// This contract's state
 #[state]
@@ -121,8 +122,9 @@ fn compute_average_salary(
     (
         state,
         vec![],
-        vec![zk_compute::sum_everything_start(
-            &SecretVarType::SumResult {},
+        vec![ZkStateChange::start_computation(
+            ZK_COMPUTE_SUM,
+            vec![SecretVarType::SumResult {}],
         )],
     )
 }

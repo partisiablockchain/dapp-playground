@@ -1,6 +1,5 @@
 use pbc_zk::*;
 
-#[allow(unused)]
 const SALARY_VARIABLE_KIND: u8 = 0u8;
 
 /// Perform a zk computation on secret-shared data sum the secret variables.
