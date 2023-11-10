@@ -17,11 +17,10 @@
  */
 
 import { ContractAbi } from "@partisiablockchain/abi-client";
-import { BlockchainPublicKey } from "@partisiablockchain/zk-client";
 import { ShardedClient } from "./client/ShardedClient";
 import { TransactionApi } from "./client/TransactionApi";
 import { ConnectedWallet } from "./ConnectedWallet";
-import { AverageSalaryApi } from "./contract/AverageSalaryApi";
+import { PetitionApi } from "./contract/PetitionApi";
 import { updateContractState } from "./WalletIntegration";
 
 export const CLIENT = new ShardedClient("https://node1.testnet.partisiablockchain.com", [
@@ -33,12 +32,11 @@ export const CLIENT = new ShardedClient("https://node1.testnet.partisiablockchai
 let contractAddress: string | undefined;
 let currentAccount: ConnectedWallet | undefined;
 let contractAbi: ContractAbi | undefined;
-let averageApi: AverageSalaryApi | undefined;
-let engineKeys: BlockchainPublicKey[] | undefined;
+let petitionApi: PetitionApi | undefined;
 
 export const setAccount = (account: ConnectedWallet | undefined) => {
   currentAccount = account;
-  setAverageApi();
+  setPetitionApi();
 };
 
 export const resetAccount = () => {
@@ -46,41 +44,29 @@ export const resetAccount = () => {
 };
 
 export const isConnected = () => {
-  return currentAccount != null;
+  return currentAccount != null && contractAddress != null;
 };
 
 export const setContractAbi = (abi: ContractAbi) => {
   contractAbi = abi;
-  setAverageApi();
+  setPetitionApi();
 };
 
 export const getContractAbi = () => {
   return contractAbi;
 };
 
-export const setAverageApi = () => {
-  if (currentAccount != undefined && contractAbi != undefined && engineKeys !== undefined) {
+export const setPetitionApi = () => {
+  if (currentAccount != undefined) {
     const transactionApi = new TransactionApi(currentAccount, updateContractState);
-    averageApi = new AverageSalaryApi(
-      transactionApi,
-      currentAccount.address,
-      contractAbi,
-      engineKeys
+    petitionApi = new PetitionApi(
+      transactionApi
     );
   }
 };
 
-export const getAverageApi = () => {
-  return averageApi;
-};
-
-export const getEngineKeys = () => {
-  return engineKeys;
-};
-
-export const setEngineKeys = (keys: BlockchainPublicKey[]) => {
-  engineKeys = keys;
-  setAverageApi();
+export const getPetitionApi = () => {
+  return petitionApi;
 };
 
 export const getContractAddress = () => {

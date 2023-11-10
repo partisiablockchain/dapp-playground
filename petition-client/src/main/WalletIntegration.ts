@@ -16,27 +16,23 @@
  *
  */
 
-import { AbiParser } from "@partisiablockchain/abi-client";
 import { Buffer } from "buffer";
 import PartisiaSdk from "partisia-sdk";
 import {
   CLIENT,
-  getContractAbi,
   resetAccount,
   setAccount,
-  setContractAbi,
-  getEngineKeys,
-  setEngineKeys,
   getContractAddress,
 } from "./AppState";
-import { BlockchainPublicKey, CryptoUtils } from "@partisiablockchain/zk-client";
 import { TransactionApi } from "./client/TransactionApi";
 import { serializeTransaction } from "./client/TransactionSerialization";
 import { ConnectedWallet } from "./ConnectedWallet";
-import { deserializeContractState } from "./contract/AverageSalary";
 import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";
 import { Rpc, TransactionPayload } from "./client/TransactionData";
 import { ec } from "elliptic";
+import {CryptoUtils} from "./client/CryptoUtils";
+import {deserializePetitionState} from "./contract/Petition";
+import {BlockchainAddress} from "@partisiablockchain/abi-client";
 
 interface MetamaskRequestArguments {
   /** The RPC method to request. */
@@ -315,19 +311,8 @@ export const disconnectWalletClick = () => {
 /**
  * Structure of the raw data from a WASM contract.
  */
-interface RawZkContractData {
-  engines: { engines: Engine[] };
-  openState: { openState: { data: string } };
-}
-
-/** dto of an engine in the zk contract object. */
-interface Engine {
-  /** Address of the engine. */
-  identity: string;
-  /** Public key of the engine encoded in base64. */
-  publicKey: string;
-  /** Rest interface of the engine. */
-  restInterface: string;
+interface RawContractData {
+  state: { data: string };
 }
 
 /**
@@ -338,57 +323,45 @@ export const updateContractState = () => {
   if (address === undefined) {
     throw new Error("No address provided");
   }
-  CLIENT.getContractData<RawZkContractData>(address).then((contract) => {
+  CLIENT.getContractData<RawContractData>(address).then((contract) => {
     if (contract != null) {
       const stateView = document.querySelector("#contract-state");
       if (stateView != null) {
         stateView.innerHTML = "";
       }
 
-      if (getContractAbi() === undefined) {
-        const abiBuffer = Buffer.from(contract.abi, "base64");
-        const abi = new AbiParser(abiBuffer).parseAbi();
-        setContractAbi(abi.contract);
-      }
-
-      if (getEngineKeys() === undefined) {
-        const engineKeys = contract.serializedContract.engines.engines.map((e) =>
-          BlockchainPublicKey.fromBuffer(Buffer.from(e.publicKey, "base64"))
-        );
-        setEngineKeys(engineKeys);
-      }
-
       const stateBuffer = Buffer.from(
-        contract.serializedContract.openState.openState.data,
+        contract.serializedContract.state.data,
         "base64"
       );
 
-      const state = deserializeContractState({ state: stateBuffer });
+      console.log(stateBuffer.toString("hex"));
+
+      const state = deserializePetitionState({ state: stateBuffer });
 
       const stateHeader = document.createElement("h2");
       stateHeader.innerHTML = "State";
       if (stateView != null) {
         stateView.appendChild(stateHeader);
       }
-      const administrator = document.createElement("div");
-      administrator.innerHTML = `Administrator: ${state.administrator.asString()}`;
+      const petition = document.createElement("div");
+      petition.innerHTML = `Petition: ${state.description}`;
       if (stateView != null) {
-        stateView.appendChild(administrator);
+        stateView.appendChild(petition);
       }
 
-      const averageSalaryResult = document.createElement("div");
-      averageSalaryResult.innerHTML = `Average Salary Result: ${
-        state.averageSalaryResult ?? "None"
-      }`;
+      const signers = document.createElement("h3");
+      signers.innerHTML = "Signers";
       if (stateView != null) {
-        stateView.appendChild(averageSalaryResult);
+        stateView.appendChild(signers);
       }
-
-      const numEmployees = document.createElement("div");
-      numEmployees.innerHTML = `Number of employess: ${state.numEmployees ?? "None"}`;
-      if (stateView != null) {
-        stateView.appendChild(numEmployees);
-      }
+      state.signedBy.forEach((signer: BlockchainAddress) => {
+        const signerElement = document.createElement("div");
+        signerElement.innerHTML = signer.asString();
+        if (stateView != null) {
+          stateView.appendChild(signerElement);
+        }
+      });
     } else {
       throw new Error("Could not find data for contract");
     }

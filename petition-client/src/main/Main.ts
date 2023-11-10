@@ -16,7 +16,7 @@
  *
  */
 
-import { getAverageApi, isConnected, setContractAddress } from "./AppState";
+import { getPetitionApi, isConnected, setContractAddress } from "./AppState";
 import {
   connectMetaMaskWalletClick,
   connectMpcWalletClick,
@@ -43,49 +43,17 @@ disconnectWallet.addEventListener("click", disconnectWalletClick);
 
 // Setup event listener that sends a transfer transaction to the contract.
 // This requires that a wallet has been connected.
-const addSalarySubmitBtn = <Element>document.querySelector("#add-salary-btn");
-addSalarySubmitBtn.addEventListener("click", addSalaryFormAction);
 
-const computeSalaryBtn = <Element>document.querySelector("#compute-average-salary-btn");
-computeSalaryBtn.addEventListener("click", computeAction);
+const computeSalaryBtn = <Element>document.querySelector("#sign-btn");
+computeSalaryBtn.addEventListener("click", signAction);
 
 const addressBtn = <Element>document.querySelector("#address-btn");
 addressBtn.addEventListener("click", contractAddressClick);
 
-// Fetch the state of the Token contract and write relevant values to the UI.
-//updateContractState();
-
-// Form action for the transfer tokens form.
-// The action reads the values from the input fields and validates them.
-function addSalaryFormAction() {
-  // Test if a user has connected via the MPC wallet extension
-  if (isConnected()) {
-    const salary = <HTMLInputElement>document.querySelector("#salary");
-    if (isNaN(parseInt(salary.value, 10))) {
-      // Validate that amount is greater than zero
-      console.error("Salary must be a number");
-    } else {
-      // All fields validated, transfer tokens.
-      // To be able to tokens we need the token API to be set in state.
-      // This should have happened automatically if we were able to fetch the token contract state
-      // and abi.
-      const api = getAverageApi();
-      if (api !== undefined) {
-        // Transfer tokens via the token api
-        api
-          .addSalary(parseInt(salary.value, 10))
-          .then(() => console.warn("Transfer was successful!"));
-      }
-    }
-  } else {
-    console.error("Cannot transfer without a connected wallet!");
-  }
-}
-
-function computeAction() {
-  const api = getAverageApi();
+function signAction() {
+  const api = getPetitionApi();
   if (isConnected() && api !== undefined) {
-    api.compute().then(() => console.warn("Computed average salary"));
+    api.sign().then(() => console.warn("Computed average salary"));
   }
 }
 
