@@ -99,7 +99,7 @@ function contractAddressClick() {
     console.error(`${address} is not a valid PBC address`);
   } else {
     const currentAddress = <HTMLInputElement>document.querySelector("#current-address");
-    currentAddress.innerHTML = `Current Address: ${address}`;
+    currentAddress.innerHTML = `Contract Address: ${address}`;
     setContractAddress(address);
     updateContractState();
   }

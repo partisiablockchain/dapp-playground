@@ -30,7 +30,7 @@ export const CLIENT = new ShardedClient("https://node1.testnet.partisiablockchai
   "Shard2",
 ]);
 
-let contractAddress: string;
+let contractAddress: string | undefined;
 let currentAccount: ConnectedWallet | undefined;
 let contractAbi: ContractAbi | undefined;
 let tokenApi: AverageSalaryApi | undefined;

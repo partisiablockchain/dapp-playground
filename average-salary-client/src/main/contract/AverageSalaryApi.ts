@@ -53,25 +53,32 @@ export class AverageSalaryApi {
   }
 
   /**
-   * Build and send transfer transaction.
-   * @param to receiver of tokens
+   * Build and send add salary secret input transaction.
    * @param amount number of tokens to send
    */
   readonly addSalary = (amount: number) => {
+    const address = getContractAddress();
+    if (address === undefined) {
+      throw new Error("No address provided");
+    }
     // First build the RPC buffer that is the payload of the transaction.
     const rpc = this.buildAddSalaryRpc(amount);
     // Then send the payload via the transaction API.
     // We are sending the transaction to the configured address of the token address, and use the
     // GasCost utility to estimate how much the transaction costs.
-    return this.transactionApi.sendTransactionAndWait(getContractAddress(), rpc, 100_000);
+    return this.transactionApi.sendTransactionAndWait(address, rpc, 100_000);
   };
 
   /**
-   * Build and send mint transaction
+   * Build and send compute transaction
    */
   readonly compute = () => {
+    const address = getContractAddress();
+    if (address === undefined) {
+      throw new Error("No address provided");
+    }
     const rpc = this.ComputeAverageSalaryRpc();
-    return this.transactionApi.sendTransactionAndWait(getContractAddress(), rpc, 10_000);
+    return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
   };
 
   /**

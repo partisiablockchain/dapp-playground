@@ -334,10 +334,11 @@ interface Engine {
  * Write some of the state to the UI.
  */
 export const updateContractState = () => {
-  if (getContractAddress() === undefined) {
-    console.error("No address provided");
+  const address = getContractAddress();
+  if (address === undefined) {
+    throw new Error("No address provided");
   }
-  CLIENT.getContractData<RawContractData>(getContractAddress()).then((contract) => {
+  CLIENT.getContractData<RawContractData>(address).then((contract) => {
     if (contract != null) {
       const stateView = document.querySelector("#contract-state");
       if (stateView != null) {
