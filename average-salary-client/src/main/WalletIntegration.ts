@@ -16,25 +16,27 @@
  *
  */
 
-import {
-  AbiParser,
-  ContractAbi,
-  ScValueAddress,
-  ScValueMap,
-  ScValueNumber,
-  ScValueString,
-  StateReader,
-} from "@partisiablockchain/abi-client";
-import { LittleEndianByteInput } from "@secata-public/bitmanipulation-ts";
+import { AbiParser } from "@partisiablockchain/abi-client";
 import { Buffer } from "buffer";
 import PartisiaSdk from "partisia-sdk";
-import { CLIENT, getContractAbi, resetAccount, setAccount, setContractAbi, getEngineKeys, setEngineKeys } from "./AppState";
-import { BlockchainPublicKey  } from "@partisiablockchain/zk-client";
+import {
+  CLIENT,
+  getContractAbi,
+  resetAccount,
+  setAccount,
+  setContractAbi,
+  getEngineKeys,
+  setEngineKeys,
+  getContractAddress,
+} from "./AppState";
+import { BlockchainPublicKey, CryptoUtils } from "@partisiablockchain/zk-client";
 import { TransactionApi } from "./client/TransactionApi";
 import { serializeTransaction } from "./client/TransactionSerialization";
 import { ConnectedWallet } from "./ConnectedWallet";
-import { Address } from "./contract/Addresses";
 import { deserializeContractState } from "./contract/AverageSalary";
+import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";
+import { Rpc, TransactionPayload } from "./client/TransactionData";
+import { ec } from "elliptic";
 
 interface MetamaskRequestArguments {
   /** The RPC method to request. */
@@ -216,11 +218,66 @@ export const connectMpcWalletClick = () => {
   );
 };
 
+const connectPrivateKey = async (sender: string, keyPair: ec.KeyPair): Promise<ConnectedWallet> => {
+  return {
+    address: sender,
+    signAndSendTransaction: (payload: TransactionPayload<Rpc>, cost = 0) => {
+      // To send a transaction we need some up-to-date account information, i.e. the
+      // current account nonce.
+      return CLIENT.getAccountData(sender).then((accountData) => {
+        if (accountData == null) {
+          throw new Error("Account data was null");
+        }
+        // Account data was fetched, build and serialize the transaction
+        // data.
+        const serializedTx = serializeTransaction(
+          {
+            cost: String(cost),
+            nonce: accountData.nonce,
+            validTo: String(new Date().getTime() + TransactionApi.TRANSACTION_TTL),
+          },
+          payload
+        );
+        const hash = CryptoUtils.hashBuffers([
+          serializedTx,
+          BigEndianByteOutput.serialize((out) => out.writeString("Partisia Blockchain Testnet")),
+        ]);
+        const signature = keyPair.sign(hash);
+
+        // Serialize transaction for sending
+        const transactionPayload = Buffer.concat([
+          CryptoUtils.signatureToBuffer(signature),
+          serializedTx,
+        ]);
+
+        // Send the transaction to the blockchain
+        return CLIENT.putTransaction(transactionPayload).then((txPointer) => {
+          if (txPointer != null) {
+            return {
+              putSuccessful: true,
+              shard: txPointer.destinationShardId,
+              transactionHash: txPointer.identifier,
+            };
+          } else {
+            return { putSuccessful: false };
+          }
+        });
+      });
+    },
+  };
+};
+
+export const connectPrivateKeyWalletClick = () => {
+  const privateKey = <HTMLInputElement>document.querySelector("#private-key-value");
+  const keyPair = CryptoUtils.privateKeyToKeypair(privateKey.value);
+  const sender = CryptoUtils.keyPairToAccountAddress(keyPair);
+  handleWalletConnect(connectPrivateKey(sender, keyPair));
+};
+
 const handleWalletConnect = (connect: Promise<ConnectedWallet>) => {
   // Clean up state
   resetAccount();
   setConnectionStatus("Connecting...");
-
   connect
     .then((userAccount) => {
       setAccount(userAccount);
@@ -229,6 +286,7 @@ const handleWalletConnect = (connect: Promise<ConnectedWallet>) => {
       setConnectionStatus(`Connected to account ${userAccount.address}`);
       toggleVisibility("#wallet-connect");
       toggleVisibility("#metamask-connect");
+      toggleVisibility("#private-key-connect");
       toggleVisibility("#wallet-disconnect");
       toggleVisibility("#contract-interaction");
     })
@@ -249,6 +307,7 @@ export const disconnectWalletClick = () => {
   setConnectionStatus("Disconnected account");
   toggleVisibility("#wallet-connect");
   toggleVisibility("#metamask-connect");
+  toggleVisibility("#private-key-connect");
   toggleVisibility("#wallet-disconnect");
   toggleVisibility("#contract-interaction");
 };
@@ -271,12 +330,14 @@ interface Engine {
   restInterface: string;
 }
 
-
 /**
  * Write some of the state to the UI.
  */
 export const updateContractState = () => {
-  CLIENT.getContractData<RawContractData>(Address.averageSalary).then((contract) => {
+  if (getContractAddress() === undefined) {
+    console.error("No address provided");
+  }
+  CLIENT.getContractData<RawContractData>(getContractAddress()).then((contract) => {
     if (contract != null) {
       const stateView = document.querySelector("#contract-state");
       if (stateView != null) {
@@ -296,13 +357,15 @@ export const updateContractState = () => {
         setEngineKeys(engineKeys);
       }
 
-      const stateBuffer = Buffer.from(contract.serializedContract.openState.openState.data, "base64");
+      const stateBuffer = Buffer.from(
+        contract.serializedContract.openState.openState.data,
+        "base64"
+      );
 
-      const state = deserializeContractState({state: stateBuffer});
+      const state = deserializeContractState({ state: stateBuffer });
 
-      
       const stateHeader = document.createElement("h2");
-      stateHeader.innerHTML = "State"
+      stateHeader.innerHTML = "State";
       if (stateView != null) {
         stateView.appendChild(stateHeader);
       }
@@ -313,7 +376,9 @@ export const updateContractState = () => {
       }
 
       const averageSalaryResult = document.createElement("div");
-      averageSalaryResult.innerHTML = `Average Salary Result: ${state.averageSalaryResult ?? "None"}`;
+      averageSalaryResult.innerHTML = `Average Salary Result: ${
+        state.averageSalaryResult ?? "None"
+      }`;
       if (stateView != null) {
         stateView.appendChild(averageSalaryResult);
       }

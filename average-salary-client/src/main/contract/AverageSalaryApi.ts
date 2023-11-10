@@ -17,11 +17,15 @@
  */
 
 import { ContractAbi, FnRpcBuilder, ZkInputBuilder } from "@partisiablockchain/abi-client";
-import { ZkRpcBuilder, BlockchainAddress, BlockchainPublicKey  } from "@partisiablockchain/zk-client";
+import {
+  ZkRpcBuilder,
+  BlockchainAddress,
+  BlockchainPublicKey,
+} from "@partisiablockchain/zk-client";
 import { Buffer } from "buffer";
 import { TransactionApi } from "../client/TransactionApi";
-import { Address } from "./Addresses";
 import { computeAverageSalary } from "./AverageSalary";
+import { getContractAddress } from "../AppState";
 
 /**
  * API for the token contract.
@@ -34,13 +38,18 @@ export class AverageSalaryApi {
   private readonly transactionApi: TransactionApi;
   private readonly sender: BlockchainAddress;
   private readonly abi: ContractAbi;
-  private readonly engineKeys: BlockchainPublicKey[]
+  private readonly engineKeys: BlockchainPublicKey[];
 
-  constructor(transactionApi: TransactionApi, sender: string, abi: ContractAbi, engineKeys: BlockchainPublicKey[]) {
+  constructor(
+    transactionApi: TransactionApi,
+    sender: string,
+    abi: ContractAbi,
+    engineKeys: BlockchainPublicKey[]
+  ) {
     this.transactionApi = transactionApi;
     this.sender = BlockchainAddress.fromString(sender);
     this.abi = abi;
-    this.engineKeys = engineKeys.map(key => BlockchainPublicKey.fromBuffer(key.asBuffer()));
+    this.engineKeys = engineKeys.map((key) => BlockchainPublicKey.fromBuffer(key.asBuffer()));
   }
 
   /**
@@ -54,7 +63,7 @@ export class AverageSalaryApi {
     // Then send the payload via the transaction API.
     // We are sending the transaction to the configured address of the token address, and use the
     // GasCost utility to estimate how much the transaction costs.
-    return this.transactionApi.sendTransactionAndWait(Address.averageSalary, rpc, 100_000);
+    return this.transactionApi.sendTransactionAndWait(getContractAddress(), rpc, 100_000);
   };
 
   /**
@@ -62,7 +71,7 @@ export class AverageSalaryApi {
    */
   readonly compute = () => {
     const rpc = this.ComputeAverageSalaryRpc();
-    return this.transactionApi.sendTransactionAndWait(Address.averageSalary, rpc, 10_000);
+    return this.transactionApi.sendTransactionAndWait(getContractAddress(), rpc, 10_000);
   };
 
   /**
@@ -72,14 +81,19 @@ export class AverageSalaryApi {
    */
   private readonly buildAddSalaryRpc = (amount: number): Buffer => {
     const fnBuilder = new FnRpcBuilder("add_salary", this.abi);
-    
+
     const additionalRpc = fnBuilder.getBytes();
 
     const secretInputBuilder = ZkInputBuilder.createZkInputBuilder("add_salary", this.abi);
     secretInputBuilder.addI32(amount);
     const compactBitArray = secretInputBuilder.getBits();
 
-    return ZkRpcBuilder.zkInputOnChain(this.sender, compactBitArray, additionalRpc, this.engineKeys);
+    return ZkRpcBuilder.zkInputOnChain(
+      this.sender,
+      compactBitArray,
+      additionalRpc,
+      this.engineKeys
+    );
   };
 
   /**

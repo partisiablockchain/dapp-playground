@@ -16,11 +16,11 @@
  *
  */
 
-import BN from "bn.js";
-import { getTokenApi, isConnected } from "./AppState";
+import { getTokenApi, isConnected, setContractAddress } from "./AppState";
 import {
   connectMetaMaskWalletClick,
   connectMpcWalletClick,
+  connectPrivateKeyWalletClick,
   disconnectWalletClick,
   updateContractState,
 } from "./WalletIntegration";
@@ -33,20 +33,27 @@ connectWallet.addEventListener("click", connectMpcWalletClick);
 const metaMaskConnect = <Element>document.querySelector("#metamask-connect-btn");
 metaMaskConnect.addEventListener("click", connectMetaMaskWalletClick);
 
+// Setup event listener to connect to the MetaMask snap
+const pkConnect = <Element>document.querySelector("#private-key-connect-btn");
+pkConnect.addEventListener("click", connectPrivateKeyWalletClick);
+
 // Setup event listener to drop the connection again
 const disconnectWallet = <Element>document.querySelector("#wallet-disconnect-btn");
 disconnectWallet.addEventListener("click", disconnectWalletClick);
 
 // Setup event listener that sends a transfer transaction to the contract.
 // This requires that a wallet has been connected.
-const transferSubmitBtn = <Element>document.querySelector("#add-salary-btn");
-transferSubmitBtn.addEventListener("click", addSalaryFormAction);
+const addSalarySubmitBtn = <Element>document.querySelector("#add-salary-btn");
+addSalarySubmitBtn.addEventListener("click", addSalaryFormAction);
 
-const mintTokensBtn = <Element>document.querySelector("#compute-average-salary-btn");
-mintTokensBtn.addEventListener("click", computeAction);
+const computeSalaryBtn = <Element>document.querySelector("#compute-average-salary-btn");
+computeSalaryBtn.addEventListener("click", computeAction);
+
+const addressBtn = <Element>document.querySelector("#address-btn");
+addressBtn.addEventListener("click", contractAddressClick);
 
 // Fetch the state of the Token contract and write relevant values to the UI.
-updateContractState();
+//updateContractState();
 
 // Form action for the transfer tokens form.
 // The action reads the values from the input fields and validates them.
@@ -79,5 +86,21 @@ function computeAction() {
   const api = getTokenApi();
   if (isConnected() && api !== undefined) {
     api.compute().then(() => console.warn("Computed average salary"));
+  }
+}
+
+function contractAddressClick() {
+  const address = (<HTMLInputElement>document.querySelector("#address-value")).value;
+  const regex = /[0-9A-Fa-f]{42}/g;
+  if (address === undefined) {
+    throw new Error("Need to provide a contract address");
+  } else if (address.length != 42 || address.match(regex) == null) {
+    // Validate that address is 21 bytes in hexidecimal format
+    console.error(`${address} is not a valid PBC address`);
+  } else {
+    const currentAddress = <HTMLInputElement>document.querySelector("#current-address");
+    currentAddress.innerHTML = `Current Address: ${address}`;
+    setContractAddress(address);
+    updateContractState();
   }
 }

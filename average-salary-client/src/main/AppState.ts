@@ -17,7 +17,7 @@
  */
 
 import { ContractAbi } from "@partisiablockchain/abi-client";
-import { BlockchainPublicKey } from "@partisiablockchain/zk-client"
+import { BlockchainPublicKey } from "@partisiablockchain/zk-client";
 import { ShardedClient } from "./client/ShardedClient";
 import { TransactionApi } from "./client/TransactionApi";
 import { ConnectedWallet } from "./ConnectedWallet";
@@ -30,6 +30,7 @@ export const CLIENT = new ShardedClient("https://node1.testnet.partisiablockchai
   "Shard2",
 ]);
 
+let contractAddress: string;
 let currentAccount: ConnectedWallet | undefined;
 let contractAbi: ContractAbi | undefined;
 let tokenApi: AverageSalaryApi | undefined;
@@ -60,7 +61,12 @@ export const getContractAbi = () => {
 export const setTokenApi = () => {
   if (currentAccount != undefined && contractAbi != undefined && engineKeys !== undefined) {
     const transactionApi = new TransactionApi(currentAccount, updateContractState);
-    tokenApi = new AverageSalaryApi(transactionApi, currentAccount.address, contractAbi, engineKeys);
+    tokenApi = new AverageSalaryApi(
+      transactionApi,
+      currentAccount.address,
+      contractAbi,
+      engineKeys
+    );
   }
 };
 
@@ -74,5 +80,13 @@ export const getEngineKeys = () => {
 
 export const setEngineKeys = (keys: BlockchainPublicKey[]) => {
   engineKeys = keys;
-  setTokenApi()
+  setTokenApi();
+};
+
+export const getContractAddress = () => {
+  return contractAddress;
+};
+
+export const setContractAddress = (address: string) => {
+  contractAddress = address;
 };

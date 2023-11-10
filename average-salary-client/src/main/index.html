@@ -15,9 +15,24 @@
     <h1>PBC wallet integration demo</h1>
 
     <div>
+      <h2 id="current-address">Current Address: None</h2>
+      <div id="address">
+        <form onSubmit="return false;">
+          <input id="address-btn" type="submit" value="Connect to contract" />
+          <input id="address-value" name="address-value" type="string" />
+        </form>
+      </div>
+
       <h2>Account</h2>
       <div id="connection-status">
         <p>Currently not connected</p>
+      </div>
+
+      <div id="private-key-connect">
+        <form onSubmit="return false;">
+          <input id="private-key-connect-btn" type="submit" value="Login using private key" />
+          <input id="private-key-value" name="private-key-value" type="password" />
+        </form>
       </div>
 
       <div id="wallet-connect">
@@ -46,10 +61,10 @@
       </form>
 
       <h2>Add salary</h2>
-      <form name="add-salary-action-form">
+      <form name="add-salary-action-form" onSubmit="return false;">
         <label>Salary</label>
         <input id="salary" name="salary" type="number" />
-        <input id="add-salary-btn" type="button" value="Add salary" />
+        <input id="add-salary-btn" type="submit" value="Add salary" />
       </form>
     </div>
 
