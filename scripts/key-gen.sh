@@ -1,7 +1,7 @@
 #!/bin/bash
 
 generate_keys() {
-  declare key_pair=($(cargo partisia-contract cli -q  --use "https://nexus.secata.com/repository/mvn/com/partisia/blockchain/language/partisia-cli/4.75.0-beta-bug-base16-1699607727-d430e733/partisia-cli-4.75.0-beta-bug-base16-1699607727-d430e733-jar-with-dependencies.jar" account create))
+  declare key_pair=($(cargo partisia-contract cli account create))
   address=${key_pair[1]}
   private_key=${key_pair[4]}
 
