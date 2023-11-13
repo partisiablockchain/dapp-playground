@@ -5,7 +5,7 @@ The [petition contact](https://gitlab.com/partisiablockchain/language/example-co
 and the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
 in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain are installed.
 
-To boot the environment in [GitHub codespaces](https://docs.github.com/en/codespaces), click here
+To boot the environment in your browser, click here
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide)
 
