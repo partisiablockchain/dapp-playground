@@ -59,8 +59,8 @@ included in the Zk computation.
 * "Compute average salary, starting the ZK computation."
 
 Start the computation of the average salary, can only be called by the owner of the contract, i.e.
-must be signed by the account that deployed the contract. 
-There must also be at least 3 inputs to compute.
+must be sent by the account that deployed the contract. 
+There must also be at least 3 inputs added to the contract to compute.
 
 * "Show the ABI for a contract."
 
