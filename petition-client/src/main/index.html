@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PBC wallet integration</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/conf/config.js"></script>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Petition demo</h1>
+
+    <div>
+      <h2 id="current-address">Contract Address: None</h2>
+      <div id="address">
+        <form onSubmit="return false;">
+          <input id="address-btn" type="submit" value="Connect to contract" />
+          <input id="address-value" name="address-value" type="string" />
+        </form>
+      </div>
+
+      <h2>Account</h2>
+      <div id="connection-status">
+        <p>Currently not connected</p>
+      </div>
+
+      <div id="private-key-connect">
+        <form onSubmit="return false;">
+          <input id="private-key-connect-btn" type="submit" value="Login using private key" />
+          <input id="private-key-value" name="private-key-value" type="password" />
+        </form>
+      </div>
+
+      <div id="wallet-connect">
+        <form>
+          <input id="wallet-connect-btn" type="button" value="Connect MPC Wallet" />
+        </form>
+      </div>
+
+      <div id="metamask-connect">
+        <form>
+          <input id="metamask-connect-btn" type="button" value="Connect MetaMask snap" />
+        </form>
+      </div>
+
+      <div id="wallet-disconnect" class="hidden">
+        <form>
+          <input id="wallet-disconnect-btn" type="button" value="Logout" />
+        </form>
+      </div>
+    </div>
+
+    <div id="contract-interaction" class="hidden">
+      <h2>Sign petition</h2>
+      <form>
+        <input id="sign-btn" type="button" value="Sign" />
+      </form>
+
+    </div>
+
+    <div id="contract-state">
+      <h2></h2>
+    </div>
+  </body>
+</html>
