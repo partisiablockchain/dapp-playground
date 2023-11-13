@@ -103,6 +103,18 @@
                 "kind": "build",
                 "isDefault": false
             }
+        },
+        {
+            "label": "Start client for a contract.",
+            "type": "shell",
+            "command": "npm install; npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/${input:client-name}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
         }
     ],
     "inputs": [
@@ -136,6 +148,16 @@
             "id": "salary",
             "description": "The salary to send as secret input to average salary, the salary should be an int.",
             "type": "promptString"
+        },
+        {
+            "id": "client-name",
+            "description": "The name of the client to start.",
+            "type": "pickString",
+            "options": [
+                "petition-client",
+                "average-salary-client"
+            ],
+            "default": "petition"
         }
 
     ]
