@@ -1,5 +1,18 @@
 # A Public smart contract example - Petition Contract
 
+## Deploy a Petition contract
+
+Run the task "Deploy Petition Contract".
+
+### Sign the Petition
+
+Run the task "Sign Petition", the task will prompt choosing what account to sign the petition with.
+
+## The structure of a smart contract
+
+A smart contract consists of a state, actions and callbacks. To view the structure of the "Petition"
+contract, run the task "Show the ABI for a contract", and choose the petition option.
+
 ## State
 
 The state of a contract is the initialization step of the contract. The state is often where you defined you data
@@ -26,6 +39,8 @@ holds [addresses](https://partisiablockchain.gitlab.io/language/contract-sdk/pbc
 Actions are functions that can be called on the blockchain. There can be multiple actions within a smart contract. An
 action can use the state as is and will always require a new state returned.
 The sign action.
+
+
 
 ## Callbacks
 
