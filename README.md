@@ -53,6 +53,9 @@ Deploys an Average salary contract to testnet.
 
 * "Send a salary as a secret input to an average salary contract."
 
+Send a secret input from a given account to a given deployed average salary contract, so it can be
+included in the Zk computation.
+
 * "Compute average salary, starting the ZK computation."
 
 Start the computation of the average salary, can only be called by the owner of the contract, i.e.
