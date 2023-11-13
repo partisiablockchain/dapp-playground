@@ -47,7 +47,7 @@ Deploys the Petition contract to testnet.
 #### Sign Petition
 
 Sign the deployed Petition contract with the secret key for a given person, the task will
-prompt for an address for a deployed petition contract.
+prompt for 
 
 #### Deploy an Average salary contract (ZK contract)
 
