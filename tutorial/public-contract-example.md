@@ -1,19 +1,22 @@
 # A Public smart contract example - Petition Contract
 
+Throughout this example, when we write 'run task', then press 'F1', and search for 'Tasks: Run Task'.
+A list of tasks wil pop up, now you can select the task you are looking for.
+
 ## Deploy a Petition contract
 
-Run the task "Deploy Petition Contract", the task will prompt to choose the account to deploy with,
+Run the task "Deploy Petition Contract", the task will prompt asking for the account to deploy with,
 and what the description for the Petition should be.
 
 ### Sign the Petition
 
-Run the task "Sign Petition", the task will prompt to choose what account to sign the petition with 
+Run the task "Sign Petition", the task will prompt asking for the account to sign the petition with 
 and an address for a deployed petition contract.
 
 ## The structure of a smart contract
 
 A smart contract consists of a state, actions and callbacks. To view the structure of the "Petition"
-contract, run the task "Show the ABI for a contract", and choose the petition option.
+contract, run the task "Show the ABI for a contract", and choose the 'petition' option.
 
 ## State
 
