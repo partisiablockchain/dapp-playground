@@ -30,38 +30,38 @@ There are seven tasks predefined in the sandbox.
 
 Tasks: 
 
-* "Compile All Contracts"
+#### Compile All Contracts
 
 Compiles all the contracts.
 
-* "Compile Contract"
+#### Compile Contract
 
 Compiles the contract in the folder of the file currently displayed in the editor.
 
-* "Deploy Petition Contract"
+#### Deploy Petition Contract
 
 Deploys the Petition contract to testnet.
 
-* "Sign Petition"
+#### Sign Petition
 
 Sign the deployed Petition contract with the secret key for a given person, the task will
 prompt for an address for a deployed petition contract.
 
-* "Deploy an Average salary contract (ZK contract)"
+#### Deploy an Average salary contract (ZK contract)
 
 Deploys an Average salary contract to testnet.
 
-* "Send a salary as a secret input to an average salary contract."
+#### Send a salary as a secret input to an average salary contract.
 
 Send a secret input from a given account to a given deployed average salary contract, so it can be
 included in the Zk computation.
 
-* "Compute average salary, starting the ZK computation."
+#### Compute average salary, starting the ZK computation.
 
 Start the computation of the average salary, can only be called by the owner of the contract, i.e.
 must be sent by the account that deployed the contract. 
 There must also be at least 3 inputs added to the contract to compute.
 
-* "Show the ABI for a contract."
+#### Show the ABI for a contract.
 
 Show the ABI structure for a contract. Prompts for the name of the contract to show.
