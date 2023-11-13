@@ -338,8 +338,6 @@ export const updateContractState = () => {
       // Reads the state of the contract
       const stateBuffer = Buffer.from(contract.serializedContract.state.data, "base64");
 
-      console.log(stateBuffer.toString("hex"));
-
       const state = deserializePetitionState({ state: stateBuffer });
 
       const stateHeader = document.createElement("h2");
