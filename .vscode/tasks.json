@@ -30,7 +30,7 @@
         {
             "label": "Deploy Petition Contract",
             "type": "shell",
-            "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey .vscode/${input:key}.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi 'Cake is better than oatmeal.'",
+            "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey .vscode/${input:key}.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi '${input:petition-description}'",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -147,6 +147,11 @@
         {
             "id": "salary",
             "description": "The salary to send as secret input to average salary, the salary should be an int.",
+            "type": "promptString"
+        },
+        {
+            "id": "petition-description",
+            "description": "The description to deploy a Petition contract with, so people can sign it, if they agree.",
             "type": "promptString"
         },
         {
