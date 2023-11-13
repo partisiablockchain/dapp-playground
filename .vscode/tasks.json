@@ -162,7 +162,7 @@
                 "petition-client",
                 "average-salary-client"
             ],
-            "default": "petition"
+            "default": "petition-client"
         }
 
     ]

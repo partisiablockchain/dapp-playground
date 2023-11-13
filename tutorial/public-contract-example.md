@@ -13,6 +13,14 @@ and what the description for the Petition should be.
 Run the task "Sign Petition", the task will prompt asking for the account to sign the petition with 
 and an address for a deployed petition contract.
 
+### Use web client to view state and sign petition
+
+Run the task "Start client for contract" and choose petition-client from the prompt.
+This will start a web client able to talk to a petition contract. Input the address and click "Connect to contract".
+If the address corresponds to a petition contract you should see your petition in the state section.
+To sign the petition you need to sign in with an account that has gas. Copy your private key (A.pk, B.pk or C.pk)
+into the form and click login using private key. You can now sign the petition by clicking the sign button.
+
 ## The structure of a smart contract
 
 A smart contract consists of a state, actions and callbacks. To view the structure of the "Petition"
