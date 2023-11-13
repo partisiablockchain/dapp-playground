@@ -7,7 +7,7 @@ in a dev-container, where all the tooling for developing smart contracts for the
 
 To boot the environment in [GitHub codespaces](https://docs.github.com/en/codespaces), click here
 
-https://codespaces.new/JensScheel/web-ide
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide)
 
 
 
