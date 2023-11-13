@@ -53,8 +53,8 @@ const addressBtn = <Element>document.querySelector("#address-btn");
 addressBtn.addEventListener("click", contractAddressClick);
 
 /** Function for the contract address form.
-* This is called when the user clicks on the connect to contract button.
-* It validates the address, and then gets the state for the contract.
+ * This is called when the user clicks on the connect to contract button.
+ * It validates the address, and then gets the state for the contract.
  */
 function contractAddressClick() {
   const address = (<HTMLInputElement>document.querySelector("#address-value")).value;
@@ -69,7 +69,7 @@ function contractAddressClick() {
     const currentAddress = <HTMLInputElement>document.querySelector("#current-address");
     currentAddress.innerHTML = `Contract Address: ${address}`;
     const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
-    browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`
+    browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`;
     // Update the contract state.
     setContractAddress(address);
     updateContractState();
@@ -77,9 +77,9 @@ function contractAddressClick() {
 }
 
 /**
-* Form action for the add salary form.
-* The action reads the value from the input field and validates them.
-*/
+ * Form action for the add salary form.
+ * The action reads the value from the input field and validates them.
+ */
 function addSalaryFormAction() {
   // Test if a user has connected via the MPC wallet extension
   if (isConnected()) {

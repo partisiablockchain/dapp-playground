@@ -66,7 +66,7 @@ function contractAddressClick() {
     const currentAddress = <HTMLInputElement>document.querySelector("#current-address");
     currentAddress.innerHTML = `Contract Address: ${address}`;
     const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
-    browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`
+    browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`;
     setContractAddress(address);
     updateContractState();
   }

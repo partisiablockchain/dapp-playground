@@ -75,7 +75,7 @@ export class AverageSalaryApi {
     if (address === undefined) {
       throw new Error("No address provided");
     }
-    const rpc =  computeAverageSalary();
+    const rpc = computeAverageSalary();
     return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
   };
 

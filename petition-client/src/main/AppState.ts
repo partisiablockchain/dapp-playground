@@ -59,9 +59,7 @@ export const getContractAbi = () => {
 export const setPetitionApi = () => {
   if (currentAccount != undefined) {
     const transactionApi = new TransactionApi(currentAccount, updateContractState);
-    petitionApi = new PetitionApi(
-      transactionApi
-    );
+    petitionApi = new PetitionApi(transactionApi);
   }
 };
 

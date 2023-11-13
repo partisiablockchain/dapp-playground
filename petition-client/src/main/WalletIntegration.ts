@@ -18,21 +18,16 @@
 
 import { Buffer } from "buffer";
 import PartisiaSdk from "partisia-sdk";
-import {
-  CLIENT,
-  resetAccount,
-  setAccount,
-  getContractAddress,
-} from "./AppState";
+import { CLIENT, resetAccount, setAccount, getContractAddress } from "./AppState";
 import { TransactionApi } from "./client/TransactionApi";
 import { serializeTransaction } from "./client/TransactionSerialization";
 import { ConnectedWallet } from "./ConnectedWallet";
 import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";
 import { Rpc, TransactionPayload } from "./client/TransactionData";
 import { ec } from "elliptic";
-import {CryptoUtils} from "./client/CryptoUtils";
-import {deserializePetitionState} from "./contract/Petition";
-import {BlockchainAddress} from "@partisiablockchain/abi-client";
+import { CryptoUtils } from "./client/CryptoUtils";
+import { deserializePetitionState } from "./contract/Petition";
+import { BlockchainAddress } from "@partisiablockchain/abi-client";
 
 interface MetamaskRequestArguments {
   /** The RPC method to request. */
@@ -341,10 +336,7 @@ export const updateContractState = () => {
       }
 
       // Reads the state of the contract
-      const stateBuffer = Buffer.from(
-        contract.serializedContract.state.data,
-        "base64"
-      );
+      const stateBuffer = Buffer.from(contract.serializedContract.state.data, "base64");
 
       console.log(stateBuffer.toString("hex"));
 

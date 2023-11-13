@@ -30,9 +30,7 @@ import { getContractAddress } from "../AppState";
 export class PetitionApi {
   private readonly transactionApi: TransactionApi;
 
-  constructor(
-    transactionApi: TransactionApi
-  ) {
+  constructor(transactionApi: TransactionApi) {
     this.transactionApi = transactionApi;
   }
 
