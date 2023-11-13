@@ -28,11 +28,11 @@ import { computeAverageSalary } from "./AverageSalary";
 import { getContractAddress } from "../AppState";
 
 /**
- * API for the token contract.
- * This minimal implementation only allows for transferring tokens to a single address.
+ * API for the average salary contract.
+ * This implementation allows for adding salary and computing the result.
  *
- * The implementation uses the TransactionApi to send transactions, and ABI for the contract to be
- * able to build the RPC for the transfer transaction.
+ * The implementation uses the AverageSalaryApi to send transactions, and ABI and engine keys for the contract to be
+ * able to build the RPC for the add salary transaction.
  */
 export class AverageSalaryApi {
   private readonly transactionApi: TransactionApi;
@@ -64,8 +64,6 @@ export class AverageSalaryApi {
     // First build the RPC buffer that is the payload of the transaction.
     const rpc = this.buildAddSalaryRpc(amount);
     // Then send the payload via the transaction API.
-    // We are sending the transaction to the configured address of the token address, and use the
-    // GasCost utility to estimate how much the transaction costs.
     return this.transactionApi.sendTransactionAndWait(address, rpc, 100_000);
   };
 
@@ -77,36 +75,30 @@ export class AverageSalaryApi {
     if (address === undefined) {
       throw new Error("No address provided");
     }
-    const rpc = this.ComputeAverageSalaryRpc();
+    const rpc =  computeAverageSalary();
     return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
   };
 
   /**
-   * Build the RPC payload for the transfer transaction.
-   * @param to receiver of tokens
-   * @param amount number of tokens to send
+   * Build the RPC payload for the add salary transaction.
+   * @param amount the salary
    */
   private readonly buildAddSalaryRpc = (amount: number): Buffer => {
+    // First build the public inputs
     const fnBuilder = new FnRpcBuilder("add_salary", this.abi);
-
     const additionalRpc = fnBuilder.getBytes();
 
+    // Then build the secret input
     const secretInputBuilder = ZkInputBuilder.createZkInputBuilder("add_salary", this.abi);
     secretInputBuilder.addI32(amount);
     const compactBitArray = secretInputBuilder.getBits();
 
+    // Create the final rpc
     return ZkRpcBuilder.zkInputOnChain(
       this.sender,
       compactBitArray,
       additionalRpc,
       this.engineKeys
     );
-  };
-
-  /**
-   * Build the RPC payload for the transfer transaction.
-   */
-  private readonly ComputeAverageSalaryRpc = (): Buffer => {
-    return computeAverageSalary();
   };
 }

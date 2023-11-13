@@ -214,6 +214,9 @@ export const connectMpcWalletClick = () => {
   );
 };
 
+/**
+ * Function for using a private key to sign and send transactions.
+ */
 const connectPrivateKey = async (sender: string, keyPair: ec.KeyPair): Promise<ConnectedWallet> => {
   return {
     address: sender,
@@ -263,6 +266,9 @@ const connectPrivateKey = async (sender: string, keyPair: ec.KeyPair): Promise<C
   };
 };
 
+/**
+ * Connect to the blockchain using a private key. Reads the private key from the form.
+ */
 export const connectPrivateKeyWalletClick = () => {
   const privateKey = <HTMLInputElement>document.querySelector("#private-key-value");
   const keyPair = CryptoUtils.privateKeyToKeypair(privateKey.value);
@@ -270,6 +276,10 @@ export const connectPrivateKeyWalletClick = () => {
   handleWalletConnect(connectPrivateKey(sender, keyPair));
 };
 
+/**
+ * Common code for handling a generic wallet connection.
+ * @param connect the wallet connection. Can be Mpc Wallet, Metamask, or using a private key.
+ */
 const handleWalletConnect = (connect: Promise<ConnectedWallet>) => {
   // Clean up state
   resetAccount();
@@ -330,6 +340,7 @@ export const updateContractState = () => {
         stateView.innerHTML = "";
       }
 
+      // Reads the state of the contract
       const stateBuffer = Buffer.from(
         contract.serializedContract.state.data,
         "base64"

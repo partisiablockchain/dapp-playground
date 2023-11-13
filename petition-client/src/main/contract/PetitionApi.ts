@@ -47,8 +47,6 @@ export class PetitionApi {
     // First build the RPC buffer that is the payload of the transaction.
     const rpc = sign();
     // Then send the payload via the transaction API.
-    // We are sending the transaction to the configured address of the token address, and use the
-    // GasCost utility to estimate how much the transaction costs.
-    return this.transactionApi.sendTransactionAndWait(address, rpc, 100_000);
+    return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
   };
 }

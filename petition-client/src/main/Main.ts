@@ -50,13 +50,10 @@ computeSalaryBtn.addEventListener("click", signAction);
 const addressBtn = <Element>document.querySelector("#address-btn");
 addressBtn.addEventListener("click", contractAddressClick);
 
-function signAction() {
-  const api = getPetitionApi();
-  if (isConnected() && api !== undefined) {
-    api.sign().then(() => console.warn("Computed average salary"));
-  }
-}
-
+/** Function for the contract address form.
+ * This is called when the user clicks on the connect to contract button.
+ * It validates the address, and then gets the state for the contract.
+ */
 function contractAddressClick() {
   const address = (<HTMLInputElement>document.querySelector("#address-value")).value;
   const regex = /[0-9A-Fa-f]{42}/g;
@@ -72,5 +69,13 @@ function contractAddressClick() {
     browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`
     setContractAddress(address);
     updateContractState();
+  }
+}
+
+/** Action for the sign petition button */
+function signAction() {
+  const api = getPetitionApi();
+  if (isConnected() && api !== undefined) {
+    api.sign().then(() => console.warn("Computed average salary"));
   }
 }

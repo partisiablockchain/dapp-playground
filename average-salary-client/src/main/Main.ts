@@ -52,26 +52,48 @@ computeSalaryBtn.addEventListener("click", computeAction);
 const addressBtn = <Element>document.querySelector("#address-btn");
 addressBtn.addEventListener("click", contractAddressClick);
 
-// Fetch the state of the Token contract and write relevant values to the UI.
-//updateContractState();
+/** Function for the contract address form.
+* This is called when the user clicks on the connect to contract button.
+* It validates the address, and then gets the state for the contract.
+ */
+function contractAddressClick() {
+  const address = (<HTMLInputElement>document.querySelector("#address-value")).value;
+  const regex = /[0-9A-Fa-f]{42}/g;
+  if (address === undefined) {
+    throw new Error("Need to provide a contract address");
+  } else if (address.length != 42 || address.match(regex) == null) {
+    // Validate that address is 21 bytes in hexidecimal format
+    console.error(`${address} is not a valid PBC address`);
+  } else {
+    // Show address and a link to the browser.
+    const currentAddress = <HTMLInputElement>document.querySelector("#current-address");
+    currentAddress.innerHTML = `Contract Address: ${address}`;
+    const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
+    browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`
+    // Update the contract state.
+    setContractAddress(address);
+    updateContractState();
+  }
+}
 
-// Form action for the transfer tokens form.
-// The action reads the values from the input fields and validates them.
+/**
+* Form action for the add salary form.
+* The action reads the value from the input field and validates them.
+*/
 function addSalaryFormAction() {
   // Test if a user has connected via the MPC wallet extension
   if (isConnected()) {
     const salary = <HTMLInputElement>document.querySelector("#salary");
     if (isNaN(parseInt(salary.value, 10))) {
-      // Validate that amount is greater than zero
+      // Validate that amount is a number
       console.error("Salary must be a number");
     } else {
-      // All fields validated, transfer tokens.
-      // To be able to tokens we need the token API to be set in state.
-      // This should have happened automatically if we were able to fetch the token contract state
-      // and abi.
+      // All fields validated, add salary.
+
+      // If the user has inputted a correct average salary address this should be defined.
       const api = getAverageApi();
       if (api !== undefined) {
-        // Transfer tokens via the token api
+        // Add salary via Average Salary api
         api
           .addSalary(parseInt(salary.value, 10))
           .then(() => console.warn("Transfer was successful!"));
@@ -82,27 +104,12 @@ function addSalaryFormAction() {
   }
 }
 
+/** Action for the compute average salary button */
 function computeAction() {
+  // User is connected and the Average Salary Api is defined
   const api = getAverageApi();
   if (isConnected() && api !== undefined) {
+    // Call compute via the Api
     api.compute().then(() => console.warn("Computed average salary"));
-  }
-}
-
-function contractAddressClick() {
-  const address = (<HTMLInputElement>document.querySelector("#address-value")).value;
-  const regex = /[0-9A-Fa-f]{42}/g;
-  if (address === undefined) {
-    throw new Error("Need to provide a contract address");
-  } else if (address.length != 42 || address.match(regex) == null) {
-    // Validate that address is 21 bytes in hexidecimal format
-    console.error(`${address} is not a valid PBC address`);
-  } else {
-    const currentAddress = <HTMLInputElement>document.querySelector("#current-address");
-    currentAddress.innerHTML = `Contract Address: ${address}`;
-    const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
-    browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`
-    setContractAddress(address);
-    updateContractState();
   }
 }
