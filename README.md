@@ -1,15 +1,14 @@
 # PBC Smart Contract Development Environment
 
-In the repo there are two contracts provided. 
-The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
-and the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
-in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain are installed.
-
-To boot the environment in your browser, click here
+To boot the environment in your browser: 
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide)
 
 
+In the repo there are two contracts provided. 
+The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
+and the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
+in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain are installed.
 
 ## Use for own contract development
 
