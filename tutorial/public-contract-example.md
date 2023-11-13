@@ -2,11 +2,11 @@
 
 ## Deploy a Petition contract
 
-Run the task "Deploy Petition Contract".
+Run the task "Deploy Petition Contract", the task will prompt to choose the account to deploy with.
 
 ### Sign the Petition
 
-Run the task "Sign Petition", the task will prompt choosing what account to sign the petition with.
+Run the task "Sign Petition", the task will prompt to choose what account to sign the petition with.
 
 ## The structure of a smart contract
 
