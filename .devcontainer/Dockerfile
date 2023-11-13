@@ -8,6 +8,8 @@ USER 0
 
 RUN cargo install cargo-partisia-contract
 
+RUN cargo partisia-contract build --release
+
 COPY --from=node:18 /usr/local/bin/ /usr/local/bin
 COPY --from=node:18 /usr/local/lib/ /usr/local/lib
 COPY --from=node:18 /usr/local/share/ /usr/local/share
