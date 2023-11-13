@@ -24,3 +24,12 @@ contract code and save those changes.
 For local development see the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).
 
 
+## Explore, deploy and interact
+
+There are 2 tutorial/walk-through/guide/etc.
+The first one explores the public smart contracts, how to deploy and interact with them.
+
+The second one explores the Zk contracts, how to deploy, provide input and start a computation.
+
+Along with the two contracts, there are two frontend clients, which can be started and linked to a deployed
+contract. These are meant as examples for how to integrate contract interaction with a web application.

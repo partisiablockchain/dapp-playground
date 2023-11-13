@@ -1,6 +1,6 @@
 # Interact with a contract
 
-## The structure of a Zk smart contract
+## The structure of the Average salary smart contract
 
 To view the structure of the Average salary contract, run the task "Show the ABI for a contract", 
 and choose the average salary option.
