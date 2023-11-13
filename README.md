@@ -1,4 +1,4 @@
-# PBC Smart Contract Development Environment
+# Welcome to the PBC Smart Contract Development Environment
 
 To boot the environment in your browser: 
 
