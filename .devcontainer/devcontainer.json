@@ -25,7 +25,7 @@
 				"ms-azuretools.vscode-docker",
 				"ms-vscode-remote.remote-containers"
 			]
-		},
+		}
 	},
-	"postStartCommand": "./scripts/keygen.sh"
+	"postCreateCommand": "./scripts/key-gen.sh"
 }

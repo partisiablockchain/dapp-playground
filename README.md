@@ -33,19 +33,27 @@ Compiles all the contracts.
 
 Compiles the contract in the folder of the file currently displayed in the editor.
 
-* "Run Java Tests"
-
-Run all the java tests for the contracts. The test code is located in the "java-test" folder. 
-
 * "Deploy Petition Contract"
 
-Deploys the Petition contract to testnet, using the private key in '.vscode/A.pk'. 
+Deploys the Petition contract to testnet.
 
-* Sign Petition
-  * "Sign petition for Person A"
-  * "Sign petition for Person B"
-  * "Sign petition for Person C"
+* "Sign Petition"
 
 Sign the deployed Petition contract with the secret key for a given person, the task will
 prompt for an address for a deployed petition contract.
 
+* Deploy an Average salary contract (ZK contract)
+
+Deploys an Average salary contract to testnet.
+
+* Send a salary as a secret input to an average salary contract.
+
+* Compute average salary, starting the ZK computation.
+
+Start the computation of the average salary, can only be called by the owner of the contract, i.e.
+must be signed by the account that deployed the contract. 
+There must also be at least 3 inputs to compute.
+
+* Show the ABI for a contract.
+
+Show the ABI structure for a contract. Prompts for the name of the contract to show.
