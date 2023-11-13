@@ -27,5 +27,8 @@
 			]
 		}
 	},
-	"postCreateCommand": "./scripts/key-gen.sh"
+	"postCreateCommand": {
+		"Contract Compilation": "cargo partisia-contract build --release",
+		"Key Generation and fill them with gas": "./scripts/key-gen.sh"
+	},
 }
