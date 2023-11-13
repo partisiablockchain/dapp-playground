@@ -21,5 +21,4 @@ To start the Zk computation run the task "Compute average salary, starting the Z
 ## Secret Struct
 
 
-## Deploy and send secret input
 

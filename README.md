@@ -2,7 +2,7 @@
 
 To boot the environment in your browser: 
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide/tree/main)
 
 
 In the repo there are two contracts provided. 
