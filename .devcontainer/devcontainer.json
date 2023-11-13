@@ -27,4 +27,5 @@
 			]
 		}
 	},
+	"postCreateCommand": "./scripts/key-gen.sh"
 }
