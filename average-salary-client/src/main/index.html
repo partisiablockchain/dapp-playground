@@ -1,96 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>PBC wallet integration</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/conf/config.js"></script>
+    <style>
+      .hidden {
+        display: none;
+      }
 
-<head>
-  <title>PBC wallet integration</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="/conf/config.js"></script>
-  <style>
-    .hidden {
-      display: none;
-    }
+      body > .pure-g {
+        max-width: 1200px;
+        width: 1200px;
+        margin: auto;
+      }
 
-    body>.pure-g {
-      max-width: 1200px;
-      width: 1200px;
-      margin: auto;
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
-    integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+      div {
+        margin-bottom: 5px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
+      integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls"
+      crossorigin="anonymous" />
+  </head>
 
+  <body>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h1>Average Salary demo</h1>
 
-</head>
+        <div>
+          <h2 id="current-address">Contract Address: None</h2>
+          <div id="browser-link"></div>
+          <br />
+          <div id="address">
+            <form onSubmit="return false;" class="pure-form">
+              <fieldset>
+                <input
+                  id="address-btn"
+                  type="submit"
+                  value="Connect to contract"
+                  class="pure-button pure-button-primary" />
+                <input id="address-value" name="address-value" type="text" />
+              </fieldset>
+            </form>
+          </div>
 
-<body>
-  <div class="pure-g">
-    <div class="pure-u-1-1">
-      <h1>Average Salary demo</h1>
+          <h2>Account</h2>
+          <div id="connection-status">
+            <p>Currently not connected</p>
+          </div>
 
-      <div>
-        <h2 id="current-address">Contract Address: None</h2>
-        <div id="browser-link"></div>
-        <br />
-        <div id="address">
-          <form onSubmit="return false;" class="pure-form">
-            <fieldset>
-              <input id="address-btn" type="submit" value="Connect to contract"
-                class="pure-button pure-button-primary" />
-              <input id="address-value" name="address-value" type="text" />
-            </fieldset>
-          </form>
+          <div id="private-key-connect">
+            <form onSubmit="return false;" class="pure-form">
+              <input
+                class="pure-button pure-button-primary"
+                id="private-key-connect-btn"
+                type="submit"
+                value="Login using private key" />
+              <input id="private-key-value" name="private-key-value" type="password" />
+            </form>
+          </div>
+
+          <div id="wallet-connect">
+            <form class="pure-form">
+              <input
+                class="pure-button pure-button-primary"
+                id="wallet-connect-btn"
+                type="button"
+                value="Connect MPC Wallet" />
+            </form>
+          </div>
+
+          <div id="metamask-connect">
+            <form>
+              <input
+                class="pure-button pure-button-primary"
+                id="metamask-connect-btn"
+                type="button"
+                value="Connect MetaMask snap" />
+            </form>
+          </div>
+
+          <div id="wallet-disconnect" class="hidden">
+            <form>
+              <input
+                class="pure-button pure-button-primary"
+                id="wallet-disconnect-btn"
+                type="button"
+                value="Logout" />
+            </form>
+          </div>
         </div>
 
-        <h2>Account</h2>
-        <div id="connection-status">
-          <p>Currently not connected</p>
-        </div>
-
-        <div id="private-key-connect">
-          <form onSubmit="return false;"  class="pure-form">
-            <input class="pure-button pure-button-primary" id="private-key-connect-btn" type="submit" value="Login using private key" />
-            <input id="private-key-value" name="private-key-value" type="password" />
-          </form>
-        </div>
-
-        <div id="wallet-connect">
-          <form  class="pure-form">
-            <input class="pure-button pure-button-primary" id="wallet-connect-btn" type="button" value="Connect MPC Wallet" />
-          </form>
-        </div>
-
-        <div id="metamask-connect">
+        <div id="contract-interaction" class="hidden">
+          <h2>Compute average salary</h2>
           <form>
-            <input class="pure-button pure-button-primary" id="metamask-connect-btn" type="button" value="Connect MetaMask snap" />
+            <input
+              class="pure-button pure-button-primary"
+              id="compute-average-salary-btn"
+              type="button"
+              value="Compute" />
+          </form>
+
+          <h2>Add salary</h2>
+          <form class="pure-form" name="add-salary-action-form" onSubmit="return false;">
+            <input id="salary" name="salary" type="number" />
+            <input
+              class="pure-button pure-button-primary"
+              id="add-salary-btn"
+              type="submit"
+              value="Add salary" />
           </form>
         </div>
 
-        <div id="wallet-disconnect" class="hidden">
-          <form>
-            <input class="pure-button pure-button-primary" id="wallet-disconnect-btn" type="button" value="Logout" />
-          </form>
+        <div id="contract-state">
+          <h2></h2>
         </div>
-      </div>
-
-      <div id="contract-interaction" class="hidden">
-        <h2>Compute average salary</h2>
-        <form>
-          <input class="pure-button pure-button-primary" id="compute-average-salary-btn" type="button" value="Compute" />
-        </form>
-
-        <h2>Add salary</h2>
-        <form class="pure-form" name="add-salary-action-form" onSubmit="return false;">
-          <input id="salary" name="salary" type="number" />
-          <input class="pure-button pure-button-primary" id="add-salary-btn" type="submit" value="Add salary" />
-        </form>
-      </div>
-
-      <div id="contract-state">
-        <h2></h2>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>

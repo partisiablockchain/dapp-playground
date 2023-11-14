@@ -341,12 +341,19 @@ export const updateContractState = () => {
       const state = deserializePetitionState({ state: stateBuffer });
 
       const stateHeader = document.createElement("h2");
-      stateHeader.innerHTML = "State";
+      stateHeader.innerHTML = "Petition State";
       if (stateView != null) {
         stateView.appendChild(stateHeader);
       }
+
+      const description = document.createElement("h3");
+      description.innerHTML = "Description";
+      if (stateView != null) {
+        stateView.appendChild(description);
+      }
+
       const petition = document.createElement("div");
-      petition.innerHTML = `Petition: ${state.description}`;
+      petition.innerHTML = `${state.description}`;
       if (stateView != null) {
         stateView.appendChild(petition);
       }

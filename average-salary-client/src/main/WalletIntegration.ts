@@ -379,26 +379,42 @@ export const updateContractState = () => {
       const state = deserializeContractState({ state: stateBuffer });
 
       const stateHeader = document.createElement("h2");
-      stateHeader.innerHTML = "State";
+      stateHeader.innerHTML = "Average Salary State";
       if (stateView != null) {
         stateView.appendChild(stateHeader);
       }
+
+      const administratorHeader = document.createElement("h3");
+      administratorHeader.innerHTML = `Administrator`;
+      if (stateView != null) {
+        stateView.appendChild(administratorHeader);
+      }
+
       const administrator = document.createElement("div");
-      administrator.innerHTML = `Administrator: ${state.administrator.asString()}`;
+      administrator.innerHTML = `${state.administrator.asString()}`;
       if (stateView != null) {
         stateView.appendChild(administrator);
       }
 
+      const averageSalaryResultHeader = document.createElement("h3");
+      averageSalaryResultHeader.innerHTML = `Average Salary Result`;
+      if (stateView != null) {
+        stateView.appendChild(averageSalaryResultHeader);
+      }
+
       const averageSalaryResult = document.createElement("div");
-      averageSalaryResult.innerHTML = `Average Salary Result: ${
-        state.averageSalaryResult ?? "None"
-      }`;
+      averageSalaryResult.innerHTML = `${state.averageSalaryResult ?? "None"}`;
       if (stateView != null) {
         stateView.appendChild(averageSalaryResult);
       }
 
+      const numEmployeesHeader = document.createElement("h3");
+      numEmployeesHeader.innerHTML = `Number of employess`;
+      if (stateView != null) {
+        stateView.appendChild(numEmployeesHeader);
+      }
       const numEmployees = document.createElement("div");
-      numEmployees.innerHTML = `Number of employess: ${state.numEmployees ?? "None"}`;
+      numEmployees.innerHTML = `${state.numEmployees ?? "None"}`;
       if (stateView != null) {
         stateView.appendChild(numEmployees);
       }
