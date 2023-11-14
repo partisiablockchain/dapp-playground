@@ -17,7 +17,7 @@
  */
 
 import { TransactionApi } from "../client/TransactionApi";
-import { sign } from "./Petition";
+import { sign } from "./PetitionGenerated";
 import { getContractAddress } from "../AppState";
 
 /**

@@ -33,7 +33,7 @@ import { BlockchainPublicKey, CryptoUtils } from "@partisiablockchain/zk-client"
 import { TransactionApi } from "./client/TransactionApi";
 import { serializeTransaction } from "./client/TransactionSerialization";
 import { ConnectedWallet } from "./ConnectedWallet";
-import { deserializeContractState } from "./contract/AverageSalary";
+import { deserializeContractState } from "./contract/AverageSalaryGenerated";
 import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";
 import { Rpc, TransactionPayload } from "./client/TransactionData";
 import { ec } from "elliptic";

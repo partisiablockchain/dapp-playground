@@ -21,10 +21,10 @@ import {
 import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";
 
 const fileAbi: FileAbi = new AbiParser(
-  Buffer.from(
-    "50424341424909050005020000000002010000000d5065746974696f6e537461746500000002000000097369676e65645f6279100d0000000b6465736372697074696f6e0b010000000b536563726574566172496400000001000000067261775f69640300000002010000000a696e697469616c697a65ffffffff0f000000010000000b6465736372697074696f6e0b02000000047369676e01000000000000",
-    "hex"
-  )
+    Buffer.from(
+        "50424341424909050005020000000002010000000d5065746974696f6e537461746500000002000000097369676e65645f6279100d0000000b6465736372697074696f6e0b010000000b536563726574566172496400000001000000067261775f69640300000002010000000a696e697469616c697a65ffffffff0f000000010000000b6465736372697074696f6e0b02000000047369676e01000000000000",
+        "hex"
+    )
 ).parseAbi();
 
 type Option<K> = K | undefined;
@@ -35,8 +35,8 @@ export interface PetitionState {
 }
 
 export function newPetitionState(
-  signedBy: BlockchainAddress[],
-  description: string
+    signedBy: BlockchainAddress[],
+    description: string
 ): PetitionState {
   return { signedBy, description };
 }
@@ -44,9 +44,9 @@ export function newPetitionState(
 function fromScValuePetitionState(structValue: ScValueStruct): PetitionState {
   return {
     signedBy: structValue
-      .getFieldValue("signed_by")!
-      .setValue()
-      .values.map((sc1) => BlockchainAddress.fromBuffer(sc1.addressValue().value)),
+        .getFieldValue("signed_by")!
+        .setValue()
+        .values.map((sc1) => BlockchainAddress.fromBuffer(sc1.addressValue().value)),
     description: structValue.getFieldValue("description")!.stringValue(),
   };
 }

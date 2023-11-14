@@ -115,6 +115,30 @@
                 "kind": "build",
                 "isDefault": false
             }
+        },
+        {
+            "label": "Compile and regen average salary",
+            "type": "shell",
+            "command": "cargo partisia-contract build --release -p average-salary; cargo partisia-contract abi codegen --ts target/wasm32-unknown-unknown/release/average_salary.abi average-salary-client/src/main/contract/AverageSalaryGenerated.ts",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Compile and regen petition",
+            "type": "shell",
+            "command": "cargo partisia-contract build --release -p petition; cargo partisia-contract abi codegen --ts target/wasm32-unknown-unknown/release/petition.abi petition-client/src/main/contract/PetitionGenerated.ts",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
         }
     ],
     "inputs": [

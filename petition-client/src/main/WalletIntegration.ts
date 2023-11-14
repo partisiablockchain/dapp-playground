@@ -26,7 +26,7 @@ import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";
 import { Rpc, TransactionPayload } from "./client/TransactionData";
 import { ec } from "elliptic";
 import { CryptoUtils } from "./client/CryptoUtils";
-import { deserializePetitionState } from "./contract/Petition";
+import { deserializePetitionState } from "./contract/PetitionGenerated";
 import { BlockchainAddress } from "@partisiablockchain/abi-client";
 
 interface MetamaskRequestArguments {

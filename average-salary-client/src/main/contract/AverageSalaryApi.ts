@@ -24,7 +24,7 @@ import {
 } from "@partisiablockchain/zk-client";
 import { Buffer } from "buffer";
 import { TransactionApi } from "../client/TransactionApi";
-import { computeAverageSalary } from "./AverageSalary";
+import { computeAverageSalary } from "./AverageSalaryGenerated";
 import { getContractAddress } from "../AppState";
 
 /**
