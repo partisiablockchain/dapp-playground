@@ -28,76 +28,165 @@
             }
         },
         {
-            "label": "Run Java tests",
-            "type": "shell",
-            "command": "mvn test",
-            "options": {
-                "cwd": "${workspaceFolder}/java-test"
-            },
-            "problemMatcher": [],
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
             "label": "Deploy Petition Contract",
             "type": "shell",
-            "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey .vscode/A.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi 'Cake is better than oatmeal.'",
+            "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey .vscode/${input:key}.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi '${input:petition-description}'",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             }
         },
         {
-            "label": "Sign petition for Person A",
+            "label": "Sign petition.",
             "type": "shell",
-            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey .vscode/A.pk ${input:contract-address} sign",
+            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey .vscode/${input:key}.pk ${input:contract-address} sign",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             }
         },
         {
-            "label": "Sign petition for Person B",
+            "label": "Deploy an Average Salary Contract (ZK-contract).",
             "type": "shell",
-            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey .vscode/B.pk ${input:contract-address} sign",
+            "command": "cargo partisia-contract cli tx deploy --gas 10000000 --privatekey .vscode/${input:key}.pk target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             }
         },
         {
-            "label": "Sign petition for Person C",
+            "label": "Send a salary as a secret input to an average salary contract.",
             "type": "shell",
-            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey .vscode/C.pk ${input:contract-address} sign",
+            "command": "cargo partisia-contract cli tx action  --gas 100000 --privatekey .vscode/${input:key}.pk ${input:contract-address} add_salary ${input:salary}",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Compute average salary, starting the ZK computation.",
+            "type": "shell",
+            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey .vscode/${input:key}.pk ${input:contract-address} compute_average_salary",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Show the ABI for a contract.",
+            "type": "shell",
+            "command": "cargo partisia-contract abi show target/wasm32-unknown-unknown/release/${input:contract-name}.abi",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Start client for a contract.",
+            "type": "shell",
+            "command": "npm install; npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/${input:client-name}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Compile and regen average salary",
+            "type": "shell",
+            "command": "cargo partisia-contract build --release -p average-salary; cargo partisia-contract abi codegen --ts target/wasm32-unknown-unknown/release/average_salary.abi average-salary-client/src/main/contract/AverageSalaryGenerated.ts",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Compile and regen petition",
+            "type": "shell",
+            "command": "cargo partisia-contract build --release -p petition; cargo partisia-contract abi codegen --ts target/wasm32-unknown-unknown/release/petition.abi petition-client/src/main/contract/PetitionGenerated.ts",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
             }
         }
     ],
     "inputs": [
         {
             "id": "contract-address",
-            "description": "The Address of a deployed Petition contract.",
+            "description": "The Address of the deployed contract.",
             "type": "promptString"
+        },
+        {
+            "id": "key",
+            "description": "The id of the key, to perform the given action with. Can be either A, B or C.",
+            "type": "pickString",
+            "options": [
+                "A",
+                "B",
+                "C"
+            ],
+            "default": "A"
+        },
+        {
+            "id": "contract-name",
+            "description": "The name of the contract to use the command on.",
+            "type": "pickString",
+            "options": [
+                "petition",
+                "average_salary"
+            ],
+            "default": "petition"
+        },
+        {
+            "id": "salary",
+            "description": "The salary to send as secret input to average salary, the salary should be an int.",
+            "type": "promptString"
+        },
+        {
+            "id": "petition-description",
+            "description": "The description to deploy a Petition contract with, so people can sign it, if they agree.",
+            "type": "promptString"
+        },
+        {
+            "id": "client-name",
+            "description": "The name of the client to start.",
+            "type": "pickString",
+            "options": [
+                "petition-client",
+                "average-salary-client"
+            ],
+            "default": "petition-client"
         }
 
     ]

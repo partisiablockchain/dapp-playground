@@ -1,51 +1,38 @@
-# PBC Smart Contract - Sandbox IDE
+# Welcome to the PBC Smart Contract Development Environment
 
-The Partisia Blockchain sandbox provides the [example contracts](https://gitlab.com/partisiablockchain/language/example-contracts) 
+To boot the environment in your browser: 
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide/tree/main)
+
+
+In the repo there are two contracts provided. 
+The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
+and the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
 in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain are installed.
 
-To boot the sandbox in your browser, use the GitHub codespaces.
-Click the 'Code' icon and 'Create codespace on main'.
-
-
 ## Setup
+To interact with the Partisia Blockchain there are provided three new keys, A.pk, B.pk and C.pk in 
+the .vscode folder.
+The created keys have been filled with 100.000.000 gas on the Testnet, 
+as a part of the environment boot-up.
 
-The contracts can compile and all the tests can be run.
-To be able to make interaction with [TestNet](https://browser.testnet.partisiablockchain.com/transactions), please create
-and acquire gas for 3 accounts on TestNet. 
-Add one secret key to each of the three '.pk' files in the ".vscode" folder.
+## Use for own contract development
+
+To use the environment to develop your own contracts, fork the repository. Now you can change the
+contract code and save those changes. 
+
+For local development see the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).
 
 
-## Tasks
+## Explore, deploy and interact
 
-There is a list of predefined tasks available in the container. 
-These are examples of how the different tools can be used, and how to call them. 
-To find the list of tasks press 'F1' and search for "Tasks: Run Task" and click it.
+There are 2 tutorial/walk-through/guide/etc.
 
-There are seven tasks predefined in the sandbox.
+The first one explores the [public smart contracts](tutorial/public-contract-example.md),
+how to deploy and interact with them.
 
-Tasks: 
+The second one explores the [Zk contracts](tutorial/zk-contract-example.md), how to deploy,
+provide input and start a computation.
 
-* "Compile All Contracts"
-
-Compiles all the contracts.
-
-* "Compile Contract"
-
-Compiles the contract in the folder of the file currently displayed in the editor.
-
-* "Run Java Tests"
-
-Run all the java tests for the contracts. The test code is located in the "java-test" folder. 
-
-* "Deploy Petition Contract"
-
-Deploys the Petition contract to testnet, using the private key in '.vscode/A.pk'. 
-
-* Sign Petition
-  * "Sign petition for Person A"
-  * "Sign petition for Person B"
-  * "Sign petition for Person C"
-
-Sign the deployed Petition contract with the secret key for a given person, the task will
-prompt for an address for a deployed petition contract.
-
+Along with the two contracts, there are two frontend clients, which can be started and linked to a deployed
+contract. These are meant as examples for how to integrate contract interaction with a web application.
