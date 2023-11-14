@@ -1,5 +1,10 @@
 # A Public smart contract example - Petition Contract
 
+This article is meant to run through the examples in web-ide and explain specific elements pertaining to Partisia
+Blockchain system. It will not dive into rust macros or rust specific topics. If you need help translating rust elements
+we recommend you visit [the rust standard library](https://doc.rust-lang.org/std/index.html)
+or [the rust programming language book](https://doc.rust-lang.org/book/).
+
 ## State
 
 The state of a contract is the initialization step of the contract. The state is often where you defined you data
@@ -21,15 +26,17 @@ a [SortedVecSet](https://partisiablockchain.gitlab.io/language/contract-sdk/pbc_
 which is a vec that is sorted after the element type and can only hold unique elements. This specific SortedVecSet
 holds [addresses](https://partisiablockchain.gitlab.io/language/contract-sdk/pbc_contract_common/address/index.html).
 
+## Init
+
+Init is the first action being called in a contract when being deployed. In this contract the `#init` macro ensures that
+a description is sent to the contract to be displayed on the blockchain.
+
 ## Actions
 
 Actions are functions that can be called on the blockchain. There can be multiple actions within a smart contract. An
 action can use the state as is and will always require a new state returned.
+
 The sign action.
-
-## Callbacks
-
-What is a callback.
 
 ## CLI commands
 
