@@ -34,10 +34,7 @@ into the form and click login using private key. You can now sign the petition b
 
 ## Challenges
 1. Try to manually [compile and deploy the contract](https://partisiablockchain.gitlab.io/documentation/smart-contracts/compile-and-deploy-contracts.html). 
-2. Try to force the contract to only accept input from AccountA.pk and AccountB.pk using [asserts](https://doc.rust-lang.org/std/macro.assert.html). 
-
->! You can find inspiration on how to do it in the [voting contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/blob/main/voting/src/lib.rs?ref_type=heads).
-
+2. Try to force the contract to only accept input from AccountA.pk and AccountB.pk using [asserts](https://doc.rust-lang.org/std/macro.assert.html). You can find inspiration on how to do it in the [voting contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/blob/main/voting/src/lib.rs?ref_type=heads).
 3. Add an action that can update the description of the petition contract. You can visit the count action in the [voting contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/blob/main/voting/src/lib.rs?ref_type=heads#L116) for inspiration.
 4. Add a parameter to the above action to remove the hardcoded part of the action. 
 5. Try to create an action that can unsign a signed user from the petition contract. 
