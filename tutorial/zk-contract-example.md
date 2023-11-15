@@ -1,9 +1,8 @@
-# Interact with a contract
+# A Zero Knowledge smart contract example - Average salary contract
+Throughout this example, when we write 'run task', then press 'F1', and search for 'Tasks: Run Task'.
+A list of tasks wil pop up, now you can select the task you are looking for.
 
-## The structure of the Average salary smart contract
 
-To view the structure of the Average salary contract, run the task "Show the ABI for a contract", 
-and choose the average salary option.
 
 ## Deploy an Average salary contract 
 
@@ -24,7 +23,12 @@ the call must be signed by the account that deployed the contract.
 There must also be at least 3 inputs added to the contract to compute.
 The task will prompt to choose the sender and the address of the deployed contract.
 
-### Use web client to view state and interact with the contract
+## The structure of the Average salary smart contract
+
+To view the structure of the Average salary contract, run the task "Show the ABI for a contract",
+and choose the average salary option.
+
+## Use web client to view state and interact with the contract
 
 Run the task "Start client for contract" and choose average-salary-client from the prompt. This will start a
 web client able to talk to an average salary contract. Input the address and click "Connect to contract".
@@ -35,6 +39,7 @@ If you have logged as the administrator you can also start the computation by cl
 You might have to update the state to see the result of the computation. You can do this by clicking the connect to 
 contract button again.
 
+
 ## Secret types
 
 
@@ -42,3 +47,7 @@ contract button again.
 
 
 
+## Challenges
+1. Add a gender field to the metadata and try to branch based on that. 
+2. Try to split the average salary into two averages using public metadata. 
+3. Try to recreate the ZK computation to count how many zero knowledge inputs there are and return that.
