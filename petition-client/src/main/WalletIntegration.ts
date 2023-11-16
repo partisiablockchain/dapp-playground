@@ -359,7 +359,7 @@ export const updateContractState = () => {
       }
 
       const signers = document.createElement("h3");
-      signers.innerHTML = "Signers";
+      signers.innerHTML = "Signed by";
       if (stateView != null) {
         stateView.appendChild(signers);
       }

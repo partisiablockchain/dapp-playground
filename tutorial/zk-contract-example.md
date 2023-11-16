@@ -17,7 +17,10 @@ account to deploy with.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx deploy --gas 10000000 --privatekey ./PATH/TO/PRIVATEKEY target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi`
+```shell
+cargo partisia-contract cli tx deploy --gas 10000000 --privatekey ./PATH/TO/PRIVATEKEY target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi
+```
+
 
 ## Zk input
 
@@ -28,21 +31,26 @@ sender of the input, the contract to send to and the input salary.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx action --gas 100000 --privatekey ./PATH/TO/PRIVATEKEY {contract-address-on-chain} add_salary {salary}`
+```shell
+cargo partisia-contract cli tx action --gas 100000 --privatekey ./PATH/TO/PRIVATEKEY {contract-address-on-chain} add_salary {salary}
+```
+
 
 ## Compute average salary
 
-Run task "Compute average salary, starting the ZK computation.", to start the computation of the average salary.
+Run task `Compute average salary, starting the ZK computation.`, to start the computation of the average salary.
 The action can only be called by the owner of the contract, i.e.
 the call must be signed by the same account that deployed the contract.
 There must also be at least 3 inputs added to the contract to compute. Otherwise, the result would not be secret.
-The task will prompt you to choose the sender and the address of the deployed contract. The compute average salary is a
+The task will prompt you to choose the sender and the address of the deployed contract. The compute average salary is an
 action created in the smart contract.
 
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx action --gas 20000 --privatekey ./PATH/TO/PRIVATEKEY {contract-address-on-chain} compute_average_salary`
+```shell
+cargo partisia-contract cli tx action --gas 20000 --privatekey ./PATH/TO/PRIVATEKEY {contract-address-on-chain} compute_average_salary
+```
 
 ## The structure of the Average salary smart contract
 
@@ -52,7 +60,9 @@ and choose the average salary option.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract abi show target/wasm32-unknown-unknown/release/average_salary.abi`
+```shell
+cargo partisia-contract abi show target/wasm32-unknown-unknown/release/average_salary.abi
+```
 
 ## Use web client to view state and interact with the contract
 
