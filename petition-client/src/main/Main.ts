@@ -44,11 +44,14 @@ disconnectWallet.addEventListener("click", disconnectWalletClick);
 // Setup event listener that sends a transfer transaction to the contract.
 // This requires that a wallet has been connected.
 
-const computeSalaryBtn = <Element>document.querySelector("#sign-btn");
-computeSalaryBtn.addEventListener("click", signAction);
+const signBtn = <Element>document.querySelector("#sign-btn");
+signBtn.addEventListener("click", signAction);
 
 const addressBtn = <Element>document.querySelector("#address-btn");
 addressBtn.addEventListener("click", contractAddressClick);
+
+const updateStateBtn = <Element>document.querySelector("#update-state-btn");
+updateStateBtn.addEventListener("click", updateContractState);
 
 /** Function for the contract address form.
  * This is called when the user clicks on the connect to contract button.
@@ -76,6 +79,15 @@ function contractAddressClick() {
 function signAction() {
   const api = getPetitionApi();
   if (isConnected() && api !== undefined) {
-    api.sign().then(() => console.warn("Computed average salary"));
+    const browserLink = <HTMLInputElement>document.querySelector("#sign-transaction-link");
+    browserLink.innerHTML = '<br><div class="loader"></div>';
+    api
+      .sign()
+      .then((transactionHash) => {
+        browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
+      })
+      .catch((msg) => {
+        browserLink.innerHTML = `<br>${msg}`;
+      });
   }
 }
