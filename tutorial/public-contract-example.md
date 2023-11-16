@@ -36,7 +36,7 @@ into the form and click login using private key. You can now sign the petition b
 
 ## Challenges
 
-If you ever get stuck on one of the challenges you can always find the Dev-chat in
+If you ever get stuck on one of the challenges you can always find the ever helpful Dev-chat in
 our [active Discord community](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).
 
 1. Try to
