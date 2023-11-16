@@ -70,7 +70,7 @@ contract button again.
 
 ## Challenges
 
-If you ever get stuck on one of the challenges you can always find the ever helpful Dev-chat in
+If you ever get stuck on one of the challenges you can always ask for help in the supportive Dev-chat in
 our [active Discord community](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).
 
 1. Try to make the ZK computation count how many zero knowledge inputs there are and return that as a public available
