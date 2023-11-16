@@ -58,12 +58,11 @@ If you have logged as the administrator you can also start the computation by cl
 You might have to update the state to see the result of the computation. You can do this by clicking the connect to
 contract button again.
 
-## Secret types
-
-## Secret Struct
-
 ## Challenges
 
-1. Add a gender field to the metadata and try to branch based on that.
-2. Try to split the average salary into two averages using public metadata.
-3. Try to recreate the ZK computation to count how many zero knowledge inputs there are and return that.
+1. Try to make the ZK computation count how many zero knowledge inputs there are and return that as a public available
+   variable. You can see how it works
+   in [zk-voting](https://gitlab.com/partisiablockchain/language/example-contracts/-/blob/main/zk-voting-simple/src/contract.rs?ref_type=heads).
+2. Add a gender field to the metadata and try to branch by using a public condition available in the metadata.
+3. Try to split the average salary into two different averages using available gender public metadata created in the
+   earlier challenge.
