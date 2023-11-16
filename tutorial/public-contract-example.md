@@ -2,7 +2,7 @@
 
 This example contract is a petition contract, it is created as an example of how to sign a public document.
 
-Throughout this example, when we write 'run task', then press 'F1', and search for 'Tasks: Run Task'.
+Throughout this example, when we write `run task`, then press `F1`, and search for `Tasks: Run Task`.
 A list of tasks wil pop up, now you can select the task you are looking for.
 
 ## Deploy a Petition contract

@@ -14,20 +14,19 @@ To run any premade task you need to press `F1` and write `Run Task` followed by 
 of
 all prescripted task within the development environment.
 
-## Its an Automated setup
+## It is an Automated setup
 
 To interact with the Partisia Blockchain you need an account, the accounts are created as privatekeys for you as a user.
-This dev
-container provides you with three new accounts: AccountA.pk, AccountB.pk and AccountC.pk
+This dev-container provides you with three new accounts: Account-A.pk, Account-B.pk and Account-C.pk
 in the .vscode folder.
 
 The created accounts have test_coins pre-minted which gives you 100.000.000 gas on the Testnet to interact, deploy and
 play around with as part of the dev-environment. You can continue using these outside of the dev environment.
 
-## Its your own online personalized contract development environment
+## It is your own online personalized contract development environment
 
 To use the environment to develop your own contracts, fork the repository. On the fork you can start changing the
-contract code and save those changes to build smart contracts on Partisia Blockchain.
+contract code and commit those changes to build smart contracts on Partisia Blockchain.
 
 For local development see how to do it through
 the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).
@@ -46,6 +45,5 @@ how to provide secure and private input and how to start a zero knowledge comput
 Along with the two contracts, there are two frontend clients, which can be started and linked to a deployed
 contract. These are meant as examples for how to integrate contract interaction with a web application.
 
-If this dev environment interests you we urge you to visit
-our [documentation](https://partisiablockchain.gitlab.io/documentation/) and start being part
-of [our active community in Discord](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).
+If you want to know more about the blockchain, ZK Rust or just contracts in general,
+we urge you to visit our [documentation](https://partisiablockchain.gitlab.io/documentation/) and participate in [our active community in Discord](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).

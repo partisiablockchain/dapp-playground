@@ -6,7 +6,7 @@ individuals are interested in determining whether they are getting a fair salary
 revealing the salary of any given individual. The smart contract is written in Partisia
 Blockchains [unique language ZKRust](https://partisiablockchain.gitlab.io/documentation/smart-contracts/zk-smart-contracts/zk-smart-contracts.html).
 
-Throughout this example, when we write 'run task', then press 'F1', and search for 'Tasks: Run Task'.
+Throughout this example, when we write `run task`, then press `F1`, and search for `Tasks: Run Task`.
 A list of tasks wil pop up, now you can select the task you are looking for.
 
 ## Deploy an Average salary contract
@@ -17,7 +17,7 @@ account to deploy with.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx deploy --gas 10000000 --privatekey {YourPrivateKey} target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi`
+`cargo partisia-contract cli tx deploy --gas 10000000 --privatekey {PATH_TO_YOUR_KEY} target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi`
 
 ## Zk input
 
@@ -28,7 +28,7 @@ sender of the input, the contract to send to and the input salary.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx action --gas 100000 --privatekey {YourPrivateKey} {contract-address-on-chain} add_salary {salary}`
+`cargo partisia-contract cli tx action --gas 100000 --privatekey {PATH_TO_YOUR_KEY} {contract-address-on-chain} add_salary {salary}`
 
 ## Compute average salary
 
