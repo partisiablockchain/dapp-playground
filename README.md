@@ -10,7 +10,8 @@ and
 the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
 in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain are installed.
 
-To run any premade task you need to press `F1` and write `Run Task` followed by an `enter press`. This gives you a list of
+To run any premade task you need to press `F1` and write `Run Task` followed by an `enter press`. This gives you a list
+of
 all prescripted task within the development environment.
 
 ## Its an Automated setup
@@ -43,4 +44,8 @@ you can test how to deploy,
 how to provide secure and private input and how to start a zero knowledge computation.
 
 Along with the two contracts, there are two frontend clients, which can be started and linked to a deployed
-contract. These are meant as examples for how to integrate contract interaction with a web application. 
+contract. These are meant as examples for how to integrate contract interaction with a web application.
+
+If this dev environment interests you we urge you to visit
+our [documentation](https://partisiablockchain.gitlab.io/documentation/) and start being part
+of [our active community in Discord](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).

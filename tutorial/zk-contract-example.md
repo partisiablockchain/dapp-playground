@@ -1,5 +1,11 @@
 # A Zero Knowledge smart contract example - Average salary contract
 
+[Average salary](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
+is a common multi-party computation example, where several privacy-concious
+individuals are interested in determining whether they are getting a fair salary, without
+revealing the salary of any given individual. The smart contract is written in Partisia
+Blockchains [unique language ZKRust](https://partisiablockchain.gitlab.io/documentation/smart-contracts/zk-smart-contracts/zk-smart-contracts.html).
+
 Throughout this example, when we write 'run task', then press 'F1', and search for 'Tasks: Run Task'.
 A list of tasks wil pop up, now you can select the task you are looking for.
 
@@ -51,7 +57,7 @@ used in the Run task:
 ## Use web client to view state and interact with the contract
 
 Run task "Start client for contract" and choose average-salary-client from the prompt. This will start a
-web client able to talk to an average salary contract. 
+web client able to talk to an average salary contract.
 
 After opening the web client, input the address and click "
 Connect to contract".
@@ -63,6 +69,9 @@ You might have to update the state to see the result of the computation. You upd
 contract button again.
 
 ## Challenges
+
+If you ever get stuck on one of the challenges you can always find the Dev-chat in
+our [active Discord community](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).
 
 1. Try to make the ZK computation count how many zero knowledge inputs there are and return that as a public available
    variable. You can see how it works

@@ -1,5 +1,7 @@
 # A Public smart contract example - Petition Contract
 
+This example contract is a petition contract, it is created as an example of how to sign a public document.
+
 Throughout this example, when we write 'run task', then press 'F1', and search for 'Tasks: Run Task'.
 A list of tasks wil pop up, now you can select the task you are looking for.
 
@@ -33,6 +35,9 @@ or AccountC.pk)
 into the form and click login using private key. You can now sign the petition by clicking the sign button.
 
 ## Challenges
+
+If you ever get stuck on one of the challenges you can always find the Dev-chat in
+our [active Discord community](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).
 
 1. Try to
    manually [compile and deploy the contract](https://partisiablockchain.gitlab.io/documentation/smart-contracts/compile-and-deploy-contracts.html).
