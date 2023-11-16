@@ -17,6 +17,6 @@ fill_with_gas() {
   cargo partisia-contract cli -q tx mintgas --privatekey ./scripts/ide.pk --gas 20000 $1
 }
 
-generate_keys .vscode/A.pk
-generate_keys .vscode/B.pk
-generate_keys .vscode/C.pk
+generate_keys .vscode/Account-A.pk
+generate_keys .vscode/Account-B.pk
+generate_keys .vscode/Account-C.pk

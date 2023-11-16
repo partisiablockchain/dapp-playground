@@ -7,9 +7,5 @@ expanded.rs
 
 .idea/
 
-.vscode/A.pk
-.vscode/B.pk
-.vscode/C.pk
-
 # Maven with auto-import, exclude module files
 *.iml

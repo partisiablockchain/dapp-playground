@@ -149,14 +149,14 @@
         },
         {
             "id": "key",
-            "description": "The id of the key, to perform the given action with. Can be either A, B or C.",
+            "description": "The id of the key, to perform the given action with. Can be either Account-A, Account-B or Account-C.",
             "type": "pickString",
             "options": [
-                "A",
-                "B",
-                "C"
+                "Account-A",
+                "Account-B",
+                "Account-C"
             ],
-            "default": "A"
+            "default": "Account-A"
         },
         {
             "id": "contract-name",

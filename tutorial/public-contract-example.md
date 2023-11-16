@@ -1,66 +1,51 @@
 # A Public smart contract example - Petition Contract
 
+This example contract is a petition contract, it is created as an example of how to sign a public document.
+
 Throughout this example, when we write 'run task', then press 'F1', and search for 'Tasks: Run Task'.
 A list of tasks wil pop up, now you can select the task you are looking for.
 
 ## Deploy a Petition contract
 
-Run the task "Deploy Petition Contract", the task will prompt asking for the account to deploy with,
+Run task "Deploy Petition Contract", the task will prompt asking for the account to deploy with,
 and what the description for the Petition should be.
+
+[CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
+used in the Run task:
+<br>
+`cargo partisia-contract cli tx deploy --gas 2500000 --privatekey {YourPrivateKey} target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi '{petition-description}'`
 
 ### Sign the Petition
 
-Run the task "Sign Petition", the task will prompt asking for the account to sign the petition with 
+Run task "Sign Petition", the task will prompt asking for the account to sign the petition with
 and an address for a deployed petition contract.
+
+[CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
+used in the Run task:
+<br>
+`cargo partisia-contract cli tx action --gas 20000 --privatekey {YourPrivateKey} {contract-address-on-chain} sign`
 
 ### Use web client to view state and sign petition
 
-Run the task "Start client for contract" and choose petition-client from the prompt.
+Run task "Start client for contract" and choose petition-client from the prompt.
 This will start a web client able to talk to a petition contract. Input the address and click "Connect to contract".
 If the address corresponds to a petition contract you should see your petition in the state section.
-To sign the petition you need to sign in with an account that has gas. Copy your private key (A.pk, B.pk or C.pk)
+To sign the petition you need to sign in with an account that has gas. Copy your private key (AccountA.pk, AccountB.pk
+or AccountC.pk)
 into the form and click login using private key. You can now sign the petition by clicking the sign button.
 
-## The structure of a smart contract
+## Challenges
 
-A smart contract consists of a state, actions and callbacks. To view the structure of the "Petition"
-contract, run the task "Show the ABI for a contract", and choose the 'petition' option.
+If you ever get stuck on one of the challenges you can always ask for help in the supportive Dev-chat in
+our [active Discord community](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).
 
-## State
-
-The state of a contract is the initialization step of the contract. The state is often where you defined you data
-structure and the macro `#[state]` must be given exactly once in any given contract.
-
-In the case of the petition contract you can see that the macro is given followed by the definition of the struct with
-two variables.
-
-```rust
-#[state]
-pub struct PetitionState {
-    signed_by: SortedVecSet<Address>,
-    description: String,
-}
-```
-
-The struct has two variables a description which is a string and
-a [SortedVecSet](https://partisiablockchain.gitlab.io/language/contract-sdk/pbc_contract_common/sorted_vec_map/struct.SortedVecSet.html)
-which is a vec that is sorted after the element type and can only hold unique elements. This specific SortedVecSet
-holds [addresses](https://partisiablockchain.gitlab.io/language/contract-sdk/pbc_contract_common/address/index.html).
-
-## Actions
-
-Actions are functions that can be called on the blockchain. There can be multiple actions within a smart contract. An
-action can use the state as is and will always require a new state returned.
-The sign action.
-
-
-
-## Callbacks
-
-What is a callback.
-
-## CLI commands
-
-Deploy and interact
-
-Tasks working.
+1. Try to
+   manually [compile and deploy the contract](https://partisiablockchain.gitlab.io/documentation/smart-contracts/compile-and-deploy-contracts.html).
+2. Try to force the contract to only accept input from AccountA.pk and AccountB.pk
+   using [asserts](https://doc.rust-lang.org/std/macro.assert.html). You can find inspiration on how to do it in
+   the [voting contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/blob/main/voting/src/lib.rs?ref_type=heads).
+3. Add an action that can update the description of the petition contract. You can visit the count action in
+   the [voting contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/blob/main/voting/src/lib.rs?ref_type=heads#L116)
+   for inspiration.
+4. Add a parameter to the above action to remove the hardcoded part of the action.
+5. Try to create an action that can unsign a signed user from the petition contract. 
