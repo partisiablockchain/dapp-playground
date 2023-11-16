@@ -19,6 +19,24 @@
       div {
         margin-bottom: 5px;
       }
+
+      .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
     <link
       rel="stylesheet"
@@ -103,8 +121,19 @@
               type="button"
               value="Sign" />
           </form>
+          <div id="sign-transaction-link"></div>
         </div>
 
+        <h2 id="state-header" class="hidden">Petition State</h2>
+        <div id="update-state" class="hidden">
+          <form>
+            <input
+              class="pure-button pure-button-primary"
+              id="update-state-btn"
+              type="button"
+              value="Update State" />
+          </form>
+        </div>
         <div id="contract-state">
           <h2></h2>
         </div>

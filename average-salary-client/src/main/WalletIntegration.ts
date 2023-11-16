@@ -378,11 +378,10 @@ export const updateContractState = () => {
 
       const state = deserializeContractState({ state: stateBuffer });
 
-      const stateHeader = document.createElement("h2");
-      stateHeader.innerHTML = "Average Salary State";
-      if (stateView != null) {
-        stateView.appendChild(stateHeader);
-      }
+      const stateHeader = <HTMLInputElement>document.querySelector("#state-header");
+      const updateStateButton = <HTMLInputElement>document.querySelector("#update-state");
+      stateHeader.classList.remove("hidden");
+      updateStateButton.classList.remove("hidden");
 
       const administratorHeader = document.createElement("h3");
       administratorHeader.innerHTML = `Administrator`;

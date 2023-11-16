@@ -65,8 +65,8 @@ If the address corresponds to an average salary contract you should see the admi
 To add salary to the contract you need to sign in with an account that has gas. Copy your private key
 (AccountA.pk, AccountB.pk or AccountC.pk) into the form and click login using private key. You can now add salary.
 If you have logged in as the administrator you can start the computation by clicking the compute button.
-You might have to update the state to see the result of the computation. You update the state by clicking the connect to
-contract button again.
+You might have to update the state to see the result of the computation. You update the state by clicking the Update 
+State button.
 
 ## Challenges
 

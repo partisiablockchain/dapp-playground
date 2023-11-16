@@ -20,7 +20,7 @@ import { CLIENT } from "../AppState";
 import { ConnectedWallet } from "../ConnectedWallet";
 import { ShardId } from "./TransactionData";
 
-export type CallbackPromise = Promise<void>;
+export type CallbackPromise = Promise<string>;
 
 /**
  * API for sending transactions to PBC.
@@ -56,7 +56,10 @@ export class TransactionApi {
       .then((putResponse) => {
         if (putResponse.putSuccessful) {
           return this.waitForTransaction(putResponse.shard, putResponse.transactionHash)
-            .then(() => this.fetchUpdatedState())
+            .then(() => {
+              this.fetchUpdatedState();
+              return putResponse.transactionHash;
+            })
             .catch((reason) => {
               throw reason;
             });

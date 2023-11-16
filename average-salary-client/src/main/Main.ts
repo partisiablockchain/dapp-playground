@@ -52,6 +52,9 @@ computeSalaryBtn.addEventListener("click", computeAction);
 const addressBtn = <Element>document.querySelector("#address-btn");
 addressBtn.addEventListener("click", contractAddressClick);
 
+const updateStateBtn = <Element>document.querySelector("#update-state-btn");
+updateStateBtn.addEventListener("click", updateContractState);
+
 /** Function for the contract address form.
  * This is called when the user clicks on the connect to contract button.
  * It validates the address, and then gets the state for the contract.
@@ -94,9 +97,18 @@ function addSalaryFormAction() {
       const api = getAverageApi();
       if (api !== undefined) {
         // Add salary via Average Salary api
+        const browserLink = <HTMLInputElement>(
+          document.querySelector("#add-salary-transaction-link")
+        );
+        browserLink.innerHTML = '<br><div class="loader"></div>';
         api
           .addSalary(parseInt(salary.value, 10))
-          .then(() => console.warn("Transfer was successful!"));
+          .then((transactionHash) => {
+            browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
+          })
+          .catch((msg) => {
+            browserLink.innerHTML = `<br>${msg}`;
+          });
       }
     }
   } else {
@@ -108,8 +120,17 @@ function addSalaryFormAction() {
 function computeAction() {
   // User is connected and the Average Salary Api is defined
   const api = getAverageApi();
+  const browserLink = <HTMLInputElement>document.querySelector("#compute-transaction-link");
+  browserLink.innerHTML = '<br><div class="loader"></div>';
   if (isConnected() && api !== undefined) {
     // Call compute via the Api
-    api.compute().then(() => console.warn("Computed average salary"));
+    api
+      .compute()
+      .then((transactionHash) => {
+        browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
+      })
+      .catch((msg) => {
+        browserLink.innerHTML = `<br>${msg}`;
+      });
   }
 }
