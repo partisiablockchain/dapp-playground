@@ -40,7 +40,7 @@
     "test": "npx webpack --config webpack.config.js",
     "prettier": "npx prettier --print-width 100 --tab-width 2 --quote-props as-needed --trailing-comma es5 --bracket-same-line --prose-wrap preserve --write src",
     "lint": "npx eslint src --max-warnings 0",
-    "start": "npx webpack serve --open --env PORT=8080"
+    "start": "npx webpack serve --open --env PORT=8081"
   },
   "prettier": {
     "printWidth": 100,

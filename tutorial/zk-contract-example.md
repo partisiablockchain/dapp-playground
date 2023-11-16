@@ -1,7 +1,7 @@
 # A Zero Knowledge smart contract example - Average salary contract
 
 [Average salary](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
-is a common multi-party computation example, where several privacy-concious
+is a common multi-party computation example, where several privacy-conscious
 individuals are interested in determining whether they are getting a fair salary, without
 revealing the salary of any given individual. The smart contract is written in Partisia
 Blockchains [unique language ZKRust](https://partisiablockchain.gitlab.io/documentation/smart-contracts/zk-smart-contracts/zk-smart-contracts.html).
@@ -17,7 +17,7 @@ account to deploy with.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx deploy --gas 10000000 --privatekey {PATH_TO_YOUR_KEY} target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi`
+`cargo partisia-contract cli tx deploy --gas 10000000 --privatekey ./PATH/TO/PRIVATEKEY target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi`
 
 ## Zk input
 
@@ -28,7 +28,7 @@ sender of the input, the contract to send to and the input salary.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx action --gas 100000 --privatekey {PATH_TO_YOUR_KEY} {contract-address-on-chain} add_salary {salary}`
+`cargo partisia-contract cli tx action --gas 100000 --privatekey ./PATH/TO/PRIVATEKEY {contract-address-on-chain} add_salary {salary}`
 
 ## Compute average salary
 
@@ -42,7 +42,7 @@ action created in the smart contract.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx action --gas 20000 --privatekey {YourPrivateKey} {contract-address-on-chain} compute_average_salary`
+`cargo partisia-contract cli tx action --gas 20000 --privatekey ./PATH/TO/PRIVATEKEY {contract-address-on-chain} compute_average_salary`
 
 ## The structure of the Average salary smart contract
 

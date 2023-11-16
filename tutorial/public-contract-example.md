@@ -13,7 +13,7 @@ and what the description for the Petition should be.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx deploy --gas 2500000 --privatekey {YourPrivateKey} target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi '{petition-description}'`
+`cargo partisia-contract cli tx deploy --gas 2500000 --privatekey ./PATH/TO/PRIVATEKEY target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi '{petition-description}'`
 
 ### Sign the Petition
 
@@ -23,7 +23,7 @@ and an address for a deployed petition contract.
 [CLI instruction](https://partisiablockchain.gitlab.io/documentation/smart-contracts/smart-conract-tools-overview.html#the-command-line-interface-cli)
 used in the Run task:
 <br>
-`cargo partisia-contract cli tx action --gas 20000 --privatekey {YourPrivateKey} {contract-address-on-chain} sign`
+`cargo partisia-contract cli tx action --gas 20000 --privatekey ./PATH/TO/PRIVATEKEY {contract-address-on-chain} sign`
 
 ### Use web client to view state and sign petition
 
