@@ -8,52 +8,70 @@ Read the documentation to better understand
 
 To try this environment in your browser:
 
-[![Open the Partisiablockchain/web-ide in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide/tree/main)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide/tree/main)
 
 In the repo there are two contracts provided.
 The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
 and
 the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
-in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain are installed.
+in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain
+are installed.
 
-To run any premade task you need to press `F1` and write `Run Task` followed by an `enter press`. This gives you a list
+To run any premade task you need to press `Ctrl+F1`. This gives you a list
 of
-all prescripted task within the development environment.
+all prescripted tasks within the development environment.
 
 ## It is an Automated setup
 
-To interact with the Partisia Blockchain you need an account, the accounts are created with private keys for you as a user.
+To interact with the Partisia Blockchain you need an account, the accounts are created with private
+keys for you as a user.
 The environment provides you with three new accounts,
 `Account-A.pk`, `Account-B.pk` and `Account-C.pk` upon creation.
 
-The created accounts have test_coins pre-minted which gives you 100.000.000 gas on the Testnet to interact, deploy and
-play around with as part of the dev-environment. You can continue using these outside of the dev environment.
+Read more about how addresses works
+for [accounts and smart contracts](https://partisiablockchain.gitlab.io/documentation/pbc-fundamentals/dictionary.html#address).
+
+The created accounts have test_coins pre-minted which gives you 100.000.000 gas on the Testnet to
+interact, deploy and
+play around with as part of the dev-environment. You can continue using these outside of the dev
+environment,
+just remember the private keys, because they are not saved when you delete the container.
 
 ## It is your own online personalized contract development environment
 
 To use the environment to develop your own contracts, fork the repository.
 On the fork you can start changing the contract code and commit those changes to
-build smart contracts on Partisia Blockchain. 
+build smart contracts on Partisia Blockchain.
 
-Remember to set up a prebuild of the codespace, when forking the repository. This drastically decreases 
-boot up time, when creating a new container. 
+Remember to set up a prebuild of the codespace, when forking the repository. This drastically
+decreases
+boot up time, when creating a new container. The button in this README, will also need modification,
+to launch the container with the forked repository.
+View
+the [Github docs](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces)
+on how to change the button to link to your forked repository.
 
 For local development see how to do it through
 the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).
 
 ## Try, Learn and Interact with Partisia Blockchain
 
-There are 2 challenge based tutorials as part of your development environment.
+There are 2 challenge-based tutorials as part of your development environment.
 
 The first one explores the [public smart contracts](tutorial/public-contract-example.md),
 this example shows you how to deploy and interact with public smart contracts.
 
-The second one explores the superpower of Partisia Blockchain: [The Zk contracts](tutorial/zk-contract-example.md), here
+The second one explores the superpower of Partisia
+Blockchain: [The Zk contracts](tutorial/zk-contract-example.md), here
 you can test how to deploy,
 how to provide secure and private input and how to start a zero knowledge computation.
 
-Along with the two contracts, there are two frontend clients, which can be started and linked to a deployed
-contract. These are meant as examples for how to integrate contract interaction with a web application.
+Along with the two contracts, there are two frontend clients, which can be started and linked to a
+deployed contract.
+These are meant as examples for how to integrate contract interaction with a web
+application.
 
 If you want to know more about the blockchain, ZK Rust or just contracts in general,
-we urge you to visit our [documentation](https://partisiablockchain.gitlab.io/documentation/) and participate in [our active community on Discord](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).
+we urge you to visit our [documentation](https://partisiablockchain.gitlab.io/documentation/) and
+participate
+in [our active community on Discord](https://partisiablockchain.gitlab.io/documentation/get-support-from-pbc-community.html).
