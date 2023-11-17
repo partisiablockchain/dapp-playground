@@ -358,6 +358,8 @@ export const updateContractState = () => {
   if (address === undefined) {
     throw new Error("No address provided");
   }
+  const refreshLoader = <HTMLInputElement>document.querySelector("#refresh-loader");
+  refreshLoader.classList.remove("hidden");
   CLIENT.getContractData<RawZkContractData>(address).then((contract) => {
     if (contract != null) {
       // Parses the contract abi
@@ -397,6 +399,7 @@ export const updateContractState = () => {
 
       const contractState = <HTMLElement>document.querySelector("#contract-state");
       contractState.classList.remove("hidden");
+      refreshLoader.classList.add("hidden");
     } else {
       throw new Error("Could not find data for contract");
     }

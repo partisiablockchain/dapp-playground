@@ -328,6 +328,8 @@ export const updateContractState = () => {
   if (address === undefined) {
     throw new Error("No address provided");
   }
+  const refreshLoader = <HTMLInputElement>document.querySelector("#refresh-loader");
+  refreshLoader.classList.remove("hidden");
   CLIENT.getContractData<RawContractData>(address).then((contract) => {
     if (contract != null) {
       // Reads the state of the contract
@@ -344,6 +346,7 @@ export const updateContractState = () => {
       description.innerHTML = `${state.description}`;
 
       const signedBy = <HTMLElement>document.querySelector("#signed-by");
+      signedBy.innerHTML = "";
       state.signedBy.forEach((signer: BlockchainAddress) => {
         const signerElement = document.createElement("div");
         signerElement.innerHTML = signer.asString();
@@ -352,6 +355,7 @@ export const updateContractState = () => {
 
       const contractState = <HTMLElement>document.querySelector("#contract-state");
       contractState.classList.remove("hidden");
+      refreshLoader.classList.add("hidden");
     } else {
       throw new Error("Could not find data for contract");
     }
