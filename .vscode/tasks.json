@@ -2,32 +2,6 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Compile Contract",
-            "type": "shell",
-            "command": "cargo partisia-contract build --release",
-            "options": {
-                "cwd": "${fileDirname}"
-            },
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            }
-        },
-        {
-            "label": "Compile All Contracts",
-            "type": "shell",
-            "command": "cargo partisia-contract build --release",
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
             "label": "Deploy Petition Contract",
             "type": "shell",
             "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey ${input:key}.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi '${input:petition-description}'",
@@ -67,7 +41,7 @@
             }
         },
         {
-            "label": "Send a salary as a secret input to an average salary contract.",
+            "label": "Send salary as secret input to average salary contract",
             "type": "shell",
             "command": "cargo partisia-contract cli tx action  --gas 100000 --privatekey ${input:key}.pk ${input:contract-address} add_salary ${input:salary}",
             "options": {
@@ -93,23 +67,11 @@
             }
         },
         {
-            "label": "Show the ABI for a contract.",
-            "type": "shell",
-            "command": "cargo partisia-contract abi show target/wasm32-unknown-unknown/release/${input:contract-name}.abi",
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            }
-        },
-        {
-            "label": "Start client for a contract.",
+            "label": "Start Average Salary Client.",
             "type": "shell",
             "command": "npm install; npm start",
             "options": {
-                "cwd": "${workspaceFolder}/${input:client-name}"
+                "cwd": "${workspaceFolder}/average-salary-client"
             },
             "group": {
                 "kind": "build",
@@ -117,23 +79,11 @@
             }
         },
         {
-            "label": "Compile and regen average salary",
+            "label": "Start Petition Client.",
             "type": "shell",
-            "command": "cargo partisia-contract build --release -p average-salary; cargo partisia-contract abi codegen --ts target/wasm32-unknown-unknown/release/average_salary.abi average-salary-client/src/main/contract/AverageSalaryGenerated.ts",
+            "command": "npm install; npm start",
             "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            }
-        },
-        {
-            "label": "Compile and regen petition",
-            "type": "shell",
-            "command": "cargo partisia-contract build --release -p petition; cargo partisia-contract abi codegen --ts target/wasm32-unknown-unknown/release/petition.abi petition-client/src/main/contract/PetitionGenerated.ts",
-            "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}/petition-client"
             },
             "group": {
                 "kind": "build",

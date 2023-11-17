@@ -28,7 +28,7 @@ keys for you as a user.
 The environment provides you with three new accounts,
 `Account-A.pk`, `Account-B.pk` and `Account-C.pk` upon creation.
 
-Read more about how addresses works
+Read how addresses works
 for [accounts and smart contracts](https://partisiablockchain.gitlab.io/documentation/pbc-fundamentals/dictionary.html#address).
 
 The created accounts have test_coins pre-minted which gives you 100.000.000 gas on the Testnet to
