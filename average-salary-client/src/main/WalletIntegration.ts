@@ -328,6 +328,7 @@ export const disconnectWalletClick = () => {
 interface RawZkContractData {
   engines: { engines: Engine[] };
   openState: { openState: { data: string } };
+  variables: Array<{ key: number; value: ZkVariable }>;
 }
 
 /** dto of an engine in the zk contract object. */
@@ -338,6 +339,14 @@ interface Engine {
   publicKey: string;
   /** Rest interface of the engine. */
   restInterface: string;
+}
+
+/** A subset of a Zk variable on chain. */
+interface ZkVariable {
+  id: number;
+  information: { data: string };
+  owner: string;
+  transaction: string;
 }
 
 /**
@@ -395,6 +404,18 @@ export const updateContractState = () => {
         stateView.appendChild(administrator);
       }
 
+      const noSalariesHeader = document.createElement("h3");
+      noSalariesHeader.innerHTML = `Number of inputted salaries`;
+      if (stateView != null) {
+        stateView.appendChild(noSalariesHeader);
+      }
+
+      const noSalaries = document.createElement("div");
+      noSalaries.innerHTML = `${countSalaries(contract.serializedContract.variables)}`;
+      if (stateView != null) {
+        stateView.appendChild(noSalaries);
+      }
+
       const averageSalaryResultHeader = document.createElement("h3");
       averageSalaryResultHeader.innerHTML = `Average Salary Result`;
       if (stateView != null) {
@@ -436,3 +457,9 @@ const toggleVisibility = (selector: string) => {
     element.classList.toggle("hidden");
   }
 };
+
+function countSalaries(variables: Array<{ key: number; value: ZkVariable }>) {
+  return Array.from(variables.values()).filter(
+    (v) => Buffer.from(v.value.information.data, "base64").readUInt8() == 0
+  ).length;
+}

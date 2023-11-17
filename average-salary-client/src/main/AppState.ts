@@ -49,7 +49,7 @@ export const isConnected = () => {
   return currentAccount != null;
 };
 
-export const setContractAbi = (abi: ContractAbi) => {
+export const setContractAbi = (abi: ContractAbi | undefined) => {
   contractAbi = abi;
   setAverageApi();
 };
@@ -78,7 +78,7 @@ export const getEngineKeys = () => {
   return engineKeys;
 };
 
-export const setEngineKeys = (keys: BlockchainPublicKey[]) => {
+export const setEngineKeys = (keys: BlockchainPublicKey[] | undefined) => {
   engineKeys = keys;
   setAverageApi();
 };

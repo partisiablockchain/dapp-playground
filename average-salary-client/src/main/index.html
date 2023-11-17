@@ -51,22 +51,6 @@
         <h1>Average Salary demo</h1>
 
         <div>
-          <h2 id="current-address">Contract Address: None</h2>
-          <div id="browser-link"></div>
-          <br />
-          <div id="address">
-            <form onSubmit="return false;" class="pure-form">
-              <fieldset>
-                <input
-                  id="address-btn"
-                  type="submit"
-                  value="Connect to contract"
-                  class="pure-button pure-button-primary" />
-                <input id="address-value" name="address-value" type="text" />
-              </fieldset>
-            </form>
-          </div>
-
           <h2>Account</h2>
           <div id="connection-status">
             <p>Currently not connected</p>
@@ -114,6 +98,22 @@
           </div>
         </div>
 
+        <h2 id="current-address">Contract Address: None</h2>
+        <div id="browser-link"></div>
+        <br />
+        <div id="address">
+          <form onSubmit="return false;" class="pure-form">
+            <fieldset>
+              <input
+                id="address-btn"
+                type="submit"
+                value="Connect to contract"
+                class="pure-button pure-button-primary" />
+              <input id="address-value" name="address-value" type="text" />
+            </fieldset>
+          </form>
+        </div>
+
         <div id="contract-interaction" class="hidden">
           <h2>Add salary</h2>
           <form class="pure-form" name="add-salary-action-form" onSubmit="return false;">
@@ -125,17 +125,16 @@
               value="Add salary" />
           </form>
           <div id="add-salary-transaction-link"></div>
-        </div>
-
-        <h2>Compute average salary</h2>
-        <form>
-          <input
+          <h2>Compute average salary</h2>
+          <form>
+            <input
               class="pure-button pure-button-primary"
               id="compute-average-salary-btn"
               type="button"
               value="Compute average" />
-        </form>
-        <div id="compute-transaction-link"></div>
+          </form>
+          <div id="compute-transaction-link"></div>
+        </div>
 
         <h2 id="state-header" class="hidden">Average Salary State</h2>
         <div id="update-state" class="hidden">

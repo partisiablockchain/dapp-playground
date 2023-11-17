@@ -16,7 +16,13 @@
  *
  */
 
-import { getAverageApi, isConnected, setContractAddress } from "./AppState";
+import {
+  getAverageApi,
+  isConnected,
+  setContractAbi,
+  setContractAddress,
+  setEngineKeys,
+} from "./AppState";
 import {
   connectMetaMaskWalletClick,
   connectMpcWalletClick,
@@ -73,6 +79,10 @@ function contractAddressClick() {
     currentAddress.innerHTML = `Contract Address: ${address}`;
     const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
     browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`;
+
+    // Reset abi and engine keys
+    setContractAbi(undefined);
+    setEngineKeys(undefined);
     // Update the contract state.
     setContractAddress(address);
     updateContractState();
