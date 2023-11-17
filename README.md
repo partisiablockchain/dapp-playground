@@ -6,9 +6,9 @@ contracts utilizing the Zk Rust and public blockchain.
 Read the documentation to better understand
 [the fundamentals of the Partisia Blockchain](https://partisiablockchain.gitlab.io/documentation/pbc-fundamentals/introduction-to-the-fundamentals.html)
 
-To boot the environment in your browser:
+To try this environment in your browser:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide/tree/main)
+[![Open the Partisiablockchain/web-ide in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide/tree/main)
 
 In the repo there are two contracts provided.
 The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
@@ -35,7 +35,8 @@ To use the environment to develop your own contracts, fork the repository.
 On the fork you can start changing the contract code and commit those changes to
 build smart contracts on Partisia Blockchain. 
 
-Remember to setup a prebuild of the codespace, when forking the repository. 
+Remember to set up a prebuild of the codespace, when forking the repository. This drastically decreases 
+boot up time, when creating a new container. 
 
 For local development see how to do it through
 the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).

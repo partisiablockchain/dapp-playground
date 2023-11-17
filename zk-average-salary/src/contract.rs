@@ -105,10 +105,6 @@ fn compute_average_salary(
     zk_state: ZkState<SecretVarType>,
 ) -> (ContractState, Vec<EventGroup>, Vec<ZkStateChange>) {
     assert_eq!(
-        context.sender, state.administrator,
-        "Only administrator can start computation"
-    );
-    assert_eq!(
         zk_state.calculation_state,
         CalculationStatus::Waiting,
         "Computation must start from Waiting state, but was {:?}",
