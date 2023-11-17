@@ -19,7 +19,7 @@ are installed.
 
 To run any premade task you need to press `Ctrl+F1`. This gives you a list
 of
-all prescripted task within the development environment.
+all prescripted tasks within the development environment.
 
 ## It is an Automated setup
 
@@ -35,7 +35,7 @@ The created accounts have test_coins pre-minted which gives you 100.000.000 gas 
 interact, deploy and
 play around with as part of the dev-environment. You can continue using these outside of the dev
 environment,
-just remember the private keys, cause they are not saved when you delete the container.
+just remember the private keys, because they are not saved when you delete the container.
 
 ## It is your own online personalized contract development environment
 
@@ -56,7 +56,7 @@ the [dev container documentation](https://code.visualstudio.com/docs/devcontaine
 
 ## Try, Learn and Interact with Partisia Blockchain
 
-There are 2 challenge based tutorials as part of your development environment.
+There are 2 challenge-based tutorials as part of your development environment.
 
 The first one explores the [public smart contracts](tutorial/public-contract-example.md),
 this example shows you how to deploy and interact with public smart contracts.
@@ -67,8 +67,8 @@ you can test how to deploy,
 how to provide secure and private input and how to start a zero knowledge computation.
 
 Along with the two contracts, there are two frontend clients, which can be started and linked to a
-deployed
-contract. These are meant as examples for how to integrate contract interaction with a web
+deployed contract.
+These are meant as examples for how to integrate contract interaction with a web
 application.
 
 If you want to know more about the blockchain, ZK Rust or just contracts in general,
