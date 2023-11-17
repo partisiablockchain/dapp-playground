@@ -98,21 +98,19 @@
           </div>
         </div>
 
-        <h2 id="current-address">Contract Address: None</h2>
-        <div id="browser-link"></div>
-        <br />
+        <h2 id="current-address">Average Salary Address: None</h2>
         <div id="address">
           <form onSubmit="return false;" class="pure-form">
-            <fieldset>
-              <input
-                id="address-btn"
-                type="submit"
-                value="Connect to contract"
-                class="pure-button pure-button-primary" />
-              <input id="address-value" name="address-value" type="text" />
-            </fieldset>
+            <input id="address-value" name="address-value" type="text" />
+            <input
+              id="address-btn"
+              type="submit"
+              value="Set address"
+              class="pure-button pure-button-primary" />
           </form>
         </div>
+        <br />
+        <div id="browser-link"></div>
 
         <div id="contract-interaction" class="hidden">
           <h2>Add salary</h2>
@@ -136,18 +134,25 @@
           <div id="compute-transaction-link"></div>
         </div>
 
-        <h2 id="state-header" class="hidden">Average Salary State</h2>
-        <div id="update-state" class="hidden">
-          <form>
-            <input
-              class="pure-button pure-button-primary"
-              id="update-state-btn"
-              type="button"
-              value="Refresh State" />
-          </form>
-        </div>
-        <div id="contract-state">
-          <h2></h2>
+        <div id="contract-state" class="hidden">
+          <h2 id="state-header">Average Salary State</h2>
+          <div id="update-state">
+            <form>
+              <input
+                class="pure-button pure-button-primary"
+                id="update-state-btn"
+                type="button"
+                value="Refresh State" />
+            </form>
+          </div>
+          <h3>Administrator</h3>
+          <div id="administrator-value"></div>
+          <h3>Number of inputted salaries</h3>
+          <div id="num-salaries"></div>
+          <h3>Average Salary Result</h3>
+          <div id="average-result"></div>
+          <h3>Number of employees</h3>
+          <div id="num-employees"></div>
         </div>
       </div>
     </div>

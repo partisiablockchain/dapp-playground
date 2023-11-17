@@ -28,6 +28,7 @@ import {
   getEngineKeys,
   setEngineKeys,
   getContractAddress,
+  isConnected,
 } from "./AppState";
 import { BlockchainPublicKey, CryptoUtils } from "@partisiablockchain/zk-client";
 import { TransactionApi } from "./client/TransactionApi";
@@ -298,7 +299,7 @@ const handleWalletConnect = (connect: Promise<ConnectedWallet>) => {
       toggleVisibility("#metamask-connect");
       toggleVisibility("#private-key-connect");
       toggleVisibility("#wallet-disconnect");
-      toggleVisibility("#contract-interaction");
+      updateInteractionVisibility();
     })
     .catch((error) => {
       if ("message" in error) {
@@ -319,7 +320,7 @@ export const disconnectWalletClick = () => {
   toggleVisibility("#metamask-connect");
   toggleVisibility("#private-key-connect");
   toggleVisibility("#wallet-disconnect");
-  toggleVisibility("#contract-interaction");
+  updateInteractionVisibility();
 };
 
 /**
@@ -359,11 +360,6 @@ export const updateContractState = () => {
   }
   CLIENT.getContractData<RawZkContractData>(address).then((contract) => {
     if (contract != null) {
-      const stateView = document.querySelector("#contract-state");
-      if (stateView != null) {
-        stateView.innerHTML = "";
-      }
-
       // Parses the contract abi
       if (getContractAbi() === undefined) {
         const abiBuffer = Buffer.from(contract.abi, "base64");
@@ -387,61 +383,30 @@ export const updateContractState = () => {
 
       const state = deserializeContractState({ state: stateBuffer });
 
-      const stateHeader = <HTMLInputElement>document.querySelector("#state-header");
-      const updateStateButton = <HTMLInputElement>document.querySelector("#update-state");
-      stateHeader.classList.remove("hidden");
-      updateStateButton.classList.remove("hidden");
-
-      const administratorHeader = document.createElement("h3");
-      administratorHeader.innerHTML = `Administrator`;
-      if (stateView != null) {
-        stateView.appendChild(administratorHeader);
-      }
-
-      const administrator = document.createElement("div");
+      const administrator = <HTMLElement>document.querySelector("#administrator-value");
       administrator.innerHTML = `${state.administrator.asString()}`;
-      if (stateView != null) {
-        stateView.appendChild(administrator);
-      }
 
-      const noSalariesHeader = document.createElement("h3");
-      noSalariesHeader.innerHTML = `Number of inputted salaries`;
-      if (stateView != null) {
-        stateView.appendChild(noSalariesHeader);
-      }
-
-      const noSalaries = document.createElement("div");
+      const noSalaries = <HTMLElement>document.querySelector("#num-salaries");
       noSalaries.innerHTML = `${countSalaries(contract.serializedContract.variables)}`;
-      if (stateView != null) {
-        stateView.appendChild(noSalaries);
-      }
 
-      const averageSalaryResultHeader = document.createElement("h3");
-      averageSalaryResultHeader.innerHTML = `Average Salary Result`;
-      if (stateView != null) {
-        stateView.appendChild(averageSalaryResultHeader);
-      }
-
-      const averageSalaryResult = document.createElement("div");
+      const averageSalaryResult = <HTMLElement>document.querySelector("#average-result");
       averageSalaryResult.innerHTML = `${state.averageSalaryResult ?? "None"}`;
-      if (stateView != null) {
-        stateView.appendChild(averageSalaryResult);
-      }
 
-      const numEmployeesHeader = document.createElement("h3");
-      numEmployeesHeader.innerHTML = `Number of employess`;
-      if (stateView != null) {
-        stateView.appendChild(numEmployeesHeader);
-      }
-      const numEmployees = document.createElement("div");
+      const numEmployees = <HTMLElement>document.querySelector("#num-employees");
       numEmployees.innerHTML = `${state.numEmployees ?? "None"}`;
-      if (stateView != null) {
-        stateView.appendChild(numEmployees);
-      }
+
+      const contractState = <HTMLElement>document.querySelector("#contract-state");
+      contractState.classList.remove("hidden");
     } else {
       throw new Error("Could not find data for contract");
     }
   });
+};
+
+const countSalaries = (variables: Array<{ key: number; value: ZkVariable }>) => {
+  return Array.from(variables.values()).filter(
+    (v) => Buffer.from(v.value.information.data, "base64").readUInt8() == 0
+  ).length;
 };
 
 const setConnectionStatus = (status: string) => {
@@ -458,8 +423,11 @@ const toggleVisibility = (selector: string) => {
   }
 };
 
-function countSalaries(variables: Array<{ key: number; value: ZkVariable }>) {
-  return Array.from(variables.values()).filter(
-    (v) => Buffer.from(v.value.information.data, "base64").readUInt8() == 0
-  ).length;
-}
+export const updateInteractionVisibility = () => {
+  const contractInteraction = <HTMLElement>document.querySelector("#contract-interaction");
+  if (isConnected() && getContractAddress() !== undefined) {
+    contractInteraction.classList.remove("hidden");
+  } else {
+    contractInteraction.classList.add("hidden");
+  }
+};

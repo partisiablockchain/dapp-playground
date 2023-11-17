@@ -23,6 +23,7 @@ import {
   connectPrivateKeyWalletClick,
   disconnectWalletClick,
   updateContractState,
+  updateInteractionVisibility,
 } from "./WalletIntegration";
 
 // Setup event listener to connect to the MPC wallet browser extension
@@ -67,10 +68,11 @@ function contractAddressClick() {
     console.error(`${address} is not a valid PBC address`);
   } else {
     const currentAddress = <HTMLInputElement>document.querySelector("#current-address");
-    currentAddress.innerHTML = `Contract Address: ${address}`;
+    currentAddress.innerHTML = `Petition Address: ${address}`;
     const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
     browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`;
     setContractAddress(address);
+    updateInteractionVisibility();
     updateContractState();
   }
 }

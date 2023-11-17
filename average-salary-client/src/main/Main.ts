@@ -29,6 +29,7 @@ import {
   connectPrivateKeyWalletClick,
   disconnectWalletClick,
   updateContractState,
+  updateInteractionVisibility,
 } from "./WalletIntegration";
 
 // Setup event listener to connect to the MPC wallet browser extension
@@ -76,7 +77,7 @@ function contractAddressClick() {
   } else {
     // Show address and a link to the browser.
     const currentAddress = <HTMLInputElement>document.querySelector("#current-address");
-    currentAddress.innerHTML = `Contract Address: ${address}`;
+    currentAddress.innerHTML = `Average Salary Address: ${address}`;
     const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
     browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`;
 
@@ -85,6 +86,7 @@ function contractAddressClick() {
     setEngineKeys(undefined);
     // Update the contract state.
     setContractAddress(address);
+    updateInteractionVisibility();
     updateContractState();
   }
 }

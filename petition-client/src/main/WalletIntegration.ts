@@ -18,7 +18,7 @@
 
 import { Buffer } from "buffer";
 import PartisiaSdk from "partisia-sdk";
-import { CLIENT, resetAccount, setAccount, getContractAddress } from "./AppState";
+import { CLIENT, resetAccount, setAccount, getContractAddress, isConnected } from "./AppState";
 import { TransactionApi } from "./client/TransactionApi";
 import { serializeTransaction } from "./client/TransactionSerialization";
 import { ConnectedWallet } from "./ConnectedWallet";
@@ -289,7 +289,7 @@ const handleWalletConnect = (connect: Promise<ConnectedWallet>) => {
       toggleVisibility("#metamask-connect");
       toggleVisibility("#private-key-connect");
       toggleVisibility("#wallet-disconnect");
-      toggleVisibility("#contract-interaction");
+      updateInteractionVisibility();
     })
     .catch((error) => {
       if ("message" in error) {
@@ -310,7 +310,7 @@ export const disconnectWalletClick = () => {
   toggleVisibility("#metamask-connect");
   toggleVisibility("#private-key-connect");
   toggleVisibility("#wallet-disconnect");
-  toggleVisibility("#contract-interaction");
+  updateInteractionVisibility();
 };
 
 /**
@@ -330,11 +330,6 @@ export const updateContractState = () => {
   }
   CLIENT.getContractData<RawContractData>(address).then((contract) => {
     if (contract != null) {
-      const stateView = document.querySelector("#contract-state");
-      if (stateView != null) {
-        stateView.innerHTML = "";
-      }
-
       // Reads the state of the contract
       const stateBuffer = Buffer.from(contract.serializedContract.state.data, "base64");
 
@@ -345,30 +340,18 @@ export const updateContractState = () => {
       stateHeader.classList.remove("hidden");
       updateStateButton.classList.remove("hidden");
 
-      const description = document.createElement("h3");
-      description.innerHTML = "Description";
-      if (stateView != null) {
-        stateView.appendChild(description);
-      }
+      const description = <HTMLElement>document.querySelector("#description");
+      description.innerHTML = `${state.description}`;
 
-      const petition = document.createElement("div");
-      petition.innerHTML = `${state.description}`;
-      if (stateView != null) {
-        stateView.appendChild(petition);
-      }
-
-      const signers = document.createElement("h3");
-      signers.innerHTML = "Signed by";
-      if (stateView != null) {
-        stateView.appendChild(signers);
-      }
+      const signedBy = <HTMLElement>document.querySelector("#signed-by");
       state.signedBy.forEach((signer: BlockchainAddress) => {
         const signerElement = document.createElement("div");
         signerElement.innerHTML = signer.asString();
-        if (stateView != null) {
-          stateView.appendChild(signerElement);
-        }
+        signedBy.appendChild(signerElement);
       });
+
+      const contractState = <HTMLElement>document.querySelector("#contract-state");
+      contractState.classList.remove("hidden");
     } else {
       throw new Error("Could not find data for contract");
     }
@@ -386,5 +369,14 @@ const toggleVisibility = (selector: string) => {
   const element = document.querySelector(selector);
   if (element != null) {
     element.classList.toggle("hidden");
+  }
+};
+
+export const updateInteractionVisibility = () => {
+  const contractInteraction = <HTMLElement>document.querySelector("#contract-interaction");
+  if (isConnected() && getContractAddress() !== undefined) {
+    contractInteraction.classList.remove("hidden");
+  } else {
+    contractInteraction.classList.add("hidden");
   }
 };
