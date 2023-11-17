@@ -1,4 +1,0 @@
-include:
-- project: 'secata-public/pom/shared-ci'
-  file: 'ts-root.yml'
-  ref: 'v.2.12.0'

@@ -16,7 +16,7 @@ and
 the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
 in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain are installed.
 
-To run any premade task you need to press `F1` and write `Run Task` followed by an `enter press`. This gives you a list
+To run any premade task you need to press `Ctrl+F1`. This gives you a list
 of
 all prescripted task within the development environment.
 
@@ -26,8 +26,11 @@ To interact with the Partisia Blockchain you need an account, the accounts are c
 The environment provides you with three new accounts,
 `Account-A.pk`, `Account-B.pk` and `Account-C.pk` upon creation.
 
+Read more about how addresses works for [accounts and smart contracts](https://partisiablockchain.gitlab.io/documentation/pbc-fundamentals/dictionary.html#address).
+
 The created accounts have test_coins pre-minted which gives you 100.000.000 gas on the Testnet to interact, deploy and
-play around with as part of the dev-environment. You can continue using these outside of the dev environment.
+play around with as part of the dev-environment. You can continue using these outside of the dev environment,
+just remember the private keys, cause they are not saved when you delete the container.
 
 ## It is your own online personalized contract development environment
 
@@ -36,7 +39,8 @@ On the fork you can start changing the contract code and commit those changes to
 build smart contracts on Partisia Blockchain. 
 
 Remember to set up a prebuild of the codespace, when forking the repository. This drastically decreases 
-boot up time, when creating a new container. 
+boot up time, when creating a new container. The button in this README, will also need modification, 
+to launch the container with the forked repository.
 
 For local development see how to do it through
 the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).
