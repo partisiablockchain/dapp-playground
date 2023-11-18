@@ -294,7 +294,7 @@ const handleWalletConnect = (connect: Promise<ConnectedWallet>) => {
       setAccount(userAccount);
 
       // Fix UI
-      setConnectionStatus(`Connected to account ${userAccount.address}`);
+      setConnectionStatus(`Logged in: ${userAccount.address}`);
       toggleVisibility("#wallet-connect");
       toggleVisibility("#metamask-connect");
       toggleVisibility("#private-key-connect");

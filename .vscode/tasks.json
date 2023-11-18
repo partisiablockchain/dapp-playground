@@ -67,11 +67,11 @@
             }
         },
         {
-            "label": "Start Average Salary Client.",
+            "label": "Start Average Salary Frontend.",
             "type": "shell",
             "command": "npm install; npm start",
             "options": {
-                "cwd": "${workspaceFolder}/average-salary-client"
+                "cwd": "${workspaceFolder}/average-salary-frontend"
             },
             "group": {
                 "kind": "build",
@@ -79,11 +79,11 @@
             }
         },
         {
-            "label": "Start Petition Client.",
+            "label": "Start Petition Frontend.",
             "type": "shell",
             "command": "npm install; npm start",
             "options": {
-                "cwd": "${workspaceFolder}/petition-client"
+                "cwd": "${workspaceFolder}/petition-frontend"
             },
             "group": {
                 "kind": "build",
