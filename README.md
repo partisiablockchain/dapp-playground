@@ -1,4 +1,4 @@
-# Welcome to the PBC Smart Contract Development Environment
+# Welcome to the Partisia Blockchain DApps Playground
 
 This a development environment for the Partisia Blockchain, made for creating applications and smart
 contracts utilizing the Zk Rust and public blockchain.
