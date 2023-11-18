@@ -46,7 +46,7 @@ build smart contracts on Partisia Blockchain.
 Remember to set up a prebuild of the codespace, when forking the repository. This drastically
 decreases
 boot up time, when creating a new container. The button in this README, will also need modification,
-to launch the container with the forked repository.
+to launch the container with a forked repository.
 View
 the [Github docs](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces)
 on how to change the button to link to your forked repository.
