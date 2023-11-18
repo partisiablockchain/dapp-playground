@@ -3,17 +3,17 @@
 This a development environment for the Partisia Blockchain, made for creating applications and smart
 contracts utilizing the Zk Rust and public blockchain.
 
+
 Read the documentation to better understand
 [the fundamentals of the Partisia Blockchain](https://partisiablockchain.gitlab.io/documentation/pbc-fundamentals/introduction-to-the-fundamentals.html)
 
-In the repo there are two contracts provided.
+The repo contains two simple smart contracts with simple front-ends: 
 The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
 and
 the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
-in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain
-are installed.
+ This is provided in a dev-container, where all the tooling needed for developing smart contracts and front-ends is installed.
 
-To run any premade task you need to press `Ctrl+F1`. This gives you a list
+To run any premade task you need to press `Ctrl+Shift+B`. This gives you a list
 of
 all prescripted tasks within the development environment.
 
@@ -39,8 +39,7 @@ To use the environment to develop your own contracts, fork the repository.
 On the fork you can start changing the contract code and commit those changes to
 build smart contracts on Partisia Blockchain.
 
-Remember to set up a prebuild of the codespace, when forking the repository. This drastically
-decreases boot up time, when creating a new container.
+When forking the repository you can drastically decreases boot up time for new dev containers by [configuring prebuilds](https://docs.github.com/en/codespaces/prebuilding-your-codespaces/configuring-prebuilds).
 
 For local development see how to do it through
 the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).

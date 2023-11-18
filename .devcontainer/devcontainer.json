@@ -16,6 +16,9 @@
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
 			"settings": {
+				"workbench.editorAssociations": {
+					"*.md": "vscode.markdown.preview.editor"
+				  }
 			},
 			"extensions": [
 				"vscjava.vscode-java-pack",
@@ -28,5 +31,5 @@
 	"postCreateCommand": {
 		"Contract Compilation": "cargo partisia-contract build --release",
 		"Key Generation and fill them with gas": "./scripts/key-gen.sh"
-	},
+	}
 }

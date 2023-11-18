@@ -9,7 +9,7 @@ The smart contract is written in Rust and uses the Partisia
 Blockchains [unique language ZKRust](https://partisiablockchain.gitlab.io/documentation/smart-contracts/zk-smart-contracts/zk-smart-contracts.html),
 to define the Zk computation of summing the variables.
 
-Throughout this example, when we write `run task`, then press `Ctrl+F1`.
+Throughout this example, when we write `run task`, then press `Ctrl+Shift+B`.
 A list of tasks wil pop up, now you can select the task you are looking for.
 
 ## Deploy an Average salary contract

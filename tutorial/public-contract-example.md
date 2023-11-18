@@ -8,7 +8,7 @@ our [smart contract documentation](https://partisiablockchain.gitlab.io/document
 The Petition contract shows how to create a collection of signatures for
 a specific topic on the chain.
 
-Throughout this example, when we write `run task`, then press `Ctrl+F1`.
+Throughout this example, when we write `run task`, then press `Ctrl+Shift+B`.
 A list of tasks wil pop up, now you can select the task you are looking for.
 
 ## Deploy a Petition contract
