@@ -1,14 +1,10 @@
-# Welcome to the Partisia Blockchain DApps Playground
+# The DApps Playground for Partisia Blockchain 
 
 This a development environment for the Partisia Blockchain, made for creating applications and smart
 contracts utilizing the Zk Rust and public blockchain.
 
 Read the documentation to better understand
 [the fundamentals of the Partisia Blockchain](https://partisiablockchain.gitlab.io/documentation/pbc-fundamentals/introduction-to-the-fundamentals.html)
-
-To try this environment in your browser:
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide/tree/main)
 
 In the repo there are two contracts provided.
 The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
@@ -44,12 +40,7 @@ On the fork you can start changing the contract code and commit those changes to
 build smart contracts on Partisia Blockchain.
 
 Remember to set up a prebuild of the codespace, when forking the repository. This drastically
-decreases
-boot up time, when creating a new container. The button in this README, will also need modification,
-to launch the container with a forked repository.
-View
-the [Github docs](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces)
-on how to change the button to link to your forked repository.
+decreases boot up time, when creating a new container.
 
 For local development see how to do it through
 the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).
