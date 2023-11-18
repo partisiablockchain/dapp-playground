@@ -1,1 +1,1 @@
-{ "key": "crtl+f1",  "command": "workbench.action.tasks.runTask"}
+{ "key": "ctrl+f1",  "command": "workbench.action.tasks.runTask"}
