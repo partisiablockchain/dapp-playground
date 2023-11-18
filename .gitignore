@@ -10,4 +10,6 @@ expanded.rs
 # Maven with auto-import, exclude module files
 *.iml
 
-*.pk
+Account-A.pk
+Account-B.pk
+Account-C.pk

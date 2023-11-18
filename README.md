@@ -1,23 +1,23 @@
-# Welcome to the PBC Smart Contract Development Environment
+# The DApp Playground for Partisia Blockchain
 
 This a development environment for the Partisia Blockchain, made for creating applications and smart
 contracts utilizing the Zk Rust and public blockchain.
 
+Read here how
+to [create a codespace for a repository](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository),
+select the `main` branch, when creating a codespace.
+
 Read the documentation to better understand
 [the fundamentals of the Partisia Blockchain](https://partisiablockchain.gitlab.io/documentation/pbc-fundamentals/introduction-to-the-fundamentals.html)
 
-To try this environment in your browser:
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/JensScheel/web-ide/tree/main)
-
-In the repo there are two contracts provided.
+The repo contains two simple smart contracts with simple front-ends:
 The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
 and
 the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
-in a dev-container, where all the tooling for developing smart contracts for the Partisia Blockchain
-are installed.
+This is provided in a dev-container, where all the tooling needed for developing smart contracts and
+front-ends is installed.
 
-To run any premade task you need to press `Ctrl+F1`. This gives you a list
+To run any premade task you need to press `Ctrl+Shift+B`. This gives you a list
 of
 all prescripted tasks within the development environment.
 
@@ -43,13 +43,11 @@ To use the environment to develop your own contracts, fork the repository.
 On the fork you can start changing the contract code and commit those changes to
 build smart contracts on Partisia Blockchain.
 
-Remember to set up a prebuild of the codespace, when forking the repository. This drastically
-decreases
-boot up time, when creating a new container. The button in this README, will also need modification,
-to launch the container with the forked repository.
-View
-the [Github docs](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces)
-on how to change the button to link to your forked repository.
+You can see how to use codespaces in a forked repository in
+this [article](https://www.freecodecamp.org/news/how-to-make-your-first-open-source-contribution/).
+
+When forking the repository you can drastically decrease boot up time for new dev containers
+by [configuring prebuilds](https://docs.github.com/en/codespaces/prebuilding-your-codespaces/configuring-prebuilds).
 
 For local development see how to do it through
 the [dev container documentation](https://code.visualstudio.com/docs/devcontainers/containers).
