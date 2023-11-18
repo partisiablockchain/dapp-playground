@@ -1,4 +1,4 @@
-# The DApps Playground for Partisia Blockchain 
+# The DApp Playground for Partisia Blockchain 
 
 This a development environment for the Partisia Blockchain, made for creating applications and smart
 contracts utilizing the Zk Rust and public blockchain.
