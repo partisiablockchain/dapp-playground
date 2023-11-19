@@ -1,0 +1,122 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Deploy Petition Contract",
+            "type": "shell",
+            "command": "cargo partisia-contract cli tx deploy --gas 2500000 --privatekey ${input:key}.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi '${input:petition-description}'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Sign petition.",
+            "type": "shell",
+            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey ${input:key}.pk ${input:contract-address} sign",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Deploy an Average Salary Contract (ZK-contract).",
+            "type": "shell",
+            "command": "cargo partisia-contract cli tx deploy --gas 10000000 --privatekey ${input:key}.pk target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Send salary as secret input to average salary contract",
+            "type": "shell",
+            "command": "cargo partisia-contract cli tx action  --gas 100000 --privatekey ${input:key}.pk ${input:contract-address} add_salary ${input:salary}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Compute average salary, starting the ZK computation.",
+            "type": "shell",
+            "command": "cargo partisia-contract cli tx action --gas 20000 --privatekey ${input:key}.pk ${input:contract-address} compute_average_salary",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Start Average Salary Frontend.",
+            "type": "shell",
+            "command": "npm install; npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/average-salary-frontend"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "Start Petition Frontend.",
+            "type": "shell",
+            "command": "npm install; npm start",
+            "options": {
+                "cwd": "${workspaceFolder}/petition-frontend"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "contract-address",
+            "description": "The Address of the deployed contract.",
+            "type": "promptString"
+        },
+        {
+            "id": "key",
+            "description": "The id of the key, to perform the given action with. Can be either Account-A, Account-B or Account-C.",
+            "type": "pickString",
+            "options": [
+                "Account-A",
+                "Account-B",
+                "Account-C"
+            ],
+            "default": "Account-A"
+        },
+        {
+            "id": "salary",
+            "description": "The salary to send as secret input to average salary, the salary should be an int.",
+            "type": "promptString"
+        },
+        {
+            "id": "petition-description",
+            "description": "The description to deploy a Petition contract with, so people can sign it, if they agree.",
+            "type": "promptString"
+        }
+    ]
+}

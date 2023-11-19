@@ -1,0 +1,35 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "Partisia Smart Contract Web IDE",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"shutdownAction": "stopContainer",
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"codespaces": {
+			"openFiles": [
+				"README.md"
+			]
+		},
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				"workbench.editorAssociations": {
+					"*.md": "vscode.markdown.preview.editor"
+				  }
+			},
+			"extensions": [
+				"vscjava.vscode-java-pack",
+				"rust-lang.rust-analyzer",
+				"ms-azuretools.vscode-docker",
+				"ms-vscode-remote.remote-containers"
+			]
+		}
+	},
+	"postCreateCommand": {
+		"Contract Compilation": "cargo partisia-contract build --release",
+		"Key Generation and fill them with gas": "./scripts/key-gen.sh"
+	}
+}

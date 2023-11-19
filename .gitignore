@@ -1,0 +1,15 @@
+# Rust / Cargo
+Cargo.lock
+target/
+example-contracts/
+# Expanded rust
+expanded.rs
+
+.idea/
+
+# Maven with auto-import, exclude module files
+*.iml
+
+Account-A.pk
+Account-B.pk
+Account-C.pk

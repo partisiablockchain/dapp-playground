@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Petition</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/conf/config.js"></script>
+    <style>
+      .hidden {
+        display: none;
+      }
+
+      body > .pure-g {
+        max-width: 1200px;
+        width: 1200px;
+        margin: auto;
+      }
+
+      div {
+        margin-bottom: 5px;
+      }
+
+      .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
+      integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls"
+      crossorigin="anonymous" />
+  </head>
+
+  <body>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h1>Petition example application</h1>
+        <div>
+          <h2>Account</h2>
+          <div id="connection-status">
+            <p>Currently not logged in</p>
+          </div>
+
+          <div id="private-key-connect">
+            <form class="pure-form" onSubmit="return false;">
+              <input
+                class="pure-button pure-button-primary"
+                id="private-key-connect-btn"
+                type="submit"
+                value="Login using private key" />
+              <input id="private-key-value" name="private-key-value" type="password" />
+            </form>
+          </div>
+
+          <div id="wallet-connect">
+            <form>
+              <input
+                class="pure-button pure-button-primary"
+                id="wallet-connect-btn"
+                type="button"
+                value="Login using MPC Wallet" />
+            </form>
+          </div>
+
+          <div id="metamask-connect">
+            <form>
+              <input
+                class="pure-button pure-button-primary"
+                id="metamask-connect-btn"
+                type="button"
+                value="Login using MetaMask snap" />
+            </form>
+          </div>
+
+          <div id="wallet-disconnect" class="hidden">
+            <form>
+              <input
+                class="pure-button pure-button-primary"
+                id="wallet-disconnect-btn"
+                type="button"
+                value="Logout" />
+            </form>
+          </div>
+        </div>
+
+        <h2 id="current-address">Petition Address: None</h2>
+        <div id="address">
+          <form class="pure-form" onSubmit="return false;">
+            <input id="address-value" name="address-value" type="text" />
+            <input
+              class="pure-button pure-button-primary"
+              id="address-btn"
+              type="submit"
+              value="Set address" />
+          </form>
+        </div>
+        <br />
+        <div id="browser-link"></div>
+
+        <div id="contract-interaction" class="hidden">
+          <h2>Sign petition</h2>
+          <form>
+            <input
+              class="pure-button pure-button-primary"
+              id="sign-btn"
+              type="button"
+              value="Sign" />
+          </form>
+          <div id="sign-transaction-link"></div>
+        </div>
+
+        <div id="contract-state" class="hidden">
+          <h2 id="state-header">Petition State</h2>
+          <div id="update-state">
+            <form>
+              <input
+                class="pure-button pure-button-primary"
+                id="update-state-btn"
+                type="button"
+                value="Refresh State" />
+              <input id="refresh-loader" class="loader hidden" />
+            </form>
+          </div>
+          <h3>Description</h3>
+          <div id="description"></div>
+          <h3>Signed by</h3>
+          <div id="signed-by"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

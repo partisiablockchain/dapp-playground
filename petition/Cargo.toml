@@ -1,0 +1,25 @@
+[package]
+name = "petition"
+readme = "README.md"
+version.workspace = true
+description.workspace = true
+homepage.workspace = true
+repository.workspace = true
+documentation.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ['rlib', 'cdylib']
+
+[dependencies]
+pbc_contract_common.workspace = true
+pbc_traits.workspace = true
+pbc_lib.workspace = true
+read_write_rpc_derive.workspace = true
+read_write_state_derive.workspace = true
+create_type_spec_derive.workspace = true
+pbc_contract_codegen.workspace = true
+
+[features]
+abi = ["pbc_contract_common/abi", "pbc_contract_codegen/abi", "pbc_traits/abi", "create_type_spec_derive/abi", "pbc_lib/abi"]
