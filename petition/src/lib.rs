@@ -59,7 +59,7 @@ pub fn initialize(
 #[action(shortname = 0x01)]
 pub fn sign(ctx: ContractContext, state: PetitionState) -> PetitionState {
     assert!(
-        !state.allowed_signers.contains(&ctx.sender),
+        state.allowed_signers.contains(&ctx.sender),
         "This account is not allowed to sign contracts."
     );
     let mut new_state = state;
