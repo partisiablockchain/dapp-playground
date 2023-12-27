@@ -48,6 +48,9 @@ disconnectWallet.addEventListener("click", disconnectWalletClick);
 const signBtn = <Element>document.querySelector("#sign-btn");
 signBtn.addEventListener("click", signAction);
 
+const updateDescriptionBtn = <Element>document.querySelector("#update-description-btn");
+updateDescriptionBtn.addEventListener("click", updateDescriptionAction);
+
 const addressBtn = <Element>document.querySelector("#address-btn");
 addressBtn.addEventListener("click", contractAddressClick);
 
@@ -85,6 +88,23 @@ function signAction() {
     browserLink.innerHTML = '<br><div class="loader"></div>';
     api
       .sign()
+      .then((transactionHash) => {
+        browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
+      })
+      .catch((msg) => {
+        browserLink.innerHTML = `<br>${msg}`;
+      });
+  }
+}
+
+/** Action for updating the description of a petition */
+function updateDescriptionAction() {
+  const api = getPetitionApi();
+  if (isConnected() && api !== undefined) {
+    const browserLink = <HTMLInputElement>document.querySelector("#update-transaction-link");
+    browserLink.innerHTML = '<br><div class="loader"></div>';
+    api
+      .updateDescription()
       .then((transactionHash) => {
         browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
       })
