@@ -54,7 +54,7 @@ pub fn initialize(
 ///
 /// # Returns
 ///
-/// The updated vote state reflecting the new signing.
+/// The updated petition state reflecting the new signing.
 ///
 #[action(shortname = 0x01)]
 pub fn sign(ctx: ContractContext, state: PetitionState) -> PetitionState {
@@ -64,5 +64,24 @@ pub fn sign(ctx: ContractContext, state: PetitionState) -> PetitionState {
     );
     let mut new_state = state;
     new_state.signed_by.insert(ctx.sender);
+    new_state
+}
+
+/// Update description of the petition
+///
+/// # Arguments
+///
+/// * `ctx` - the contract context containing information about the sender and the blockchain.
+/// * `state` - the current state of the petition.
+///
+/// # Returns
+///
+/// The updated state reflecting the new description
+///
+#[action(shortname = 0x02)]
+pub fn update_description(ctx: ContractContext, state: PetitionState) -> PetitionState {
+    const NEW_DESCRIPTION: &'static str = "This is a constant new string";
+    let mut new_state: PetitionState = state;
+    new_state.description = NEW_DESCRIPTION.to_string();
     new_state
 }
