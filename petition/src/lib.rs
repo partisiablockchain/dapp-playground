@@ -88,3 +88,27 @@ pub fn update_description(
     new_state.description = description;
     new_state
 }
+
+/// Un-sign the petition
+///
+/// # Arguments
+///
+/// * `ctx` - the contract context containing information about the sender and the blockchain.
+/// * `state` - the current state of the petition.
+///
+/// # Returns
+///
+/// The updated petition state reflecting the removal of the account that un-signed
+///
+#[action(shortname = 0x03)]
+pub fn unsign(ctx: ContractContext, state: PetitionState) -> PetitionState {
+    // check if user exists in signed state.
+    assert!(
+        state.signed_by.contains(&ctx.sender),
+        "This account's signature is not listed. Please sign, then try-again."
+    );
+
+    let mut new_state = state;
+    new_state.signed_by.remove(&ctx.sender);
+    new_state
+}
