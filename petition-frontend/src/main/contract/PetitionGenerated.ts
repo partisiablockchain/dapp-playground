@@ -81,7 +81,8 @@ export function sign(): Buffer {
   return fnBuilder.getBytes();
 }
 
-export function updateDescription(): Buffer {
+export function updateDescription(description: string): Buffer {
   const fnBuilder = new FnRpcBuilder("update_description", fileAbi.contract);
+  fnBuilder.addString(description);
   return fnBuilder.getBytes();
 }

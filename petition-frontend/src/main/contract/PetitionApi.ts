@@ -51,13 +51,13 @@ export class PetitionApi {
   /**
    * Build and send update description transaction
    */
-  readonly updateDescription = () => {
+  readonly updateDescription = (description: string) => {
     const address = getContractAddress();
     if (address === undefined) {
       throw new Error("No address provided");
     }
     // First build the RPC buffer that is the payload of the transaction.
-    const rpc = updateDescription();
+    const rpc = updateDescription(description);
     // Then send the payload via the transaction API.
     return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
   };

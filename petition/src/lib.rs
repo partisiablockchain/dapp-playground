@@ -79,9 +79,12 @@ pub fn sign(ctx: ContractContext, state: PetitionState) -> PetitionState {
 /// The updated state reflecting the new description
 ///
 #[action(shortname = 0x02)]
-pub fn update_description(ctx: ContractContext, state: PetitionState) -> PetitionState {
-    const NEW_DESCRIPTION: &'static str = "This is a constant new string";
+pub fn update_description(
+    ctx: ContractContext,
+    state: PetitionState,
+    description: String,
+) -> PetitionState {
     let mut new_state: PetitionState = state;
-    new_state.description = NEW_DESCRIPTION.to_string();
+    new_state.description = description;
     new_state
 }
