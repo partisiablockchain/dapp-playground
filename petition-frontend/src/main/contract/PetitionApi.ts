@@ -17,7 +17,7 @@
  */
 
 import { TransactionApi } from "../client/TransactionApi";
-import { sign, updateDescription } from "./PetitionGenerated";
+import { sign, updateDescription, unsign } from "./PetitionGenerated";
 import { getContractAddress } from "../AppState";
 
 /**
@@ -61,4 +61,19 @@ export class PetitionApi {
     // Then send the payload via the transaction API.
     return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
   };
+
+  /**
+   * Build and send unsign transaction.
+   */
+  readonly unsign = () => {
+    const address = getContractAddress();
+    if (address === undefined) {
+      throw new Error("No address provided");
+    }
+    // First build the RPC buffer that is the payload of the transaction.
+    const rpc = unsign();
+    // Then send the payload via the transaction API.
+    return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
+  };
 }
+

@@ -102,7 +102,6 @@ pub fn update_description(
 ///
 #[action(shortname = 0x03)]
 pub fn unsign(ctx: ContractContext, state: PetitionState) -> PetitionState {
-    // check if user exists in signed state.
     assert!(
         state.signed_by.contains(&ctx.sender),
         "This account's signature is not listed. Please sign, then try-again."

@@ -86,3 +86,8 @@ export function updateDescription(description: string): Buffer {
   fnBuilder.addString(description);
   return fnBuilder.getBytes();
 }
+
+export function unsign(): Buffer {
+  const fnBuilder = new FnRpcBuilder("unsign", fileAbi.contract);
+  return fnBuilder.getBytes();
+}
