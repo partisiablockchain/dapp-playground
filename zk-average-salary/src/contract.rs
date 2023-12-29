@@ -42,6 +42,7 @@ struct ContractState {
     average_salary_result: Option<u32>,
     /// Will contain the number of employees after starting the computation
     num_employees: Option<u32>,
+    num_of_inputs: u64,
 }
 
 /// Initializes contract
@@ -53,6 +54,7 @@ fn initialize(ctx: ContractContext, zk_state: ZkState<SecretVarType>) -> Contrac
         administrator: ctx.sender,
         average_salary_result: None,
         num_employees: None,
+        num_of_inputs: 0,
     }
 }
 
@@ -92,7 +94,11 @@ fn inputted_variable(
     zk_state: ZkState<SecretVarType>,
     inputted_variable: SecretVarId,
 ) -> ContractState {
-    state
+    let num_of_inputs = state.num_of_inputs + 1;
+    let mut new_state = state;
+    new_state.num_of_inputs = num_of_inputs;
+
+    new_state
 }
 
 /// Allows the administrator to start the computation of the average salary.
