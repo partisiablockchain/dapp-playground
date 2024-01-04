@@ -134,11 +134,10 @@ fn compute_average_salary(
     (
         state,
         vec![],
-        vec![zk_compute::gender_salaries()],
-        /*vec![ZkStateChange::start_computation(
-          ZK_COMPUTE_SUM,
-          vec![SecretVarType::SumResult {}],
-        )],*/
+        vec![ZkStateChange::start_computation(
+            zk_compute::gender_salaries(),
+            vec![SecretVarType::SumResult {}],
+        )],
     )
 }
 
