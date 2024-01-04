@@ -6,14 +6,18 @@ extern crate pbc_contract_codegen;
 extern crate pbc_contract_common;
 extern crate pbc_lib;
 
+mod zk_compute;
+
 use pbc_contract_common::address::Address;
 use pbc_contract_common::context::ContractContext;
 use pbc_contract_common::events::EventGroup;
 use pbc_contract_common::shortname::ShortnameZkComputation;
 use pbc_contract_common::zk::ZkClosed;
 use pbc_contract_common::zk::{CalculationStatus, SecretVarId, ZkInputDef, ZkState, ZkStateChange};
+// use pbc_zk::api::SecretVar;
 use read_write_rpc_derive::ReadWriteRPC;
 use read_write_state_derive::ReadWriteState;
+use zk_compute::ZKInput;
 
 /// Secret variable metadata. Unused for this contract, so we use a zero-sized struct to save space.
 #[derive(ReadWriteState, ReadWriteRPC, Debug)]
@@ -31,7 +35,8 @@ const BITLENGTH_OF_SECRET_SALARY_VARIABLES: u32 = 32;
 /// Number of employees to wait for before starting computation. A value of 2 or below is useless.
 const MIN_NUM_EMPLOYEES: u32 = 3;
 
-const ZK_COMPUTE_SUM: ShortnameZkComputation = ShortnameZkComputation::from_u32(0x61);
+// const ZK_COMPUTE_SUM: ShortnameZkComputation = ShortnameZkComputation::from_u32(0x61);
+// const ZK_GENDER_AVG_SALARY: ShortnameZkComputation = ShortnameZkComputation::from_u32(0x62);
 
 /// This contract's state
 #[state]
@@ -61,12 +66,16 @@ fn initialize(ctx: ContractContext, zk_state: ZkState<SecretVarType>) -> Contrac
 /// Adds another salary variable
 ///
 /// The ZkInputDef encodes that the variable should have size [`BITLENGTH_OF_SECRET_SALARY_VARIABLES`].
-#[zk_on_secret_input(shortname = 0x40)]
+#[zk_on_secret_input(shortname = 0x40, secret_type = "ZKInput")]
 fn add_salary(
     context: ContractContext,
     state: ContractState,
     zk_state: ZkState<SecretVarType>,
-) -> (ContractState, Vec<EventGroup>, ZkInputDef<SecretVarType>) {
+) -> (
+    ContractState,
+    Vec<EventGroup>,
+    ZkInputDef<SecretVarType, ZKInput>,
+) {
     assert!(
         zk_state
             .secret_variables
@@ -76,6 +85,7 @@ fn add_salary(
         "Each address is only allowed to send one salary variable. Sender: {:?}",
         context.sender
     );
+
     let input_def = ZkInputDef {
         seal: false,
         metadata: SecretVarType::Salary {},
@@ -124,10 +134,11 @@ fn compute_average_salary(
     (
         state,
         vec![],
-        vec![ZkStateChange::start_computation(
-            ZK_COMPUTE_SUM,
-            vec![SecretVarType::SumResult {}],
-        )],
+        vec![zk_compute::gender_salaries()],
+        /*vec![ZkStateChange::start_computation(
+          ZK_COMPUTE_SUM,
+          vec![SecretVarType::SumResult {}],
+        )],*/
     )
 }
 
