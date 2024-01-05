@@ -7,7 +7,7 @@ Read the documentation to better understand
 [the fundamentals of the Partisia Blockchain](https://partisiablockchain.gitlab.io/documentation/pbc-fundamentals/introduction-to-the-fundamentals.html)
 
 The repo contains two simple smart contracts with simple front-ends:
-The [petition contact](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
+The [petition contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/petition?ref_type=heads)
 and
 the [average salary contract](https://gitlab.com/partisiablockchain/language/example-contracts/-/tree/main/zk-average-salary?ref_type=heads)
 This is provided in a codespace, where all the tooling needed for developing smart contracts and
