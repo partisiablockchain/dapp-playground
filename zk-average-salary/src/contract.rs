@@ -69,7 +69,7 @@ fn add_salary(
             .secret_variables
             .iter()
             .chain(zk_state.pending_inputs.iter())
-            .all(|v| v.owner != context.sender),
+            .all(|(_, v)| v.owner != context.sender),
         "Each address is only allowed to send one salary variable. Sender: {:?}",
         context.sender
     );
@@ -161,7 +161,7 @@ fn open_sum_variable(
         .get_variable(*opened_variables.get(0).unwrap())
         .unwrap();
 
-    let result = read_variable_u32_le(opened_variable);
+    let result = read_variable_u32_le(&opened_variable);
 
     let mut zk_state_changes = vec![];
     if let SecretVarType::SumResult {} = opened_variable.metadata {
