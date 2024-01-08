@@ -56,7 +56,6 @@ click `Login using private key`.
 Add the salary to the input field, and click `Add salary`, it takes a while for the input to go
 through, so click the `Refresh state`, to see the number of inputted salaries increase.
 
-
 When there is at least three inputted salaries, then the average can be computed.
 To start the computation click the `Start computation` button.
 You need to refresh the state to see the result of the computation, the computation can take up to
@@ -99,7 +98,6 @@ our [active Discord community](https://partisiablockchain.gitlab.io/documentatio
    a public available
    variable. You can see how it works
    in [zk-voting](https://gitlab.com/partisiablockchain/language/example-contracts/-/blob/main/zk-voting-simple/src/contract.rs?ref_type=heads).
-2. Add a gender field to the metadata and try to branch by using a public condition available in the
-   metadata.
-3. Try to split the average salary into two different averages using available gender public
-   metadata created in challenge 2.
+2. Add a gender field to the secret input and try to branch by using a secret condition.
+3. Try to split the average salary into different averages by returning multiple outputs based on the gender field
+   created in challenge 2.

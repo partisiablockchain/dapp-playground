@@ -17,10 +17,6 @@ plus_metadata = []
 path = "src/contract.rs"
 crate-type = ['rlib', 'cdylib']
 
-[[test]]
-name = "zk_test"
-path = "src/zk_test.rs"
-
 [package.metadata.zk]
 zk-compute-path = "src/zk_compute.rs"
 
