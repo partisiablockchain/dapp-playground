@@ -51,8 +51,7 @@ pub fn initialize(_ctx: ContractContext, description: String) -> PetitionState {
 /// The updated vote state reflecting the new signing.
 ///
 #[action(shortname = 0x01)]
-pub fn sign(ctx: ContractContext, state: PetitionState) -> PetitionState {
-    let mut new_state = state;
-    new_state.signed_by.insert(ctx.sender);
-    new_state
+pub fn sign(ctx: ContractContext, mut state: PetitionState) -> PetitionState {
+    state.signed_by.insert(ctx.sender);
+    state
 }
