@@ -49,6 +49,13 @@ pub struct InputCounts {
     pub other_count: i32,
 }
 
+#[derive(ReadWriteState, CreateTypeSpec, Clone)]
+pub struct GenderedAverages {
+    pub male_average_salary: i32,
+    pub female_average_salary: i32,
+    pub other_average_salary: i32,
+}
+
 /// Number of employees to wait for before starting computation. A value of 2 or below is useless.
 const MIN_NUM_EMPLOYEES: u32 = 3;
 
@@ -58,7 +65,7 @@ struct ContractState {
     /// Address allowed to start computation
     administrator: Address,
     /// Will contain the result (average) when computation is complete
-    average_salary_result: Option<u32>,
+    average_salary_result: Option<GenderedAverages>,
     /// Will contain the number of employees after starting the computation
     num_employees: u32,
 }
