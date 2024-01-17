@@ -14,6 +14,7 @@ use pbc_contract_common::context::ContractContext;
 use pbc_contract_common::events::EventGroup;
 use pbc_contract_common::zk::ZkClosed;
 use pbc_contract_common::zk::{CalculationStatus, SecretVarId, ZkInputDef, ZkState, ZkStateChange};
+use pbc_traits::ReadWriteState;
 use pbc_zk::Sbi32;
 use read_write_rpc_derive::ReadWriteRPC;
 use read_write_state_derive::ReadWriteState;
@@ -190,19 +191,47 @@ fn open_sum_variable(
         .get_variable(*opened_variables.get(0).unwrap())
         .unwrap();
 
-    let result = read_variable_u32_le(&opened_variable);
+    let result = read_variable_u32_le(&zk_state, &opened_variable.variable_id);
+
+    let averages = GenderedAverages {
+        male_average_salary: division_ignore_zero(
+            result.salary_sums.male_salary_sum,
+            result.input_counts.male_count
+        ),
+        female_average_salary: division_ignore_zero(
+            result.salary_sums.female_salary_sum,
+            result.input_counts.male_count
+        ),
+        other_average_salary: division_ignore_zero(
+            result.salary_sums.other_salary_sum,
+            result.input_counts.other_count
+        ),
+    };
 
     let mut zk_state_changes = vec![];
     if let SecretVarType::SumResult {} = opened_variable.metadata {
-        state.average_salary_result = Some(result / state.num_employees );
+        state.average_salary_result = Some(averages);
         zk_state_changes = vec![ZkStateChange::ContractDone];
     }
     (state, vec![], zk_state_changes)
 }
 
-/// Reads a variable's data as an u32.
-fn read_variable_u32_le(sum_variable: &ZkClosed<SecretVarType>) -> u32 {
-    let mut buffer = [0u8; 4];
-    buffer.copy_from_slice(sum_variable.data.as_ref().unwrap().as_slice());
-    <u32>::from_le_bytes(buffer)
+fn division_ignore_zero(nominator: i32, denominator: i32) -> i32{
+    if denominator != 0 {
+        nominator / denominator
+    } else {
+        0
+    }
 }
+
+/// Reads a variable's data as an u32.
+fn read_variable_u32_le(
+    zk_state: ZkState<SecretVarType>,
+    variable_id: &SecretVarId,
+) -> GenderedSumResult {
+    let variable = zk_state.get_variable(*variable_id).unwrap();
+    let buffer: Vec<u8> = variable.data.clone().unwrap();
+    let result = GenderedSumResult::state_read_from(&mut buffer.as_slice());
+
+    result
+}   
