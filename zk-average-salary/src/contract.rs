@@ -16,6 +16,7 @@ use pbc_contract_common::zk::{CalculationStatus, SecretVarId, ZkInputDef, ZkStat
 use pbc_zk::Sbi32;
 use read_write_rpc_derive::ReadWriteRPC;
 use read_write_state_derive::ReadWriteState;
+use crate::zk_compute::ZkInput;
 
 /// Secret variable metadata. Unused for this contract, so we use a zero-sized struct to save space.
 #[derive(ReadWriteState, ReadWriteRPC, Debug)]
@@ -54,15 +55,15 @@ fn initialize(ctx: ContractContext, zk_state: ZkState<SecretVarType>) -> Contrac
 }
 
 /// Adds another salary variable
-#[zk_on_secret_input(shortname = 0x40)]
+#[zk_on_secret_input(shortname = 0x40, secret_type="ZkInput")]
 fn add_salary(
     context: ContractContext,
     state: ContractState,
     zk_state: ZkState<SecretVarType>,
 ) -> (
     ContractState,
-    Vec<EventGroup>,
-    ZkInputDef<SecretVarType, Sbi32>,
+    Vec<EventGroup>,    
+    ZkInputDef<SecretVarType, ZkInput>,
 ) {
     assert!(
         zk_state
@@ -86,7 +87,7 @@ fn inputted_variable(
     mut state: ContractState,
     zk_state: ZkState<SecretVarType>,
     inputted_variable: SecretVarId,
-) -> ContractState {
+) -> ContractState { 
     state.num_employees += 1;
     state
 }
@@ -111,6 +112,7 @@ fn compute_average_salary(
         zk_state.calculation_state,
     );
 
+    
     assert!(state.num_employees >= MIN_NUM_EMPLOYEES , "At least {MIN_NUM_EMPLOYEES} employees must have submitted and confirmed their inputs, before starting computation, but had only {}", state.num_employees);
 
     (
