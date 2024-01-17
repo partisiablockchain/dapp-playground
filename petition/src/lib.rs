@@ -14,6 +14,8 @@ use pbc_contract_common::sorted_vec_map::SortedVecSet;
 pub struct PetitionState {
     signed_by: SortedVecSet<Address>,
     description: String,
+    account_a:Address,
+    account_b:Address
 }
 
 /// Initialize a new petition to sign.
@@ -28,7 +30,7 @@ pub struct PetitionState {
 /// The initial state of the petition, with no signers.
 ///
 #[init]
-pub fn initialize(_ctx: ContractContext, description: String) -> PetitionState {
+pub fn initialize(_ctx: ContractContext, description: String, account_a: Address, account_b: Address) -> PetitionState {
     assert_ne!(
         description, "",
         "The description af a petition cannot be empty."
@@ -36,6 +38,8 @@ pub fn initialize(_ctx: ContractContext, description: String) -> PetitionState {
     PetitionState {
         description,
         signed_by: SortedVecSet::new(),
+        account_a,
+        account_b
     }
 }
 
@@ -52,6 +56,7 @@ pub fn initialize(_ctx: ContractContext, description: String) -> PetitionState {
 ///
 #[action(shortname = 0x01)]
 pub fn sign(ctx: ContractContext, mut state: PetitionState) -> PetitionState {
+    assert!(ctx.sender == state.account_a || ctx.sender == state.account_b);
     state.signed_by.insert(ctx.sender);
     state
 }

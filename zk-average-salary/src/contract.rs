@@ -38,7 +38,7 @@ struct ContractState {
     /// Will contain the result (average) when computation is complete
     average_salary_result: Option<u32>,
     /// Will contain the number of employees after starting the computation
-    num_employees: Option<u32>,
+    num_employees: u32,
 }
 
 /// Initializes contract
@@ -49,7 +49,7 @@ fn initialize(ctx: ContractContext, zk_state: ZkState<SecretVarType>) -> Contrac
     ContractState {
         administrator: ctx.sender,
         average_salary_result: None,
-        num_employees: None,
+        num_employees: 0,
     }
 }
 
@@ -83,10 +83,11 @@ fn add_salary(
 #[zk_on_variable_inputted]
 fn inputted_variable(
     context: ContractContext,
-    state: ContractState,
+    mut state: ContractState,
     zk_state: ZkState<SecretVarType>,
     inputted_variable: SecretVarId,
 ) -> ContractState {
+    state.num_employees += 1;
     state
 }
 
@@ -110,10 +111,8 @@ fn compute_average_salary(
         zk_state.calculation_state,
     );
 
-    let num_employees = zk_state.secret_variables.len() as u32;
-    assert!(num_employees >= MIN_NUM_EMPLOYEES , "At least {MIN_NUM_EMPLOYEES} employees must have submitted and confirmed their inputs, before starting computation, but had only {num_employees}");
+    assert!(state.num_employees >= MIN_NUM_EMPLOYEES , "At least {MIN_NUM_EMPLOYEES} employees must have submitted and confirmed their inputs, before starting computation, but had only {}", state.num_employees);
 
-    state.num_employees = Some(num_employees);
     (
         state,
         vec![],
@@ -165,8 +164,7 @@ fn open_sum_variable(
 
     let mut zk_state_changes = vec![];
     if let SecretVarType::SumResult {} = opened_variable.metadata {
-        let num_employees = state.num_employees.unwrap();
-        state.average_salary_result = Some(result / num_employees);
+        state.average_salary_result = Some(result / state.num_employees );
         zk_state_changes = vec![ZkStateChange::ContractDone];
     }
     (state, vec![], zk_state_changes)
