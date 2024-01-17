@@ -8,6 +8,7 @@ extern crate pbc_lib;
 
 mod zk_compute;
 
+use create_type_spec_derive::CreateTypeSpec;
 use pbc_contract_common::address::Address;
 use pbc_contract_common::context::ContractContext;
 use pbc_contract_common::events::EventGroup;
@@ -26,6 +27,26 @@ enum SecretVarType {
     Salary {},
     #[discriminant(1)]
     SumResult {},
+}
+
+#[derive(ReadWriteState, CreateTypeSpec, Clone)]
+pub struct GenderedSumResult {
+    pub salary_sums: SalarySums,
+    pub input_counts: InputCounts,
+}
+
+#[derive(ReadWriteState, CreateTypeSpec, Clone)]
+pub struct SalarySums {
+    pub male_salary_sum: i32,
+    pub female_salary_sum: i32,
+    pub other_salary_sum: i32,
+}
+
+#[derive(ReadWriteState, CreateTypeSpec, Clone)]
+pub struct InputCounts {
+    pub male_count: i32,
+    pub female_count: i32,
+    pub other_count: i32,
 }
 
 /// Number of employees to wait for before starting computation. A value of 2 or below is useless.
@@ -112,7 +133,7 @@ fn compute_average_salary(
         zk_state.calculation_state,
     );
 
-    
+
     assert!(state.num_employees >= MIN_NUM_EMPLOYEES , "At least {MIN_NUM_EMPLOYEES} employees must have submitted and confirmed their inputs, before starting computation, but had only {}", state.num_employees);
 
     (
