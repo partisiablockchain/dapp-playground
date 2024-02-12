@@ -1,11 +1,15 @@
+// Allows including the content of the README.md file at the path "../README.md" as documentation for this code.
 #![doc = include_str!("../README.md")]
+// Disables warnings for unused variables throughout the code.
 #![allow(unused_variables)]
 
+// External crates used by this contract for generating code, common structures, and functionalities.
 #[macro_use]
 extern crate pbc_contract_codegen;
 extern crate pbc_contract_common;
 extern crate pbc_lib;
 
+// Importing necessary modules and types from the `pbc_contract_common` crate.
 use pbc_contract_common::address::Address;
 use pbc_contract_common::context::ContractContext;
 use pbc_contract_common::events::EventGroup;
@@ -15,6 +19,7 @@ use pbc_contract_common::zk::{CalculationStatus, SecretVarId, ZkInputDef, ZkStat
 use read_write_rpc_derive::ReadWriteRPC;
 use read_write_state_derive::ReadWriteState;
 
+// Defines two types of secret variables: Salary and SumResult, both are not used directly but are placeholders for ZK computations.
 /// Secret variable metadata. Unused for this contract, so we use a zero-sized struct to save space.
 #[derive(ReadWriteState, ReadWriteRPC, Debug)]
 #[repr(u8)]
@@ -25,12 +30,14 @@ enum SecretVarType {
     SumResult {},
 }
 
+// Specifies the bit length for secret salary variables, ensuring they fit within the computation's constraints.
 /// The maximum size of MPC variables.
 const BITLENGTH_OF_SECRET_SALARY_VARIABLES: u32 = 32;
 
 /// Number of employees to wait for before starting computation. A value of 2 or below is useless.
 const MIN_NUM_EMPLOYEES: u32 = 3;
 
+// Identifier for the ZK computation to sum salaries.
 const ZK_COMPUTE_SUM: ShortnameZkComputation = ShortnameZkComputation::from_u32(0x61);
 
 /// This contract's state
@@ -65,7 +72,7 @@ fn add_salary(
     state: ContractState,
     zk_state: ZkState<SecretVarType>,
 ) -> (ContractState, Vec<EventGroup>, ZkInputDef<SecretVarType>) {
-    assert!(
+   /* assert!(
         zk_state
             .secret_variables
             .iter()
@@ -74,6 +81,7 @@ fn add_salary(
         "Each address is only allowed to send one salary variable. Sender: {:?}",
         context.sender
     );
+    */
     let input_def = ZkInputDef {
         seal: false,
         metadata: SecretVarType::Salary {},
