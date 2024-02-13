@@ -71,7 +71,7 @@ fn add_salary(
     context: ContractContext,
     state: ContractState,
     zk_state: ZkState<SecretVarType>,
-) -> (ContractState, Vec<EventGroup>, ZkInputDef<SecretVarType>) {
+) -> (ContractState, Vec<EventGroup>, ZkInputDef<SecretVarType>)  {
    /* assert!(
         zk_state
             .secret_variables
@@ -188,3 +188,4 @@ fn read_variable_u32_le(sum_variable: &ZkClosed<SecretVarType>) -> u32 {
     buffer.copy_from_slice(sum_variable.data.as_ref().unwrap().as_slice());
     <u32>::from_le_bytes(buffer)
 }
+//solved zk-average-salary
