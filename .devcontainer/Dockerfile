@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.6
-ARG RUST_VERSION=1.74
+ARG RUST_VERSION=1.72
 FROM registry.gitlab.com/partisia/dockerimages/rustmaven:${RUST_VERSION}
 LABEL authors="Partisia"
 
