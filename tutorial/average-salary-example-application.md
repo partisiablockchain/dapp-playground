@@ -20,7 +20,7 @@ account to deploy with
 The average salary can also be deployed by running the following command in your terminal.
 
 ```shell
-cargo partisia-contract cli tx deploy --gas 10000000 --privatekey Account-A.pk target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi
+cargo partisia-contract transaction deploy --gas 10000000 --privatekey Account-A.pk target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi
 ```
 
 The task and command will provide you with a link to view the deployed contract in
@@ -70,7 +70,7 @@ prompts you to choose the sender of the input, the contract to send to and the i
 You can also send the secret input by running the command below.
 
 ```shell
-cargo partisia-contract cli tx action --gas 100000 --privatekey Account-C.pk {contract-address-on-chain} add_salary {salary}
+cargo partisia-contract transaction action --gas 100000 --privatekey Account-C.pk {contract-address-on-chain} add_salary {salary}
 ```
 
 ## Compute average salary
@@ -82,7 +82,7 @@ The task will prompt you to choose the sender and the address of the deployed co
 You can also start the computation of the average by running the command below.
 
 ```shell
-cargo partisia-contract cli tx action --gas 20000 --privatekey Account-A.pk {contract-address-on-chain} compute_average_salary
+cargo partisia-contract transaction action --gas 20000 --privatekey Account-A.pk {contract-address-on-chain} compute_average_salary
 ```
 
 ## Learning challenges

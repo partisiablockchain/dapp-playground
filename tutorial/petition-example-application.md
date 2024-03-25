@@ -19,7 +19,7 @@ and what the description for the Petition should be.
 The contract can also be deployed by running this command.
 
 ```shell
-cargo partisia-contract cli tx deploy --gas 2500000 --privatekey Account-A.pk  target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi 'My Petition is Awesome'
+cargo partisia-contract transaction deploy --gas 2500000 --privatekey Account-A.pk  target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi 'My Petition is Awesome'
 ```
 
 The task and command will provide you with a link to view the deployed contract in
@@ -61,7 +61,7 @@ with and an address for a deployed petition contract
 You can also sign the Petition by running the following command in your terminal.
 
 ```shell
-cargo partisia-contract cli tx action --gas 20000 --privatekey Account-C.pk {contract-address-on-chain} sign
+cargo partisia-contract transaction action --gas 20000 --privatekey Account-C.pk {contract-address-on-chain} sign
 ```
 
 ## Learning challenges
