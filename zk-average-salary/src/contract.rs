@@ -73,14 +73,15 @@ fn add_salary(
         "Each address is only allowed to send one salary variable. Sender: {:?}",
         context.sender
     );
-    let input_def = ZkInputDef::with_metadata(SecretVarType::Salary {});
+    let input_def =
+        ZkInputDef::with_metadata(Some(SHORTNAME_INPUTTED_VARIABLE), SecretVarType::Salary {});
     (state, vec![], input_def)
 }
 
 /// Automatically called when a variable is confirmed on chain.
 ///
 /// Unused for this contract, so we do nothing.
-#[zk_on_variable_inputted]
+#[zk_on_variable_inputted(shortname = 0x41)]
 fn inputted_variable(
     context: ContractContext,
     state: ContractState,
@@ -118,6 +119,7 @@ fn compute_average_salary(
         state,
         vec![],
         vec![zk_compute::sum_everything_start(
+            Some(SHORTNAME_SUM_COMPUTE_COMPLETE),
             &SecretVarType::SumResult {},
         )],
     )
@@ -126,7 +128,7 @@ fn compute_average_salary(
 /// Automatically called when the computation is completed
 ///
 /// The only thing we do is to instantly open/declassify the output variables.
-#[zk_on_compute_complete]
+#[zk_on_compute_complete(shortname = 0x42)]
 fn sum_compute_complete(
     context: ContractContext,
     state: ContractState,
@@ -158,7 +160,7 @@ fn open_sum_variable(
         "Unexpected number of output variables"
     );
     let opened_variable = zk_state
-        .get_variable(*opened_variables.get(0).unwrap())
+        .get_variable(*opened_variables.first().unwrap())
         .unwrap();
 
     let result = read_variable_u32_le(&opened_variable);
