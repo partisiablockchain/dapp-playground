@@ -40,8 +40,8 @@ function createSharedKey(keyPair: Elliptic.KeyPair, publicKey: Buffer): Buffer {
  */
 function createAesForParty(keyPair: Elliptic.KeyPair, publicKey: Buffer): Cipher {
   const sharedKey = createSharedKey(keyPair, publicKey);
-  const iv = sharedKey.slice(0, 16);
-  const secretKey = sharedKey.slice(16, 32);
+  const iv = sharedKey.subarray(0, 16);
+  const secretKey = sharedKey.subarray(16, 32);
   return createCipheriv("aes-128-cbc", secretKey, iv);
 }
 
@@ -184,4 +184,3 @@ export const CryptoUtils = {
   hashBuffer,
   signatureFillInRecoveryId,
 };
-
