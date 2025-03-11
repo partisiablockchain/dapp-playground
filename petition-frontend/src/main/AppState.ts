@@ -16,18 +16,18 @@
  *
  */
 
-import { ContractAbi } from "@partisiablockchain/abi-client";
-import { ShardedClient } from "./client/ShardedClient";
-import { TransactionApi } from "./client/TransactionApi";
-import { ConnectedWallet } from "./ConnectedWallet";
-import { PetitionApi } from "./contract/PetitionApi";
-import { updateContractState } from "./WalletIntegration";
+import { ContractAbi, BlockchainAddress } from "@partisiablockchain/abi-client";
+import { ConnectedWallet } from "./shared/ConnectedWallet";
+import {
+  BlockchainTransactionClient,
+  ChainControllerApi,
+  Configuration,
+  SenderAuthentication,
+} from "@partisiablockchain/blockchain-api-transaction-client";
 
-export const CLIENT = new ShardedClient("https://node1.testnet.partisiablockchain.com", [
-  "Shard0",
-  "Shard1",
-  "Shard2",
-]);
+export const CLIENT = new ChainControllerApi(
+  new Configuration({ basePath: "https://node1.testnet.partisiablockchain.com" })
+);
 
 let contractAddress: string | undefined;
 let currentAccount: ConnectedWallet | undefined;

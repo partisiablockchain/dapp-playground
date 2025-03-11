@@ -21,7 +21,7 @@ function generateKeyPair(): Elliptic.KeyPair {
  * @return the shared secret.
  */
 function createSharedKey(keyPair: Elliptic.KeyPair, publicKey: Buffer): Buffer {
-  const pairFromBuffer = ec.keyFromPublic(publicKey);
+  const pairFromBuffer: Elliptic.KeyPair = ec.keyFromPublic(publicKey);
   const sharedRandom: BN = keyPair.derive(pairFromBuffer.getPublic());
 
   let sharedBuffer = sharedRandom.toArrayLike(Buffer, "be");
@@ -45,13 +45,40 @@ function createAesForParty(keyPair: Elliptic.KeyPair, publicKey: Buffer): Cipher
   return createCipheriv("aes-128-cbc", secretKey, iv);
 }
 
+export interface Signature {
+  r: BN;
+  s: BN;
+  recoveryParam: number | null;
+}
+
+/**
+ * Determines the recoveryParam for the given signature.
+ *
+ * @param signature Signature to determine recovery param for.
+ * @param msg Signed message.
+ * @param publicKeyBuffer Public key to act as reference
+ */
+function signatureFillInRecoveryId(signature: Signature, msg: Buffer, publicKeyBuffer: Buffer) {
+  const keyPair = ec.keyFromPublic(publicKeyBuffer);
+  const publicKey = keyPair.getPublic();
+
+  const signatureOptions = {
+    r: signature.r,
+    s: signature.s,
+  };
+
+  // NOTE: Type annotations are incorrect for below method
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  signature.recoveryParam = ec.getKeyRecoveryParam(msg as any, signatureOptions, publicKey as any);
+}
+
 /**
  * Serializes a signature into byte.
  *
  * @param signature the signature.
  * @return the bytes.
  */
-function signatureToBuffer(signature: Elliptic.Signature): Buffer {
+function signatureToBuffer(signature: Signature): Buffer {
   if (signature.recoveryParam == null) {
     throw new Error("Recovery parameter is null");
   }
@@ -155,4 +182,6 @@ export const CryptoUtils = {
   publicKeyToAccountAddress,
   hashBuffers,
   hashBuffer,
+  signatureFillInRecoveryId,
 };
+

@@ -16,9 +16,10 @@
  *
  */
 
-import { TransactionApi } from "../client/TransactionApi";
 import { sign } from "./PetitionGenerated";
 import { getContractAddress } from "../AppState";
+
+import { BlockchainTransactionClient } from "@privacyblockchain/blockchain-api-transaction-client";
 
 /**
  * API for the token contract.
@@ -28,16 +29,19 @@ import { getContractAddress } from "../AppState";
  * able to build the RPC for the transfer transaction.
  */
 export class PetitionApi {
-  private readonly transactionApi: TransactionApi;
+  private readonly transactionClient: BlockchainTransactionClient | undefined;
 
-  constructor(transactionApi: TransactionApi) {
-    this.transactionApi = transactionApi;
+  constructor(transactionClient: BlockchainTransactionClient) {
+    this.transactionClient = transactionClient;
   }
 
   /**
    * Build and send sign transaction.
    */
   readonly sign = () => {
+    if (this.transactionClient === undefined) {
+      throw new Error("No account logged in");
+    }
     const address = getContractAddress();
     if (address === undefined) {
       throw new Error("No address provided");
@@ -45,6 +49,6 @@ export class PetitionApi {
     // First build the RPC buffer that is the payload of the transaction.
     const rpc = sign();
     // Then send the payload via the transaction API.
-    return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
+    return this.transactionClient.signAndSend({ address, rpc }, 10_000);
   };
 }
