@@ -20,7 +20,7 @@ account to deploy with
 The average salary can also be deployed by running the following command in your terminal.
 
 ```shell
-cargo partisia-contract transaction deploy --gas 10000000 --privatekey Account-A.pk target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi
+cargo partisia-contract transaction deploy --gas 10000000 --privatekey Account-A.pk target/wasm32-unknown-unknown/release/average_salary.pbc
 ```
 
 The task and command will provide you with a link to view the deployed contract in
