@@ -16,11 +16,7 @@
  *
  */
 
-import {
-  getAverageApi,
-  isConnected,
-  setContractAddress,
-} from "./AppState";
+import { getAverageApi, isConnected, setContractAddress } from "./AppState";
 import {
   connectMetaMaskWalletClick,
   connectMpcWalletClick,

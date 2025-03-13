@@ -85,6 +85,6 @@ export class AverageSalaryApi {
       throw new Error("No account logged in");
     }
     const rpc = computeAverageSalary();
-    return this.transactionClient.signAndSend({ address, rpc }, 10_000);
+    return this.transactionClient.signAndSend({ address, rpc }, 100_000);
   };
 }

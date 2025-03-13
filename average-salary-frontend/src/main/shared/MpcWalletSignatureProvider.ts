@@ -42,7 +42,7 @@ export const connectMpcWallet = async (): Promise<SenderAuthentication> => {
         throw new Error("Unable to establish connection to MPC wallet");
       }
     })
-    .catch((error: any) => {
+    .catch((error) => {
       // Something went wrong with the connection.
       if (error instanceof Error) {
         if (error.message === "Extension not Found") {

@@ -48,7 +48,6 @@ export const isConnected = () => {
 export const setAverageApi = () => {
   let transactionClient = undefined;
   let zkClient = undefined;
-
   if (currentAccount != undefined && contractAddress != null) {
     transactionClient = BlockchainTransactionClient.create(
       "https://node1.testnet.partisiablockchain.com",
