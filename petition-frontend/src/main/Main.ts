@@ -25,6 +25,7 @@ import {
   updateContractState,
   updateInteractionVisibility,
 } from "./WalletIntegration";
+import {BlockchainAddress} from "@privacyblockchain/abi-client";
 
 // Setup event listener to connect to the MPC wallet browser extension
 const connectWallet = <Element>document.querySelector("#wallet-connect-btn");
@@ -71,7 +72,7 @@ function contractAddressClick() {
     currentAddress.innerHTML = `Petition Address: ${address}`;
     const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
     browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`;
-    setContractAddress(address);
+    setContractAddress(BlockchainAddress.fromString(address));
     updateInteractionVisibility();
     updateContractState();
   }
@@ -88,7 +89,7 @@ function signAction() {
       .then((transactionHash) => {
         browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
       })
-      .catch((msg) => {
+      .catch((msg: string) => {
         browserLink.innerHTML = `<br>${msg}`;
       });
   }

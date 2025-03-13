@@ -3,6 +3,7 @@ import {
   SentTransaction,
   Transaction,
 } from "@privacyblockchain/blockchain-api-transaction-client";
+
 /**
  * Unified interface for connected MPC wallets.
  *
@@ -18,8 +19,8 @@ export interface ConnectedWallet {
    * Method to sign and send a transaction to the blockchain.
    */
   readonly signAndSendTransaction: (
-    client: BlockchainTransactionClient,
-    payload: Transaction,
-    cost?: string | number
+      client: BlockchainTransactionClient,
+      payload: Transaction,
+      cost?: string | number
   ) => Promise<SentTransaction>;
 }
