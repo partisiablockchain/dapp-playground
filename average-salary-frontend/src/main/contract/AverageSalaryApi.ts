@@ -15,17 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-import { ContractAbi, FnRpcBuilder, ZkInputBuilder } from "@partisiablockchain/abi-client";
 import {
-  ZkRpcBuilder,
   BlockchainAddress,
-  BlockchainPublicKey,
-} from "@partisiablockchain/zk-client";
-import { Buffer } from "buffer";
-import { TransactionApi } from "../client/TransactionApi";
-import { computeAverageSalary } from "./AverageSalaryGenerated";
+  BlockchainTransactionClient,
+} from "@privacyblockchain/blockchain-api-transaction-client";
+
+import { RealZkClient } from "@partisiablockchain/zk-client";
+import { addSalary, computeAverageSalary } from "./AverageSalaryGenerated";
 import { getContractAddress } from "../AppState";
+
+export interface AverageSalaryBasicState {
+  administrator: BlockchainAddress;
+  averageSalaryResult: number | undefined;
+  numEmployees: number | undefined;
+  noSalaries: number;
+}
 
 /**
  * API for the average salary contract.
@@ -35,36 +39,38 @@ import { getContractAddress } from "../AppState";
  * able to build the RPC for the add salary transaction.
  */
 export class AverageSalaryApi {
-  private readonly transactionApi: TransactionApi;
+  private readonly transactionClient: BlockchainTransactionClient | undefined;
+  private readonly zkClient: RealZkClient;
   private readonly sender: BlockchainAddress;
-  private readonly abi: ContractAbi;
-  private readonly engineKeys: BlockchainPublicKey[];
 
   constructor(
-    transactionApi: TransactionApi,
-    sender: string,
-    abi: ContractAbi,
-    engineKeys: BlockchainPublicKey[]
+    transactionClient: BlockchainTransactionClient | undefined,
+    zkClient: RealZkClient,
+    sender: BlockchainAddress
   ) {
-    this.transactionApi = transactionApi;
-    this.sender = BlockchainAddress.fromString(sender);
-    this.abi = abi;
-    this.engineKeys = engineKeys.map((key) => BlockchainPublicKey.fromBuffer(key.asBuffer()));
+    this.transactionClient = transactionClient;
+    this.zkClient = zkClient;
+    this.sender = sender;
   }
 
   /**
    * Build and send add salary secret input transaction.
-   * @param amount number of tokens to send
+   * @param amount the average salary to input
    */
-  readonly addSalary = (amount: number) => {
-    const address = getContractAddress();
-    if (address === undefined) {
-      throw new Error("No address provided");
+  readonly addSalary = async (amount: number) => {
+    if (this.transactionClient === undefined) {
+      throw new Error("No account logged in");
     }
-    // First build the RPC buffer that is the payload of the transaction.
-    const rpc = this.buildAddSalaryRpc(amount);
-    // Then send the payload via the transaction API.
-    return this.transactionApi.sendTransactionAndWait(address, rpc, 100_000);
+
+    const addSalarySecretInputBuilder = addSalary();
+    const secretInput = addSalarySecretInputBuilder.secretInput(amount);
+    const transaction = await this.zkClient.buildOnChainInputTransaction(
+      this.sender,
+      secretInput.secretInput,
+      secretInput.publicRpc
+    );
+
+    return this.transactionClient.signAndSend(transaction, 100_000);
   };
 
   /**
@@ -75,30 +81,10 @@ export class AverageSalaryApi {
     if (address === undefined) {
       throw new Error("No address provided");
     }
+    if (this.transactionClient === undefined) {
+      throw new Error("No account logged in");
+    }
     const rpc = computeAverageSalary();
-    return this.transactionApi.sendTransactionAndWait(address, rpc, 10_000);
-  };
-
-  /**
-   * Build the RPC payload for the add salary transaction.
-   * @param amount the salary
-   */
-  private readonly buildAddSalaryRpc = (amount: number): Buffer => {
-    // First build the public inputs
-    const fnBuilder = new FnRpcBuilder("add_salary", this.abi);
-    const additionalRpc = fnBuilder.getBytes();
-
-    // Then build the secret input
-    const secretInputBuilder = ZkInputBuilder.createZkInputBuilder("add_salary", this.abi);
-    secretInputBuilder.addI32(amount);
-    const compactBitArray = secretInputBuilder.getBits();
-
-    // Create the final rpc
-    return ZkRpcBuilder.zkInputOnChain(
-      this.sender,
-      compactBitArray,
-      additionalRpc,
-      this.engineKeys
-    );
+    return this.transactionClient.signAndSend({ address, rpc }, 10_000);
   };
 }

@@ -19,9 +19,7 @@
 import {
   getAverageApi,
   isConnected,
-  setContractAbi,
   setContractAddress,
-  setEngineKeys,
 } from "./AppState";
 import {
   connectMetaMaskWalletClick,
@@ -81,9 +79,6 @@ function contractAddressClick() {
     const browserLink = <HTMLInputElement>document.querySelector("#browser-link");
     browserLink.innerHTML = `<a href="https://browser.testnet.partisiablockchain.com/contracts/${address}" target="_blank">Browser link</a>`;
 
-    // Reset abi and engine keys
-    setContractAbi(undefined);
-    setEngineKeys(undefined);
     // Update the contract state.
     setContractAddress(address);
     updateInteractionVisibility();
@@ -116,7 +111,7 @@ function addSalaryFormAction() {
         api
           .addSalary(parseInt(salary.value, 10))
           .then((transactionHash) => {
-            browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
+            browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash.transactionPointer.identifier}" target="_blank">Transaction link in browser</a>`;
           })
           .catch((msg) => {
             browserLink.innerHTML = `<br>${msg}`;
@@ -139,9 +134,9 @@ function computeAction() {
     api
       .compute()
       .then((transactionHash) => {
-        browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
+        browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash.transactionPointer.identifier}" target="_blank">Transaction link in browser</a>`;
       })
-      .catch((msg) => {
+      .catch((msg: string) => {
         browserLink.innerHTML = `<br>${msg}`;
       });
   }

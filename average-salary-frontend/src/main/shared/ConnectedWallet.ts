@@ -16,8 +16,8 @@
  *
  */
 
-import { ShardPutTransactionResponse } from "./client/ShardedClient";
-import { Rpc, TransactionPayload } from "./client/TransactionData";
+import { ShardPutTransactionResponse } from "../client/ShardedClient";
+import { Rpc, TransactionPayload } from "../client/TransactionData";
 
 /**
  * Interface for a connected MPC wallet.
