@@ -16,11 +16,14 @@
  *
  */
 
-import {deserializeState, PetitionState, sign} from "./PetitionGenerated";
+import { deserializeState, PetitionState, sign } from "./PetitionGenerated";
 import { getContractAddress } from "../AppState";
 
-import {BlockchainTransactionClient, ChainControllerApi} from "@privacyblockchain/blockchain-api-transaction-client";
-import {BlockchainAddress} from "@privacyblockchain/abi-client";
+import {
+  BlockchainTransactionClient,
+  ChainControllerApi,
+} from "@privacyblockchain/blockchain-api-transaction-client";
+import { BlockchainAddress } from "@privacyblockchain/abi-client";
 
 export interface PetitionBasicState {
   signedBy: BlockchainAddress[];
@@ -39,8 +42,8 @@ export class PetitionApi {
   private readonly client: ChainControllerApi;
 
   constructor(
-      shardedClient: ChainControllerApi,
-      transactionClient: BlockchainTransactionClient | undefined
+    shardedClient: ChainControllerApi,
+    transactionClient: BlockchainTransactionClient | undefined
   ) {
     this.transactionClient = transactionClient;
     this.client = shardedClient;
@@ -66,7 +69,6 @@ export class PetitionApi {
   public basicState(contractAddress: BlockchainAddress): Promise<PetitionBasicState> {
     return this.getState(contractAddress);
   }
-
 
   /**
    * Build and send sign transaction.

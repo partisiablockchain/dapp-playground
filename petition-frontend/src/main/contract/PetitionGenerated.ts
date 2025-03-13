@@ -26,7 +26,7 @@ type Option<K> = K | undefined;
 export class PetitionGenerated {
   private readonly _client: BlockchainStateClient | undefined;
   private readonly _address: BlockchainAddress | undefined;
-  
+
   public constructor(
     client: BlockchainStateClient | undefined,
     address: BlockchainAddress | undefined
@@ -52,7 +52,6 @@ export class PetitionGenerated {
     const input = AbiByteInput.createLittleEndian(bytes);
     return this.deserializePetitionState(input);
   }
-
 }
 export interface PetitionState {
   signedBy: BlockchainAddress[];
@@ -89,10 +88,6 @@ export function deserializeState(
     return new PetitionGenerated(client, address).deserializePetitionState(input);
   } else {
     const input = AbiByteInput.createLittleEndian(state.bytes);
-    return new PetitionGenerated(
-      state.client,
-      state.address
-    ).deserializePetitionState(input);
+    return new PetitionGenerated(state.client, state.address).deserializePetitionState(input);
   }
 }
-

@@ -19,15 +19,16 @@ import {
   resetAccount,
   setAccount,
   getContractAddress,
-  isConnected, getPetitionApi,
+  isConnected,
+  getPetitionApi,
 } from "./AppState";
 
 import { SenderAuthentication } from "@privacyblockchain/blockchain-api-transaction-client";
-import {CryptoUtils} from "./client/CryptoUtils";
-import {connectPrivateKey} from "./shared/PrivateKeySignatureProvider";
-import {connectMpcWallet} from "./shared/MpcWalletSignatureProvider";
-import {connectMetaMask} from "./shared/MetaMaskSignatureProvider";
-import {BlockchainAddress} from "@privacyblockchain/abi-client";
+import { CryptoUtils } from "./client/CryptoUtils";
+import { connectPrivateKey } from "./shared/PrivateKeySignatureProvider";
+import { connectMpcWallet } from "./shared/MpcWalletSignatureProvider";
+import { connectMetaMask } from "./shared/MetaMaskSignatureProvider";
+import { BlockchainAddress } from "@privacyblockchain/abi-client";
 
 /**
  * Function for connecting to the MPC wallet and setting the connected wallet in the app state.
@@ -63,25 +64,25 @@ const handleWalletConnect = (connect: Promise<SenderAuthentication>) => {
   resetAccount();
   setConnectionStatus("Connecting...");
   connect
-      .then((userAccount) => {
-        setAccount(userAccount);
+    .then((userAccount) => {
+      setAccount(userAccount);
 
-        // Fix UI
-        setConnectionStatus(`Logged in: ${userAccount.getAddress()}`);
-        toggleVisibility("#wallet-connect");
-        toggleVisibility("#metamask-connect");
-        toggleVisibility("#private-key-connect");
-        toggleVisibility("#wallet-disconnect");
-        updateInteractionVisibility();
-      })
-      .catch((error) => {
-        console.error(error);
-        if ("message" in error) {
-          setConnectionStatus(error.message);
-        } else {
-          setConnectionStatus("An error occurred trying to connect wallet: " + error);
-        }
-      });
+      // Fix UI
+      setConnectionStatus(`Logged in: ${userAccount.getAddress()}`);
+      toggleVisibility("#wallet-connect");
+      toggleVisibility("#metamask-connect");
+      toggleVisibility("#private-key-connect");
+      toggleVisibility("#wallet-disconnect");
+      updateInteractionVisibility();
+    })
+    .catch((error) => {
+      console.error(error);
+      if ("message" in error) {
+        setConnectionStatus(error.message);
+      } else {
+        setConnectionStatus("An error occurred trying to connect wallet: " + error);
+      }
+    });
 };
 
 /**
@@ -143,7 +144,7 @@ const setConnectionStatus = (status: string) => {
   if (statusText != null) {
     statusText.innerHTML = status;
   }
-}
+};
 
 const toggleVisibility = (selector: string) => {
   const element = document.querySelector(selector);

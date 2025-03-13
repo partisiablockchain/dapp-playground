@@ -16,17 +16,17 @@
  *
  */
 
-
 import {
   BlockchainTransactionClient,
-  ChainControllerApi, Configuration,
-  SenderAuthentication
+  ChainControllerApi,
+  Configuration,
+  SenderAuthentication,
 } from "@privacyblockchain/blockchain-api-transaction-client";
-import {BlockchainAddress} from "@privacyblockchain/abi-client";
-import {PetitionApi} from "./contract/PetitionApi";
+import { BlockchainAddress } from "@privacyblockchain/abi-client";
+import { PetitionApi } from "./contract/PetitionApi";
 
 export const CLIENT = new ChainControllerApi(
-    new Configuration({ basePath: "https://node1.testnet.partisiablockchain.com" })
+  new Configuration({ basePath: "https://node1.testnet.partisiablockchain.com" })
 );
 
 let contractAddress: BlockchainAddress | undefined;
@@ -34,7 +34,6 @@ let currentAccount: SenderAuthentication | undefined;
 let petitionApi: PetitionApi | undefined;
 
 export const setAccount = (account: SenderAuthentication | undefined) => {
-  console.log("account:", account);
   currentAccount = account;
   setPetitionApi();
 };
@@ -47,18 +46,16 @@ export const isConnected = () => {
   return currentAccount != null;
 };
 
-
 const setPetitionApi = () => {
   let transactionClient = undefined;
   if (currentAccount != undefined) {
-    console.log("set petition api, account", currentAccount.getAddress())
     transactionClient = BlockchainTransactionClient.create(
-        "https://node1.testnet.partisiablockchain.com",
-        currentAccount
+      "https://node1.testnet.partisiablockchain.com",
+      currentAccount
     );
   }
   petitionApi = new PetitionApi(CLIENT, transactionClient);
-}
+};
 
 export const getPetitionApi = () => {
   return petitionApi;
