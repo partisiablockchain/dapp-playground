@@ -16,25 +16,24 @@
  *
  */
 
-import { ContractAbi, BlockchainAddress } from "@partisiablockchain/abi-client";
-import { ConnectedWallet } from "./shared/ConnectedWallet";
 import {
   BlockchainTransactionClient,
   ChainControllerApi,
   Configuration,
   SenderAuthentication,
-} from "@partisiablockchain/blockchain-api-transaction-client";
+} from "@privacyblockchain/blockchain-api-transaction-client";
+import { BlockchainAddress } from "@privacyblockchain/abi-client";
+import { PetitionApi } from "./contract/PetitionApi";
 
 export const CLIENT = new ChainControllerApi(
   new Configuration({ basePath: "https://node1.testnet.partisiablockchain.com" })
 );
 
-let contractAddress: string | undefined;
-let currentAccount: ConnectedWallet | undefined;
-let contractAbi: ContractAbi | undefined;
+let contractAddress: BlockchainAddress | undefined;
+let currentAccount: SenderAuthentication | undefined;
 let petitionApi: PetitionApi | undefined;
 
-export const setAccount = (account: ConnectedWallet | undefined) => {
+export const setAccount = (account: SenderAuthentication | undefined) => {
   currentAccount = account;
   setPetitionApi();
 };
@@ -44,23 +43,18 @@ export const resetAccount = () => {
 };
 
 export const isConnected = () => {
-  return currentAccount != null && contractAddress != null;
+  return currentAccount != null;
 };
 
-export const setContractAbi = (abi: ContractAbi) => {
-  contractAbi = abi;
-  setPetitionApi();
-};
-
-export const getContractAbi = () => {
-  return contractAbi;
-};
-
-export const setPetitionApi = () => {
+const setPetitionApi = () => {
+  let transactionClient = undefined;
   if (currentAccount != undefined) {
-    const transactionApi = new TransactionApi(currentAccount, updateContractState);
-    petitionApi = new PetitionApi(transactionApi);
+    transactionClient = BlockchainTransactionClient.create(
+      "https://node1.testnet.partisiablockchain.com",
+      currentAccount
+    );
   }
+  petitionApi = new PetitionApi(CLIENT, transactionClient);
 };
 
 export const getPetitionApi = () => {
@@ -71,6 +65,7 @@ export const getContractAddress = () => {
   return contractAddress;
 };
 
-export const setContractAddress = (address: string) => {
+export const setContractAddress = (address: BlockchainAddress) => {
   contractAddress = address;
+  setPetitionApi();
 };

@@ -16,10 +16,19 @@
  *
  */
 
-import { sign } from "./PetitionGenerated";
+import { deserializeState, PetitionState, sign } from "./PetitionGenerated";
 import { getContractAddress } from "../AppState";
 
-import { BlockchainTransactionClient } from "@privacyblockchain/blockchain-api-transaction-client";
+import {
+  BlockchainTransactionClient,
+  ChainControllerApi,
+} from "@privacyblockchain/blockchain-api-transaction-client";
+import { BlockchainAddress } from "@privacyblockchain/abi-client";
+
+export interface PetitionBasicState {
+  signedBy: BlockchainAddress[];
+  description: string;
+}
 
 /**
  * API for the token contract.
@@ -30,9 +39,35 @@ import { BlockchainTransactionClient } from "@privacyblockchain/blockchain-api-t
  */
 export class PetitionApi {
   private readonly transactionClient: BlockchainTransactionClient | undefined;
+  private readonly client: ChainControllerApi;
 
-  constructor(transactionClient: BlockchainTransactionClient) {
+  constructor(
+    shardedClient: ChainControllerApi,
+    transactionClient: BlockchainTransactionClient | undefined
+  ) {
     this.transactionClient = transactionClient;
+    this.client = shardedClient;
+  }
+
+  private getState(contractAddress: BlockchainAddress): Promise<PetitionState> {
+    return this.client.getContract({ address: contractAddress.asString() }).then((contract) => {
+      if (contract == null) {
+        throw new Error("Could not find data for contract");
+      }
+
+      // Reads the state of the contract
+      if (contract.serializedContract != undefined) {
+        const stateBuffer = Buffer.from(contract.serializedContract, "base64");
+        return deserializeState(stateBuffer);
+      } else throw new Error("Could not get the contract state.");
+    });
+  }
+
+  /**
+   * Determines the basic state of the contract.
+   */
+  public basicState(contractAddress: BlockchainAddress): Promise<PetitionBasicState> {
+    return this.getState(contractAddress);
   }
 
   /**
@@ -49,6 +84,6 @@ export class PetitionApi {
     // First build the RPC buffer that is the payload of the transaction.
     const rpc = sign();
     // Then send the payload via the transaction API.
-    return this.transactionClient.signAndSend({ address, rpc }, 10_000);
+    return this.transactionClient.signAndSend({ address: address.asString(), rpc }, 10_000);
   };
 }
