@@ -87,7 +87,7 @@ function signAction() {
     api
       .sign()
       .then((transactionHash) => {
-        browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash}" target="_blank">Transaction link in browser</a>`;
+        browserLink.innerHTML = `<br><a href="https://browser.testnet.partisiablockchain.com/transactions/${transactionHash.transactionPointer.identifier}" target="_blank">Transaction link in browser</a>`;
       })
       .catch((msg: string) => {
         browserLink.innerHTML = `<br>${msg}`;

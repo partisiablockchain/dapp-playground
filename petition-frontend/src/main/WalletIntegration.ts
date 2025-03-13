@@ -68,10 +68,10 @@ const handleWalletConnect = (connect: Promise<SenderAuthentication>) => {
 
         // Fix UI
         setConnectionStatus(`Logged in: ${userAccount.getAddress()}`);
-        setVisibility("#wallet-connect", false);
-        setVisibility("#metamask-connect", false);
-        setVisibility("#private-key-connect", false);
-        setVisibility("#wallet-disconnect", true);
+        toggleVisibility("#wallet-connect");
+        toggleVisibility("#metamask-connect");
+        toggleVisibility("#private-key-connect");
+        toggleVisibility("#wallet-disconnect");
         updateInteractionVisibility();
       })
       .catch((error) => {
@@ -90,11 +90,10 @@ const handleWalletConnect = (connect: Promise<SenderAuthentication>) => {
 export const disconnectWalletClick = () => {
   resetAccount();
   setConnectionStatus("Disconnected account");
-  setVisibility("#wallet-connect", true);
-  setVisibility("#metamask-connect", true);
-  setVisibility("#private-key-connect", true);
-  setVisibility("#wallet-disconnect", false);
-  setVisibility("#connection-link-ledger-validate", false);
+  toggleVisibility("#wallet-connect");
+  toggleVisibility("#metamask-connect");
+  toggleVisibility("#private-key-connect");
+  toggleVisibility("#wallet-disconnect");
   updateInteractionVisibility();
 };
 
@@ -146,12 +145,10 @@ const setConnectionStatus = (status: string) => {
   }
 }
 
-const setVisibility = (selector: string, visible: boolean) => {
-  const element = <HTMLElement>document.querySelector(selector);
-  if (visible) {
-    element.classList.remove("hidden");
-  } else {
-    element.classList.add("hidden");
+const toggleVisibility = (selector: string) => {
+  const element = document.querySelector(selector);
+  if (element != null) {
+    element.classList.toggle("hidden");
   }
 };
 
