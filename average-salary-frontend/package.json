@@ -4,8 +4,8 @@
   "description": "",
   "license": "AGPL-3.0",
   "dependencies": {
-    "@privacyblockchain/abi-client": "5.132.0",
-    "@privacyblockchain/blockchain-api-transaction-client": "^5.93.0",
+    "@partisiablockchain/abi-client": "5.132.0",
+    "@partisiablockchain/blockchain-api-transaction-client": "^5.93.0",
     "@partisiablockchain/zk-client": "^5.127.0",
     "@secata-public/bitmanipulation-ts": "^3.0.7",
     "@types/bn.js": "^5.1.5",
