@@ -21,8 +21,8 @@ import {
   ChainControllerApi,
   Configuration,
   SenderAuthentication,
-} from "@privacyblockchain/blockchain-api-transaction-client";
-import { BlockchainAddress } from "@privacyblockchain/abi-client";
+} from "@partisiablockchain/blockchain-api-transaction-client";
+import { BlockchainAddress } from "@partisiablockchain/abi-client";
 import { PetitionApi } from "./contract/PetitionApi";
 
 export const CLIENT = new ChainControllerApi(

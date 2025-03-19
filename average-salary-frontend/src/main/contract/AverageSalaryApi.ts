@@ -18,7 +18,7 @@
 import {
   BlockchainAddress,
   BlockchainTransactionClient,
-} from "@privacyblockchain/blockchain-api-transaction-client";
+} from "@partisiablockchain/blockchain-api-transaction-client";
 
 import { RealZkClient } from "@partisiablockchain/zk-client";
 import { addSalary, computeAverageSalary } from "./AverageSalaryGenerated";

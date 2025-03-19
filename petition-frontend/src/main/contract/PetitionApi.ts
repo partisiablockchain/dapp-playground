@@ -22,8 +22,8 @@ import { getContractAddress } from "../AppState";
 import {
   BlockchainTransactionClient,
   ChainControllerApi,
-} from "@privacyblockchain/blockchain-api-transaction-client";
-import { BlockchainAddress } from "@privacyblockchain/abi-client";
+} from "@partisiablockchain/blockchain-api-transaction-client";
+import { BlockchainAddress } from "@partisiablockchain/abi-client";
 
 export interface PetitionBasicState {
   signedBy: BlockchainAddress[];

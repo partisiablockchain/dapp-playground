@@ -23,12 +23,12 @@ import {
   getPetitionApi,
 } from "./AppState";
 
-import { SenderAuthentication } from "@privacyblockchain/blockchain-api-transaction-client";
+import { SenderAuthentication } from "@partisiablockchain/blockchain-api-transaction-client";
 import { CryptoUtils } from "./client/CryptoUtils";
 import { connectPrivateKey } from "./shared/PrivateKeySignatureProvider";
 import { connectMpcWallet } from "./shared/MpcWalletSignatureProvider";
 import { connectMetaMask } from "./shared/MetaMaskSignatureProvider";
-import { BlockchainAddress } from "@privacyblockchain/abi-client";
+import { BlockchainAddress } from "@partisiablockchain/abi-client";
 
 /**
  * Function for connecting to the MPC wallet and setting the connected wallet in the app state.

@@ -25,7 +25,7 @@ import {
   updateContractState,
   updateInteractionVisibility,
 } from "./WalletIntegration";
-import { BlockchainAddress } from "@privacyblockchain/abi-client";
+import { BlockchainAddress } from "@partisiablockchain/abi-client";
 
 // Setup event listener to connect to the MPC wallet browser extension
 const connectWallet = <Element>document.querySelector("#wallet-connect-btn");

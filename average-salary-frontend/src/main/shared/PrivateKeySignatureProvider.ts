@@ -2,7 +2,7 @@
 import {
   SenderAuthentication,
   Signature,
-} from "@privacyblockchain/blockchain-api-transaction-client";
+} from "@partisiablockchain/blockchain-api-transaction-client";
 import { ec } from "elliptic";
 import { CryptoUtils } from "../client/CryptoUtils";
 import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";

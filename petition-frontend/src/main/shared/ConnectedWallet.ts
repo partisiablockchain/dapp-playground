@@ -2,7 +2,7 @@ import {
   BlockchainTransactionClient,
   SentTransaction,
   Transaction,
-} from "@privacyblockchain/blockchain-api-transaction-client";
+} from "@partisiablockchain/blockchain-api-transaction-client";
 
 /**
  * Unified interface for connected MPC wallets.

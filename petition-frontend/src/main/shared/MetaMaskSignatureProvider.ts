@@ -1,7 +1,7 @@
 import {
   SenderAuthentication,
   Signature,
-} from "@privacyblockchain/blockchain-api-transaction-client";
+} from "@partisiablockchain/blockchain-api-transaction-client";
 
 interface MetamaskRequestArguments {
   /** The RPC method to request. */

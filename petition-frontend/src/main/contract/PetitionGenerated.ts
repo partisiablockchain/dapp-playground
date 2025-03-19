@@ -20,7 +20,7 @@ import {
   Signature,
   StateWithClient,
   SecretInputBuilder,
-} from "@privacyblockchain/abi-client";
+} from "@partisiablockchain/abi-client";
 
 type Option<K> = K | undefined;
 export class PetitionGenerated {

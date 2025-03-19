@@ -2,7 +2,7 @@ import PartisiaSdk from "partisia-blockchain-applications-sdk";
 import {
   SenderAuthentication,
   Signature,
-} from "@privacyblockchain/blockchain-api-transaction-client";
+} from "@partisiablockchain/blockchain-api-transaction-client";
 
 /**
  * Initializes a new ConnectedWallet by connecting to Partisia Blockchain

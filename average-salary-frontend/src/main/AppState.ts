@@ -22,7 +22,7 @@ import { AverageSalaryApi } from "./contract/AverageSalaryApi";
 import {
   BlockchainTransactionClient,
   SenderAuthentication,
-} from "@privacyblockchain/blockchain-api-transaction-client";
+} from "@partisiablockchain/blockchain-api-transaction-client";
 
 export const TESTNET_URL = "https://node1.testnet.partisiablockchain.com";
 

@@ -26,7 +26,7 @@ import {
   getAverageApi,
 } from "./AppState";
 import { CryptoUtils } from "@partisiablockchain/zk-client";
-import { SenderAuthentication } from "@privacyblockchain/blockchain-api-transaction-client";
+import { SenderAuthentication } from "@partisiablockchain/blockchain-api-transaction-client";
 import { deserializeState } from "./contract/AverageSalaryGenerated";
 import { connectMpcWallet } from "./shared/MpcWalletSignatureProvider";
 import { connectMetaMask } from "./shared/MetaMaskSignatureProvider";
