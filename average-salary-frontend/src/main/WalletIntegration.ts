@@ -142,32 +142,6 @@ export const updateContractState = () => {
   const refreshLoader = <HTMLInputElement>document.querySelector("#refresh-loader");
   refreshLoader.classList.remove("hidden");
 
-  // if (averageApi.basicState != undefined) {
-  //     averageApi.basicState(address).then((state: AverageSalaryBasicState) => {
-  //       const stateHeader = <HTMLInputElement>document.querySelector("#state-header");
-  //       const updateStateButton = <HTMLInputElement>document.querySelector("#update-state");
-  //       stateHeader.classList.remove("hidden");
-  //       updateStateButton.classList.remove("hidden");
-  //
-  //       const administrator = <HTMLElement>document.querySelector("#administrator-value");
-  //       administrator.innerHTML = `${state.administrator}`;
-  //
-  //       const noSalaries = <HTMLElement>document.querySelector("#num-salaries");
-  //       noSalaries.innerHTML = `${countSalaries(variables)}`;
-  //
-  //       const averageSalaryResult = <HTMLElement>document.querySelector("#average-result");
-  //       averageSalaryResult.innerHTML = `${state.averageSalaryResult ?? "None"}`;
-  //
-  //       const numEmployees = <HTMLElement>document.querySelector("#num-employees");
-  //       numEmployees.innerHTML = `${state.numEmployees ?? "None"}`;
-  //
-  //       const contractState = <HTMLElement>document.querySelector("#contract-state");
-  //       contractState.classList.remove("hidden");
-  //       refreshLoader.classList.add("hidden");
-  //     }
-  //
-  // }
-
   CLIENT.getContractData<RawZkContractData>(address).then((contract) => {
     if (contract != null) {
       // Reads the state of the contract
