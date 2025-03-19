@@ -1,82 +1,93 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import BN from "bn.js";
+// This file is auto-generated from an abi-file using AbiCodegen.
+/* eslint-disable */
+// @ts-nocheck
+// noinspection ES6UnusedImports
 import {
-  AbiParser,
-  AbstractBuilder,
-  BigEndianReader,
-  FileAbi,
-  FnKinds,
-  FnRpcBuilder,
-  RpcReader,
-  ScValue,
-  ScValueEnum,
-  ScValueOption,
-  ScValueStruct,
-  StateReader,
-  TypeIndex,
-  StateBytes,
+  AbiBitInput,
+  AbiBitOutput,
+  AbiByteInput,
+  AbiByteOutput,
+  AbiInput,
+  AbiOutput,
+  AvlTreeMap,
   BlockchainAddress,
+  BlockchainPublicKey,
+  BlockchainStateClient,
+  BlsPublicKey,
+  BlsSignature,
+  BN,
+  Hash,
+  Signature,
+  StateWithClient,
+  SecretInputBuilder,
 } from "@partisiablockchain/abi-client";
-import { BigEndianByteOutput } from "@secata-public/bitmanipulation-ts";
-
-const fileAbi: FileAbi = new AbiParser(
-  Buffer.from(
-    "50424341424909050005020000000002010000000d5065746974696f6e537461746500000002000000097369676e65645f6279100d0000000b6465736372697074696f6e0b010000000b536563726574566172496400000001000000067261775f69640300000002010000000a696e697469616c697a65ffffffff0f000000010000000b6465736372697074696f6e0b02000000047369676e01000000000000",
-    "hex"
-  )
-).parseAbi();
 
 type Option<K> = K | undefined;
+export class PetitionGenerated {
+  private readonly _client: BlockchainStateClient | undefined;
+  private readonly _address: BlockchainAddress | undefined;
 
+  public constructor(
+    client: BlockchainStateClient | undefined,
+    address: BlockchainAddress | undefined
+  ) {
+    this._address = address;
+    this._client = client;
+  }
+  public deserializePetitionState(_input: AbiInput): PetitionState {
+    const signedBy_setLength = _input.readI32();
+    const signedBy: BlockchainAddress[] = [];
+    for (let signedBy_i = 0; signedBy_i < signedBy_setLength; signedBy_i++) {
+      const signedBy_elem: BlockchainAddress = _input.readAddress();
+      signedBy.push(signedBy_elem);
+    }
+    const description: string = _input.readString();
+    return { signedBy, description };
+  }
+  public async getState(): Promise<PetitionState> {
+    const bytes = await this._client?.getContractStateBinary(this._address!);
+    if (bytes === undefined) {
+      throw new Error("Unable to get state bytes");
+    }
+    const input = AbiByteInput.createLittleEndian(bytes);
+    return this.deserializePetitionState(input);
+  }
+}
 export interface PetitionState {
   signedBy: BlockchainAddress[];
   description: string;
 }
 
-export function newPetitionState(
-  signedBy: BlockchainAddress[],
-  description: string
-): PetitionState {
-  return { signedBy, description };
-}
-
-function fromScValuePetitionState(structValue: ScValueStruct): PetitionState {
-  return {
-    signedBy: structValue
-      .getFieldValue("signed_by")!
-      .setValue()
-      .values.map((sc1) => BlockchainAddress.fromBuffer(sc1.addressValue().value)),
-    description: structValue.getFieldValue("description")!.stringValue(),
-  };
-}
-
-export function deserializePetitionState(state: StateBytes): PetitionState {
-  const scValue = new StateReader(state.state, fileAbi.contract, state.avlTrees).readState();
-  return fromScValuePetitionState(scValue);
-}
-
-export interface SecretVarId {
-  rawId: number;
-}
-
-export function newSecretVarId(rawId: number): SecretVarId {
-  return { rawId };
-}
-
-function fromScValueSecretVarId(structValue: ScValueStruct): SecretVarId {
-  return {
-    rawId: structValue.getFieldValue("raw_id")!.asNumber(),
-  };
-}
-
 export function initialize(description: string): Buffer {
-  const fnBuilder = new FnRpcBuilder("initialize", fileAbi.contract);
-  fnBuilder.addString(description);
-  return fnBuilder.getBytes();
+  return AbiByteOutput.serializeBigEndian((_out) => {
+    _out.writeBytes(Buffer.from("ffffffff0f", "hex"));
+    _out.writeString(description);
+  });
 }
 
 export function sign(): Buffer {
-  const fnBuilder = new FnRpcBuilder("sign", fileAbi.contract);
-  return fnBuilder.getBytes();
+  return AbiByteOutput.serializeBigEndian((_out) => {
+    _out.writeBytes(Buffer.from("01", "hex"));
+  });
+}
+
+export function deserializeState(state: StateWithClient): PetitionState;
+export function deserializeState(bytes: Buffer): PetitionState;
+export function deserializeState(
+  bytes: Buffer,
+  client: BlockchainStateClient,
+  address: BlockchainAddress
+): PetitionState;
+export function deserializeState(
+  state: Buffer | StateWithClient,
+  client?: BlockchainStateClient,
+  address?: BlockchainAddress
+): PetitionState {
+  if (Buffer.isBuffer(state)) {
+    const input = AbiByteInput.createLittleEndian(state);
+    return new PetitionGenerated(client, address).deserializePetitionState(input);
+  } else {
+    const input = AbiByteInput.createLittleEndian(state.bytes);
+    return new PetitionGenerated(state.client, state.address).deserializePetitionState(input);
+  }
 }

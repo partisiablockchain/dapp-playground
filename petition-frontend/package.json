@@ -4,17 +4,19 @@
   "description": "",
   "license": "AGPL-3.0",
   "dependencies": {
-    "@partisiablockchain/abi-client": "^3.30.0",
-    "@secata-public/bitmanipulation-ts": "^3.0.7",
-    "@types/bn.js": "^5.1.5",
-    "@types/elliptic": "^6.4.18",
+    "@partisiablockchain/abi-client": "5.132.0",
+    "@partisiablockchain/blockchain-api-transaction-client": "^5.105.0",
+    "@secata-public/bitmanipulation-ts": "^3.0.6",
+    "@types/bn.js": "^5.1.6",
+    "@types/elliptic": "^6.4.14",
+    "bip32-path": "^0.4.2",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
-    "partisia-sdk": "^0.1.1",
-    "stream-browserify": "^3.0.0",
-    "elliptic": "^6.5.5",
-    "hash.js": "^1.1.7"
+    "elliptic": "^6.5.7",
+    "hash.js": "^1.1.7",
+    "partisia-blockchain-applications-sdk": "^0.1.4",
+    "stream-browserify": "^3.0.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.19.6",

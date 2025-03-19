@@ -4,7 +4,7 @@
         {
             "label": "Deploy Petition Contract",
             "type": "shell",
-            "command": "cargo pbc transaction deploy --gas 2500000 --privatekey ${input:key}.pk target/wasm32-unknown-unknown/release/petition.wasm target/wasm32-unknown-unknown/release/petition.abi '${input:petition-description}'",
+            "command": "cargo pbc transaction deploy --gas 2500000 --privatekey ${input:key}.pk target/wasm32-unknown-unknown/release/petition.pbc '${input:petition-description}'",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -30,7 +30,7 @@
         {
             "label": "Deploy an Average Salary Contract (ZK-contract).",
             "type": "shell",
-            "command": "cargo pbc transaction deploy --gas 10000000 --privatekey ${input:key}.pk target/wasm32-unknown-unknown/release/average_salary.zkwa target/wasm32-unknown-unknown/release/average_salary.abi",
+            "command": "cargo pbc transaction deploy --gas 10000000 --privatekey ${input:key}.pk target/wasm32-unknown-unknown/release/average_salary.pbc",
             "options": {
                 "cwd": "${workspaceFolder}"
             },

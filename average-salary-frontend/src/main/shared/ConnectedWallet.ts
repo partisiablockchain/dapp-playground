@@ -16,18 +16,16 @@
  *
  */
 
+import { ShardPutTransactionResponse } from "../client/ShardedClient";
+import { Rpc, TransactionPayload } from "../client/TransactionData";
+
 /**
- * Types specifying the structure of the contract data returned from the PBC client.
+ * Interface for a connected MPC wallet.
  */
-
-export type ContractType = "PUBLIC";
-
-export interface ContractCore {
-  type: ContractType;
-  address: string;
-  jarHash: string;
-  storageLength: number;
-  abi: string;
+export interface ConnectedWallet {
+  readonly address: string;
+  readonly signAndSendTransaction: (
+    payload: TransactionPayload<Rpc>,
+    cost?: string | number
+  ) => Promise<ShardPutTransactionResponse>;
 }
-
-export type ContractData<T> = ContractCore & { serializedContract: T };

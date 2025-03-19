@@ -10,7 +10,7 @@ edition.workspace = true
 license.workspace = true
 
 [features]
-abi = ["pbc_contract_common/abi", "pbc_contract_codegen/abi", "pbc_traits/abi", "create_type_spec_derive/abi", "pbc_lib/abi"]
+abi = ["pbc_contract_common/abi", "pbc_contract_codegen/abi", "pbc_traits/abi", "create_type_spec_derive/abi", "pbc_lib/abi", "pbc_zk/abi"]
 plus_metadata = []
 
 [lib]

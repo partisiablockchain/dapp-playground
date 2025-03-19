@@ -16,27 +16,23 @@
  *
  */
 
-import { ContractAbi } from "@partisiablockchain/abi-client";
-import { BlockchainPublicKey } from "@partisiablockchain/zk-client";
+import { Client, RealZkClient } from "@partisiablockchain/zk-client";
 import { ShardedClient } from "./client/ShardedClient";
-import { TransactionApi } from "./client/TransactionApi";
-import { ConnectedWallet } from "./ConnectedWallet";
 import { AverageSalaryApi } from "./contract/AverageSalaryApi";
-import { updateContractState } from "./WalletIntegration";
+import {
+  BlockchainTransactionClient,
+  SenderAuthentication,
+} from "@partisiablockchain/blockchain-api-transaction-client";
 
-export const CLIENT = new ShardedClient("https://node1.testnet.partisiablockchain.com", [
-  "Shard0",
-  "Shard1",
-  "Shard2",
-]);
+export const TESTNET_URL = "https://node1.testnet.partisiablockchain.com";
+
+export const CLIENT = new ShardedClient(TESTNET_URL, ["Shard0", "Shard1", "Shard2"]);
 
 let contractAddress: string | undefined;
-let currentAccount: ConnectedWallet | undefined;
-let contractAbi: ContractAbi | undefined;
+let currentAccount: SenderAuthentication | undefined;
 let averageApi: AverageSalaryApi | undefined;
-let engineKeys: BlockchainPublicKey[] | undefined;
 
-export const setAccount = (account: ConnectedWallet | undefined) => {
+export const setAccount = (account: SenderAuthentication | undefined) => {
   currentAccount = account;
   setAverageApi();
 };
@@ -49,38 +45,21 @@ export const isConnected = () => {
   return currentAccount != null;
 };
 
-export const setContractAbi = (abi: ContractAbi | undefined) => {
-  contractAbi = abi;
-  setAverageApi();
-};
-
-export const getContractAbi = () => {
-  return contractAbi;
-};
-
 export const setAverageApi = () => {
-  if (currentAccount != undefined && contractAbi != undefined && engineKeys !== undefined) {
-    const transactionApi = new TransactionApi(currentAccount, updateContractState);
-    averageApi = new AverageSalaryApi(
-      transactionApi,
-      currentAccount.address,
-      contractAbi,
-      engineKeys
+  let transactionClient = undefined;
+  let zkClient = undefined;
+  if (currentAccount != undefined && contractAddress != null) {
+    transactionClient = BlockchainTransactionClient.create(
+      "https://node1.testnet.partisiablockchain.com",
+      currentAccount
     );
+    zkClient = RealZkClient.create(contractAddress, new Client(TESTNET_URL));
+    averageApi = new AverageSalaryApi(transactionClient, zkClient, currentAccount.getAddress());
   }
 };
 
 export const getAverageApi = () => {
   return averageApi;
-};
-
-export const getEngineKeys = () => {
-  return engineKeys;
-};
-
-export const setEngineKeys = (keys: BlockchainPublicKey[] | undefined) => {
-  engineKeys = keys;
-  setAverageApi();
 };
 
 export const getContractAddress = () => {
@@ -89,4 +68,5 @@ export const getContractAddress = () => {
 
 export const setContractAddress = (address: string) => {
   contractAddress = address;
+  setAverageApi();
 };
